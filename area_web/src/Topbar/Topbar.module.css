@@ -1,0 +1,53 @@
+.topbarContainer {
+    height: 80px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.topbarRightPart {
+    display: flex;
+    align-items: center;
+}
+
+.logoTopbar {
+    width: 60px;
+    height: 60px;
+}
+
+.topbarTitle {
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.topbarLeftPart {
+    display: flex;
+    align-items: center;
+}
+
+.topbarInfosButton {
+    border-radius: 50px;
+    font-size: 20px;
+    background-color: #252525;
+    border: none;
+    outline: none;
+}
+
+.topbarInfosButton:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0000de;
+}
+
+.topbarInfosButton:active {
+    color: #0000de;
+}
