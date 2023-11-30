@@ -50,7 +50,6 @@
 
 .forgottenPasswordButton:hover {
     cursor: pointer;
-    text-decoration: underline;
     color: #2a2aff;
 }
 
@@ -79,11 +78,49 @@
     background-color: #0000de;
 }
 
+.notRegisteredButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.notRegisteredButton {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #808080;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.notRegisteredButton:hover {
+    cursor: pointer;
+    color: #6c6c6c;
+}
+
+.notRegisteredButton:active {
+    color: #4f4f4f;
+}
+
 @media screen and (max-width: 500px) {
     .inputTextField {
         width: 300px;
     }
     .forgottenPasswordButtonContainer {
         width: 300px;
+    }
+    .forgottenPasswordButton {
+        font-size: 12px;
+    }
+    .loginButton {
+        width: 150px;
+    }
+    .notRegisteredButtonContainer {
+        width: 300px;
+    }
+    .notRegisteredButton {
+        font-size: 12px;
     }
 }

@@ -43,6 +43,10 @@ export default function Login() {
         console.log("email : " + email + " password : " + password);
     };
 
+    const handleNotRegistered = () => {
+        navigate("/register");
+    }
+
     const handleForgottenPassword = () => {
         console.log("pwd forgotten");
     }
@@ -52,9 +56,12 @@ export default function Login() {
             <img src={LogoAREA} alt="Logo AREA" className={style.logoLoginPage} />
             <TextsFields email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
             <div className={style.forgottenPasswordButtonContainer}>
-                <button onClick={handleForgottenPassword} className={style.forgottenPasswordButton}>forgotten password</button>
+                <button onClick={handleForgottenPassword} className={style.forgottenPasswordButton}>Forgotten password</button>
             </div>
             <button className={style.loginButton} onClick={handleLogin}>Login</button>
+            <div className={style.notRegisteredButtonContainer}>
+                <button onClick={handleNotRegistered} className={style.notRegisteredButton}>Not registered for the moment</button>
+            </div>
         </div>
     );
 }
