@@ -1,19 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./PopupInfosCard.module.css";
 
-import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
-import SettingsIcon from '@mui/icons-material/Settings';
-
-import serviceLogo from "../assets/Logo_AREA.png";
-
-import DiscordLogo from "../assets/DiscordLogo.png";
-import TrelloLogo from "../assets/TrelloLogo.png";
-import GithubLogo from "../assets/GithubLogo.png";
 
 import CloseIcon from "@mui/icons-material/Close";
-
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 export default function PopupWoverlay({ setOpen, open, onClose, children, name }) {
 

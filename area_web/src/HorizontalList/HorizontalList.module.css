@@ -27,7 +27,7 @@
 
 .serviceLogo {
     width: 50px;
-    height: 50px;
+    height: auto;
     background-color: white;
 }
 
@@ -124,7 +124,7 @@
 .cardInstruction {
     font-size: 18px;
     color: #252525;
-    margin-left: 35px;
+    margin-left: 10px;
 }
 
 .cardInstructionList {

@@ -5,9 +5,6 @@ import Topbar from "../Topbar/Topbar";
 import HorizontalList from "../HorizontalList/HorizontalList";
 
 export default function Home() {
-    const navigateFunction = () => {
-        window.location = '/home';
-    };
 
     return (
         <div className={style.MainContainerHomePage}>

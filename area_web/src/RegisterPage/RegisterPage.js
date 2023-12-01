@@ -76,10 +76,6 @@ export default function Register() {
         console.log("email: " + email + " firstName: " + firstName + " lastName: " + lastName + " password: " + password + " passwordConfirmation: " + passwordConfirmation);
     };
 
-    const handleForgottenPassword = () => {
-        console.log("pwd forgotten");
-    }
-
     return (
         <div className={style.MainContainerRegisterPage}>
             <img src={LogoAREA} alt="Logo AREA" className={style.logoRegisterPage} />

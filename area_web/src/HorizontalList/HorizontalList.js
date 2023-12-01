@@ -5,8 +5,6 @@ import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import serviceLogo from "../assets/Logo_AREA.png";
-
 import DiscordLogo from "../assets/DiscordLogo.png";
 import TrelloLogo from "../assets/TrelloLogo.png";
 import GithubLogo from "../assets/GithubLogo.png";
@@ -245,7 +243,7 @@ function InformationsOnPopup({ item }) {
                     <span className={style.cardSubtitle}>Then</span>
                     <div className={style.cardInstructionList}>
                         {item && item.then && item.then.map((thenItem, index) => (
-                            <img style={{width:'25px', height:'30px', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
+                            <img style={{width:'25px', height:'auto', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
                         ))}
                     </div>
                 </div>
@@ -266,15 +264,36 @@ function InformationsOnPopup({ item }) {
     );
 }
 
-function CardTop({ item }) {
+function CardTop({ item, itemLogo }) {
     return (
         <div className={style.cardTop}>
             <div className={style.cardTopSubcontainer1}>
                 <span className={style.cardSubtitle}>When</span>
-                <span className={style.cardInstruction}> {item.when} </span>
+                <div className={style.cardInstructionList}>
+                    <img src={itemLogo} alt={itemLogo} style={{width:'25px', height:'auto'}} />
+                    <span className={style.cardInstruction}> {item.when} </span>
+                </div>
             </div>
             <div className={style.cardTopSubcontainer2}>
-                <Switch {...label} />
+            <Switch
+                {...label}
+                sx={{
+                    width: 62,
+                    height: 40,
+                    '& .MuiSwitch-switchBase': {
+                        '&.Mui-checked': {
+                            transform: 'translateX(24px)',
+                        },
+                    },
+                    '& .MuiSwitch-thumb': {
+                        width: 24,
+                        height: 24,
+                    },
+                    '& .MuiSwitch-track': {
+                        borderRadius: 26 / 2,
+                    },
+                }}
+            />
             </div>
         </div>
     );
@@ -293,13 +312,13 @@ function CardBottom({ item }) {
                 <span className={style.cardSubtitle}>Then</span>
                 <div className={style.cardInstructionList}>
                     {item && item.then && item.then.map((thenItem, index) => (
-                        <img style={{width:'25px', height:'30px', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
+                        <img style={{width:'25px', height:'auto', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
                     ))}
                 </div>
             </div>
             <div className={style.cardTopSubcontainer3}>
                 <IconButton
-                    size="small"
+                    size="large"
                     style={{
                         backgroundColor: "#252525",
                         color: "#fff",
@@ -324,10 +343,10 @@ function CardBottom({ item }) {
     );
 }
 
-function Card({ item }) {
+function Card({ item, itemLogo }) {
     return (
         <div className={style.cardContainer}>
-            <CardTop item={item} />
+            <CardTop item={item} itemLogo={itemLogo} />
             <CardBottom item={item} />
         </div>
     );
@@ -342,7 +361,7 @@ function ListContainer({ item }) {
             </div>
             <div className={style.listBody}>
                 {item.cardList.map((cardItem, index) => (
-                    <Card key={index} item={cardItem} />
+                    <Card key={index} item={cardItem} itemLogo={item.logo} />
                 ))}
             </div>
         </div>
