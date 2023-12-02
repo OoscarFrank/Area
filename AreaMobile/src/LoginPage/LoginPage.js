@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
 const backColor = "#fff";
 
-export default function LoginPage() {
+export default function LoginPage({setCurrentScreen}) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
