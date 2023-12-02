@@ -31,10 +31,10 @@ export default function LoginPage({setCurrentScreen}) {
           secureTextEntry={!passwordVisible}/>
         <MaterialCommunityIcons name={passwordVisible ? 'eye-off' : 'eye'} size={24} color="black" onPress={() => setPasswordVisible(!passwordVisible)}/>
       </View>
-      <TouchableOpacity onPress={() => console.log("touch !")}>
+      <TouchableOpacity onPress={() => setCurrentScreen('home')}>
         <Text style={styles.fgtPassword}>Forgotten password</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.connectionButton}>
+      <TouchableOpacity  onPress={() => setCurrentScreen('home')} style={styles.connectionButton}>
         <Text style={styles.connectionButtonText}>Login</Text> 
       </TouchableOpacity>
     </View>
