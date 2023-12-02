@@ -35,7 +35,7 @@ export default function LoginPage() {
         <Text style={styles.fgtPassword}>Forgotten password</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.connectionButton}>
-        <Text style={styles.connectionButtonText}>Connection</Text> 
+        <Text style={styles.connectionButtonText}>Login</Text> 
       </TouchableOpacity>
     </View>
   );
@@ -61,7 +61,7 @@ input : {
   borderColor: 'black', 
   borderWidth: 2, 
   width: '100%', 
-  borderRadius: 25, 
+  borderRadius: 15, 
   paddingLeft: 10, 
   marginRight: 10
 },
