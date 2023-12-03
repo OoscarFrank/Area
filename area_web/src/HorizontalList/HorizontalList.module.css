@@ -10,19 +10,25 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    height: 300px;
     border-bottom: 1px solid #252525;
     width: 100%;
     overflow: hidden;
 }
 
-.listHeader {
-    margin-top: 25px;
-    margin-left: 15px;
+.listHeaderContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 50px;
+    justify-content: center;
+    width: 100%;
+}
+
+.listHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 90%;
 }
 
 .serviceLogo {
@@ -38,21 +44,94 @@
     margin-left: 10px;
 }
 
+.allListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.listBodyContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.blurEffect {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background: linear-gradient(to left, rgb(245, 245, 245, 0), rgba(245, 245, 245, 1));
+    z-index: 2;
+    pointer-events: none;
+}
+
+.blurEffect.left {
+    left: 0;
+}
+
+.blurEffect.right {
+    right: 0;
+    transform: rotate(180deg);
+}
+
 .listBody {
     margin-top: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    overflow-x: auto;
+    justify-content: center;
+    overflow-x: hidden;
     overflow-y: hidden;
-    height: 200px;
     white-space: nowrap;
     flex-wrap: nowrap;
-    width: 100%;
+    width: 85%;
 }
 
 .listBody::-webkit-scrollbar {
     display: none;
+}
+
+.locationInCardsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.locationInCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    border: 1px solid #252525;
+    border-radius: 50%;
+    margin: 0 5px;
+    color: #F5F5F5;
+}
+
+.locationInCardsSelected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    border: 1px solid #0000FF;
+    background-color: #0000FF;
+    border-radius: 50%;
+    margin: 0 5px;
+    color: #F5F5F5;
 }
 
 .cardContainer {
@@ -62,8 +141,7 @@
     justify-content: flex-start;
     height: 180px;
     width: 400px;
-    margin-right: 10px;
-    margin-left: 30px;
+    margin: 25px;
     border-radius: 10px;
     background-color: #FFF;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
@@ -137,13 +215,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .listContainer {
-        height: 250px;
-    }
-
-    .listHeader {
-        margin-top: 15px;
-    }
 
     .serviceLogo {
         width: 40px;
@@ -156,15 +227,13 @@
 
     .listBody {
         margin-top: 15px;
-        height: 180px;
         padding-left: 10px;
     }
 
     .cardContainer {
         height: 150px;
         width: 300px;
-        margin-right: 10px;
-        margin-left: 10px;
+        margin: 20px;
     }
 
     .cardSubtitle {
@@ -185,13 +254,6 @@
 }
 
 @media screen and (max-width: 480px) {
-    .listContainer {
-        height: 235px;
-    }
-
-    .listHeader {
-        margin-top: 12px;
-    }
 
     .serviceLogo {
         width: 35px;
@@ -204,15 +266,15 @@
 
     .listBody {
         margin-top: 12px;
-        height: 160px;
         padding-left: 8px;
     }
 
     .cardContainer {
         height: 130px;
         width: 300px;
-        margin-right: 8px;
-        margin-left: 8px;
+        margin: 15px;
+        margin-right: 50px;
+        margin-left: 50px;
     }
 
     .cardSubtitle {
@@ -228,6 +290,10 @@
     .cardInstructionList {
         font-size: 14px;
         margin-left: 25px;
+    }
+
+    .blurEffect {
+        background: none;
     }
 }
 

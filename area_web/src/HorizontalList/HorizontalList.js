@@ -4,6 +4,8 @@ import style from "./HorizontalList.module.css";
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import DiscordLogo from "../assets/DiscordLogo.png";
 import TrelloLogo from "../assets/TrelloLogo.png";
@@ -17,7 +19,7 @@ const array = [
         name: "Discord",
         cardList: [
             {
-                when: "Message received",
+                when: "Message received1",
                 then: [
                     {
                         serviceName: "trello",
@@ -39,7 +41,7 @@ const array = [
                 isActive: "true"
             },
             {
-                when: "Message sent",
+                when: "Message sent2",
                 then: [
                     {
                         serviceName: "trello",
@@ -61,7 +63,7 @@ const array = [
                 isActive: "true"
             },
             {
-                when: "Message sent",
+                when: "Message sent3",
                 then: [
                     {
                         serviceName: "trello",
@@ -71,7 +73,7 @@ const array = [
                 isActive: "true"
             },
             {
-                when: "Message received",
+                when: "Message received4",
                 then: [
                     {
                         serviceName: "trello",
@@ -81,7 +83,7 @@ const array = [
                 isActive: "true"
             },
             {
-                when: "Message sent",
+                when: "Message sent5",
                 then: [
                     {
                         serviceName: "trello",
@@ -103,7 +105,7 @@ const array = [
                 isActive: "true"
             },
             {
-                when: "Message received",
+                when: "Message received6",
                 then: [
                     {
                         serviceName: "trello",
@@ -353,16 +355,61 @@ function Card({ item, itemLogo }) {
 }
 
 function ListContainer({ item }) {
+    const [startIndex, setStartIndex] = useState(0);
+    const cardsPerGroup = 3;
+
+    const modifiedCards = [
+        item.cardList[item.cardList.length - 1],
+        ...item.cardList,
+        item.cardList[0],
+    ];
+
+    const displayedCards = [];
+    for (let i = 0; i < cardsPerGroup; i++) {
+        displayedCards.push(modifiedCards[(startIndex + i) % modifiedCards.length]);
+    }
+
+    const handleDisplayCard = (direction) => {
+        setStartIndex(prevIndex => {
+            if (direction === 'next') {
+                return (prevIndex + 1) % item.cardList.length;
+            } else {
+                return (prevIndex - 1 + item.cardList.length) % item.cardList.length;
+            }
+        });
+    }
+
     return (
         <div className={style.listContainer}>
-            <div className={style.listHeader}>
-                <img src={item.logo} alt="serviceLogo" className={style.serviceLogo} />
-                <p className={style.listTitle}>{item.name}</p>
+            <div className={style.listHeaderContainer}>
+                <div className={style.listHeader}>
+                    <img src={item.logo} alt="serviceLogo" className={style.serviceLogo} />
+                    <p className={style.listTitle}>{item.name}</p>
+                </div>
             </div>
-            <div className={style.listBody}>
-                {item.cardList.map((cardItem, index) => (
-                    <Card key={index} item={cardItem} itemLogo={item.logo} />
-                ))}
+            <div className={style.allListContainer}>
+                <div className={style.listBodyContainer}>
+                    <div className={style.listBody}>
+                        <div className={`${style.blurEffect} ${style.left}`}></div>
+                            {displayedCards.map((cardItem, index) => (
+                                <Card key={`card-${index}`} item={cardItem} itemLogo={item.logo} />
+                            ))}
+                        <div className={`${style.blurEffect} ${style.right}`}></div>
+                    </div>
+                </div>
+                <div className={style.locationInCardsContainer}>
+                    <IconButton size="small" style={{ backgroundColor: "#252525", color: "#fff", margin: "10px" }} onClick={() => handleDisplayCard('prev')}>
+                        <ChevronLeftIcon/>
+                    </IconButton>
+                    {item.cardList.map((cardItem, index) => (
+                        <div key={`cardIndex-${index}`} className={index === startIndex ? style.locationInCardsSelected : style.locationInCards}>
+                            <span>{1 + index}</span>
+                        </div>
+                    ))}
+                    <IconButton size="small" style={{ backgroundColor: "#252525", color: "#fff", margin: "10px" }} onClick={() => handleDisplayCard('next')}>
+                        <ChevronRightIcon/>
+                    </IconButton>
+                </div>
             </div>
         </div>
     );
