@@ -7,6 +7,7 @@ import Logo from '../../assets/logo.svg';
 import HomePageCard from './HomePageCard';
 import discord from '../../assets/discord.png';
 import Carousel from 'react-native-reanimated-carousel';
+import Pagination from './Pagination';
 
 const backColor = "#fff";
 
@@ -18,22 +19,29 @@ const lineItems = [
 export default function HomePage({ setCurrentScreen }) {
     const [isSet, setIsSet] = useState(false);
     const [line, setLine] = useState(lineItems);
+    const [activeIndex, setActiveIndex] = useState(0);
     const width = Dimensions.get('window').width;
     return (
         <View style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} />
             <Carousel
-                loop
+                pagingEnabled={true}
+                snapEnabled={true}
+                mode="parallax"
+                modeConfig={{
+                  parallaxScrollingScale: 0.9,
+                  parallaxScrollingOffset: 50,
+                }}
                 width={width}
                 height={width / 2}
-                autoPlay={true}
                 data={line}
-                scrollAnimationDuration={1000}
-                onSnapToItem={(index) => console.log('current index:', index)}
+                scrollAnimationDuration={100}
+                onSnapToItem={(index) => setActiveIndex(index)}
                 renderItem={({ item }) => (
                     <HomePageCard isSet={isSet} setIsSet={setIsSet} when={item.when} then={item.then}/>
                 )}
             />
+            <Pagination activeIndex={activeIndex} itemCount={line.length} />
         </View>
     );
 }
