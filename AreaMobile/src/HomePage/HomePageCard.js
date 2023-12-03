@@ -26,7 +26,7 @@ export default function HomePageCard({isSet, setIsSet, when, then}) {
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>    
                 {
-                    then.img.map((img) => <Image source={img} style={styles.image}/>)
+                    then.img.map((img, index) => <Image source={img} style={styles.image} key={index}/>)
                 }
             </View>
             <TouchableOpacity>
