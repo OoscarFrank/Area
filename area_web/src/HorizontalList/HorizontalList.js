@@ -402,9 +402,7 @@ function ListContainer({ item }) {
                         <ChevronLeftIcon/>
                     </IconButton>
                     {item.cardList.map((cardItem, index) => (
-                        <div key={`cardIndex-${index}`} className={index === startIndex ? style.locationInCardsSelected : style.locationInCards}>
-                            <span>{1 + index}</span>
-                        </div>
+                        <div key={`cardIndex-${index}`} className={index === startIndex ? style.locationInCardsSelected : style.locationInCards} />
                     ))}
                     <IconButton size="small" style={{ backgroundColor: "#252525", color: "#fff", margin: "10px" }} onClick={() => handleDisplayCard('next')}>
                         <ChevronRightIcon/>
