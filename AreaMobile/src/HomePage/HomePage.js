@@ -34,7 +34,7 @@ const linelineItems = [
 export default function HomePage({ setCurrentScreen }) {
     const [lines, setLines] = useState(linelineItems);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
-    const width = Dimensions.get('window').width - 30;
+    const width = Dimensions.get('window').width - 10;
 
     const setIsSet = (x, y, value) => {
         let oldLine = Array.from(lines);
@@ -58,7 +58,7 @@ export default function HomePage({ setCurrentScreen }) {
                                     mode="parallax"
                                     modeConfig={{
                                     parallaxScrollingScale: 0.9,
-                                    parallaxScrollingOffset: 50,
+                                    parallaxScrollingOffset: 1,
                                     }}
                                     width={width}
                                     height={width / 2}
