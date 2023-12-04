@@ -10,7 +10,7 @@ export default function HomePageCard({isSet, setIsSet, when, then, index, delete
   return (
     <View style={styles.container}>
         <ModalArea setShowSettings={setShowSettings} showSettings={showSettings}
-        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard}/>
+        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img}/>
         <Text style={styles.textTitle}>When</Text>
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>
