@@ -1,4 +1,5 @@
 <script>
+  export let name;
   import { onMount } from 'svelte';
   import { navigate, Router, Route} from 'svelte-routing';
   import LoginPage from './routes/LoginPage.svelte';
