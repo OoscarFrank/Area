@@ -51,3 +51,40 @@
 .topbarInfosButton:active {
     color: #0000de;
 }
+
+.popupInfosUser {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 300px;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    z-index: 999;
+}
+
+.popupInfosTexteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.popupInfosTitle {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.popupInfosSubtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
