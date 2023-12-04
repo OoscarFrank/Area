@@ -3,6 +3,7 @@ import React from 'react';
 
 import Topbar from "../Topbar/Topbar";
 import HorizontalList from "../HorizontalList/HorizontalList";
+import AddArea from "../AddArea/AddArea";
 
 export default function Home() {
 
@@ -14,6 +15,7 @@ export default function Home() {
             <div className={style.horizontalListContainer}>
                 <HorizontalList />
             </div>
+            <AddArea />
         </div>
     );
 }

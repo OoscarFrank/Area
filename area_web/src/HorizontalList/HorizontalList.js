@@ -11,7 +11,7 @@ import DiscordLogo from "../assets/DiscordLogo.png";
 import TrelloLogo from "../assets/TrelloLogo.png";
 import GithubLogo from "../assets/GithubLogo.png";
 
-import PopupWoverlay from "./PopupInfosCard";
+import PopupWoverlay from "../Components/PopupInfosCard";
 
 const array = [
     {
