@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./HorizontalList.module.css";
 
 import Switch from '@mui/material/Switch';
@@ -6,10 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import DiscordLogo from "../assets/DiscordLogo.png";
 import TrelloLogo from "../assets/TrelloLogo.png";
 import GithubLogo from "../assets/GithubLogo.png";
+import IMG from "../assets/IMG....png";
 
 import PopupWoverlay from "../Components/PopupInfosCard";
 
@@ -24,6 +26,42 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
+                    },
+                    {
+                        serviceName: "github",
+                        serviceLogo: GithubLogo,
+                    },
+                    {
+                        serviceName: "X",
+                        serviceLogo: DiscordLogo,
+                    },
+                    {
+                        serviceName: "spotify",
+                        serviceLogo: DiscordLogo,
+                    },
+                    {
+                        serviceName: "github",
+                        serviceLogo: GithubLogo,
+                    },
+                    {
+                        serviceName: "X",
+                        serviceLogo: DiscordLogo,
+                    },
+                    {
+                        serviceName: "spotify",
+                        serviceLogo: DiscordLogo,
+                    },
+                    {
+                        serviceName: "github",
+                        serviceLogo: GithubLogo,
+                    },
+                    {
+                        serviceName: "X",
+                        serviceLogo: DiscordLogo,
+                    },
+                    {
+                        serviceName: "spotify",
+                        serviceLogo: DiscordLogo,
                     },
                     {
                         serviceName: "github",
@@ -228,39 +266,65 @@ const array = [
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-function InformationsOnPopup({ item }) {
+function InformationsOnPopup({ item, itemLogo }) {
     return (
         <div className={style.informationsMainContainer}>
-            <div className={style.cardTop}>
-                <div className={style.cardTopSubcontainer1}>
-                    <span className={style.cardSubtitle}>When</span>
-                    <span className={style.cardInstruction}> {item.when} </span>
+            <div className={style.InformationsOnPopupTop} >
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                    <span className={style.InformationsOnPopupAction}><b>When</b></span>
+                    <Switch
+                        {...label}
+                        sx={{
+                            width: 62,
+                            height: 40,
+                            '& .MuiSwitch-switchBase': {
+                                '&.Mui-checked': {
+                                    transform: 'translateX(24px)',
+                                },
+                            },
+                            '& .MuiSwitch-thumb': {
+                                width: 24,
+                                height: 24,
+                            },
+                            '& .MuiSwitch-track': {
+                                borderRadius: 26 / 2,
+                            },
+                        }}
+                    />
                 </div>
-                <div className={style.cardTopSubcontainer2}>
-                    <Switch {...label} />
+                <div className={style.informationsOnPopupContainerLogoAndText} >
+                    <div className={style.informationsOnPopupSubContainerTopLogoAndText}>
+                        <img src={itemLogo} alt={itemLogo} style={{width:'25px', height:'auto', marginRight:'15px'}} />
+                        {item.when}
+                    </div>
                 </div>
             </div>
-            <div className={style.cardBottom}>
-                <div className={style.cardTopSubcontainer1}>
-                    <span className={style.cardSubtitle}>Then</span>
-                    <div className={style.cardInstructionList}>
+            <div style={{width:'90%'}}>
+                <span className={style.InformationsOnPopupAction}><b>Then</b></span>
+                <div className={style.informationsOnPopupContainerLogoAndText}>
+                    <div className={style.informationsOnPopupSubContainerBottomLogoAndText}>
                         {item && item.then && item.then.map((thenItem, index) => (
-                            <img style={{width:'25px', height:'auto', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
+                            <div key={index} style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'20px'}}>
+                                <img style={{width:'25px', height:'auto', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
+                                <span>{item.when}</span>
+                            </div>
                         ))}
                     </div>
                 </div>
-                <div className={style.cardTopSubcontainer3}>
-                    <IconButton
-                        size="small"
-                        style={{
-                            backgroundColor: "#252525",
-                            color: "#fff",
-                            margin: "10px",
-                        }}
-                    >
-                        <SettingsIcon/>
-                    </IconButton>
-                </div>
+            </div>
+            <div style={{position:'fixed',display : "flex", justifyContent: "center", bottom : "12%", width : "100%", left: "22%"}}>
+
+                <IconButton
+                    size="large"
+                    style={{
+                        backgroundColor: "#FF0000",
+                        color: "#fff",
+                        margin: "10px",
+                        position: "relative"
+                    }}
+                >
+                    <DeleteIcon/>
+                </IconButton>
             </div>
         </div>
     );
@@ -301,8 +365,23 @@ function CardTop({ item, itemLogo }) {
     );
 }
 
-function CardBottom({ item }) {
+function CardBottom({ item, itemLogo }) {
     const [showInformationsCard, setShowInformationsCard] = useState(false);
+    const [newThen, setNewThen] = useState([]);
+
+    useEffect(() => {
+        let tempNewThen = [];
+        if (item && item.then && item.then.length > 5) {
+            for (let i = 0; i < 5; i++) {
+                tempNewThen.push(item.then[i]);
+            }
+            tempNewThen.push({
+                serviceName: "...",
+                serviceLogo: IMG, // Make sure IMG is defined or imported
+            });
+        }
+        setNewThen(tempNewThen);
+    }, [item]);
 
     const toggleShowInformationsCard = () => {
         setShowInformationsCard(!showInformationsCard);
@@ -313,9 +392,15 @@ function CardBottom({ item }) {
             <div className={style.cardTopSubcontainer1}>
                 <span className={style.cardSubtitle}>Then</span>
                 <div className={style.cardInstructionList}>
-                    {item && item.then && item.then.map((thenItem, index) => (
-                        <img style={{width:'25px', height:'auto', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
-                    ))}
+                {newThen.length > 0 ? (
+                    newThen.map((thenItem, index) => (
+                        <img key={index} style={{width:'25px', height:'auto', marginRight:'5px'}} src={thenItem.serviceLogo} alt={thenItem.serviceName}/>
+                        ))
+                    ) : (
+                        item && item.then && item.then.map((thenItem, index) => (
+                            <img key={index} style={{width:'25px', height:'auto', marginRight:'5px'}} src={thenItem.serviceLogo} alt={thenItem.serviceName}/>
+                        ))
+                    )}
                 </div>
             </div>
             <div className={style.cardTopSubcontainer3}>
@@ -336,9 +421,9 @@ function CardBottom({ item }) {
                     setOpen={setShowInformationsCard}
                     open={showInformationsCard}
                     onClose={toggleShowInformationsCard}
-                    name={""}
+                    name={"Edit AREA"}
                 >
-                    <InformationsOnPopup item={item} />
+                    <InformationsOnPopup item={item} itemLogo={itemLogo} />
                 </PopupWoverlay>
             )}
         </div>
@@ -349,7 +434,7 @@ function Card({ item, itemLogo }) {
     return (
         <div className={style.cardContainer}>
             <CardTop item={item} itemLogo={itemLogo} />
-            <CardBottom item={item} />
+            <CardBottom item={item} itemLogo={itemLogo} />
         </div>
     );
 }

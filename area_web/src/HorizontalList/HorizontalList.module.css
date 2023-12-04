@@ -154,7 +154,7 @@
     align-items: flex-start;
     justify-content: space-between;
     height: 50%;
-    width: 100%;
+    width: 90%;
 }
 
 .cardTopSubcontainer1 {
@@ -214,6 +214,73 @@
     margin-left: 35px;
 }
 
+.popupInfosCardContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popupInfosCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    width: 75%;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.informationsMainContainer {
+    height: 100%;
+    width: 90%;
+    overflow: scroll;
+}
+
+.informationsMainContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.InformationsOnPopupTop {
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.InformationsOnPopupAction {
+    font-size: 23px;
+}
+
+.informationsOnPopupContainerLogoAndText {
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.informationsOnPopupSubContainerTopLogoAndText {
+    display: flex;
+    margin: 15px;
+    margin-left: 45px;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.informationsOnPopupSubContainerBottomLogoAndText {
+    display: flex;
+    margin: 15px;
+    margin-left: 45px;
+    justify-content: center;
+    flex-direction: column;
+}
+
 @media screen and (max-width: 1000px) {
 
     .serviceLogo {
@@ -249,6 +316,22 @@
     .cardInstructionList {
         font-size: 16px;
         margin-left: 30px;
+    }
+
+    .InformationsOnPopupAction {
+        font-size: 20px;
+    }
+
+    .informationsOnPopupContainerLogoAndText {
+        font-size: 18px;
+    }
+
+    .informationsOnPopupSubContainerTopLogoAndText {
+        margin-left: 35px;
+    }
+
+    .informationsOnPopupSubContainerBottomLogoAndText {
+        margin-left: 35px;
     }
 
 }
@@ -295,39 +378,21 @@
     .blurEffect {
         background: none;
     }
-}
 
-.popupInfosCardContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(5px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
+    .InformationsOnPopupAction {
+        font-size: 18px;
+    }
 
-.popupInfosCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70%;
-    width: 75%;
-    border-radius: 10px;
-    background-color: #FFF;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-}
+    .informationsOnPopupContainerLogoAndText {
+        font-size: 16px;
+    }
 
-.informationsMainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 90%;
-    width: 100%;
+    .informationsOnPopupSubContainerTopLogoAndText {
+        margin-left: 30px;
+    }
+
+    .informationsOnPopupSubContainerBottomLogoAndText {
+        margin-left: 30px;
+    }
+
 }
