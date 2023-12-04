@@ -1,11 +1,16 @@
 import { StyleSheet, Text, View, TouchableOpacity, Switch, Image } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import ModalArea from './ModalArea';
+import React, {useState} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 const backColor = "#fff";
 
-export default function HomePageCard({isSet, setIsSet, when, then, index}) {
+export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard}) {
+  const [showSettings, setShowSettings] = useState(false);
+
   return (
     <View style={styles.container}>
+        <ModalArea setShowSettings={setShowSettings} showSettings={showSettings}
+        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard}/>
         <Text style={styles.textTitle}>When</Text>
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>
@@ -29,7 +34,7 @@ export default function HomePageCard({isSet, setIsSet, when, then, index}) {
                     then.img.map((img, index) => <Image source={img} style={styles.image} key={index}/>)
                 }
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setShowSettings(true)}>
                 <MaterialCommunityIcons name='cog' size={25} color="black" />
             </TouchableOpacity>
         </View>
@@ -77,4 +82,3 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     }
 });
-

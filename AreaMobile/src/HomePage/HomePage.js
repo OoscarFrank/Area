@@ -37,6 +37,12 @@ export default function HomePage({ setCurrentScreen }) {
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
     const width = Dimensions.get('window').width - 10;
 
+    const deleteCard = (x, y) => {
+        let oldLine = Array.from(lines);
+        oldLine[x].content.splice(y, y + 1);
+        setLines(oldLine);
+    }
+
     const setIsSet = (x, y, value) => {
         let oldLine = Array.from(lines);
         oldLine[x].content[y].toggled = value;
@@ -72,7 +78,7 @@ export default function HomePage({ setCurrentScreen }) {
                                         setActiveIndex(oldIndex)
                                     }}
                                     renderItem={(it) => (
-                                        <HomePageCard isSet={it.item.toggled} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.when} then={it.item.then}/>
+                                        <HomePageCard isSet={it.item.toggled} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.when} then={it.item.then} deleteCard={deleteCard}/>
                                     )}
                                     panGestureHandlerProps={{
                                         activeOffsetX: [-1, 1],
