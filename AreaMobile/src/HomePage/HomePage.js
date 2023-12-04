@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PagerView from 'react-native-pager-view';
@@ -43,7 +44,7 @@ export default function HomePage({ setCurrentScreen }) {
     }
 
     return (
-        <View style={styles.container}>
+        <GestureHandlerRootView style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} />
             <ScrollView>
                 {
@@ -83,7 +84,7 @@ export default function HomePage({ setCurrentScreen }) {
                     })
                 }
             </ScrollView>
-        </View>
+        </GestureHandlerRootView>
     );
 }
 
