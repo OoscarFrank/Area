@@ -13,9 +13,9 @@ const backColor = "#fff";
 
 
 const lineItems = [
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}},
+    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
+    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
+    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
 ]
 const linelineItems = [
     lineItems,
@@ -23,11 +23,19 @@ const linelineItems = [
     lineItems
 ]
 export default function HomePage({ setCurrentScreen }) {
-    const [isSet, setIsSet] = useState(false);
+    // const [isSet, setIsSet] = useState(false);
     const [line, setLine] = useState(lineItems);
     const [lines, setLines] = useState(linelineItems);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
-    const width = Dimensions.get('window').width;
+    const width = Dimensions.get('window').width - 10;
+
+    const setIsSet = (x, y, value) => {
+        console.log(x, y, value);
+        let oldLine = Array.from(lines);
+        oldLine[x][y].toggled = value;
+        setLines(oldLine);
+    }
+
     return (
         <View style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} />
@@ -53,10 +61,10 @@ export default function HomePage({ setCurrentScreen }) {
                                         console.log(oldIndex, activeIndex);
                                         setActiveIndex(oldIndex)
                                     }}
-                                    renderItem={({ item }) => (
-                                        <HomePageCard isSet={isSet} setIsSet={setIsSet} when={item.when} then={item.then}/>
+                                    renderItem={(it) => (
+                                        <HomePageCard isSet={it.item.toggled} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.when} then={it.item.then}/>
                                     )}
-                                />
+                                />q
                                 <Pagination activeIndex={activeIndex[index]} itemCount={line.length} />
                             </View>
                         )

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 const backColor = "#fff";
 
-export default function HomePageCard({isSet, setIsSet, when, then}) {
+export default function HomePageCard({isSet, setIsSet, when, then, index}) {
   return (
     <View style={styles.container}>
         <Text style={styles.textTitle}>When</Text>
@@ -18,7 +18,7 @@ export default function HomePageCard({isSet, setIsSet, when, then}) {
                 trackColor={{false: '#767577', true: '#0000FF'}}
                 thumbColor={isSet ? 'white' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={setIsSet}
+                onValueChange={(e) => setIsSet(index.x, index.y, e.valueOf())}
                 value={isSet}
             />
         </View>
