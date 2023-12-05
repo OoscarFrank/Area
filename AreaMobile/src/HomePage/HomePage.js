@@ -64,7 +64,7 @@ export default function HomePage({ setCurrentScreen }) {
                                     renderItem={(it) => (
                                         <HomePageCard isSet={it.item.toggled} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.when} then={it.item.then}/>
                                     )}
-                                />q
+                                />
                                 <Pagination activeIndex={activeIndex[index]} itemCount={line.length} />
                             </View>
                         )

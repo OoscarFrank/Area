@@ -1,0 +1,61 @@
+.settingsOverlay {
+    background-color: #00000080;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.settingsPopUp {
+    background-color: aliceblue;
+    color: #212121;
+    min-width: 300px;
+    width: 50%;
+    height: 80%;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    animation: settingsPopUp 0.5s ease-in-out;
+    overflow: hidden;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.topbarSettingsPopUp {
+    position: relative;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settingsPopUpTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.closeButtonTopbarSettingsWidgets {
+    display: flex;
+}
+
+.content {
+    width: 100%;
+    height: 90%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
