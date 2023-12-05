@@ -1,0 +1,398 @@
+.mainContainerList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-bottom: 1px solid #252525;
+    width: 100%;
+    overflow: hidden;
+}
+
+.listHeaderContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.listHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 90%;
+}
+
+.serviceLogo {
+    width: 50px;
+    height: auto;
+    background-color: white;
+}
+
+.listTitle {
+    font-size: 25px;
+    font-weight: bold;
+    color: #252525;
+    margin-left: 10px;
+}
+
+.allListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.listBodyContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.blurEffect {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30%;
+    background: linear-gradient(to left, rgb(245, 245, 245, 0), rgba(245, 245, 245, 1));
+    z-index: 2;
+    pointer-events: none;
+}
+
+.blurEffect.left {
+    left: 0;
+}
+
+.blurEffect.right {
+    right: 0;
+    transform: rotate(180deg);
+}
+
+.listBody {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    width: 85%;
+}
+
+.listBody::-webkit-scrollbar {
+    display: none;
+}
+
+.locationInCardsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.locationInCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    border: 1px solid #252525;
+    border-radius: 50%;
+    margin: 0 5px;
+    color: #F5F5F5;
+}
+
+.locationInCardsSelected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    border: 1px solid #0000FF;
+    background-color: #0000FF;
+    border-radius: 50%;
+    margin: 0 5px;
+    color: #F5F5F5;
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 180px;
+    width: 400px;
+    margin: 25px;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+}
+
+.cardTop {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 50%;
+    width: 90%;
+}
+
+.cardTopSubcontainer1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 50%;
+    width: 50%;
+}
+
+.cardTopSubcontainer2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    height: 50%;
+    width: 50%;
+}
+
+.cardTopSubcontainer3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 100%;
+    width: 50%;
+}
+
+.cardBottom {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 50%;
+    width: 100%;
+}
+
+.cardSubtitle {
+    font-size: 20px;
+    color: #252525;
+    margin: 10px;
+}
+
+.cardInstruction {
+    font-size: 18px;
+    color: #252525;
+    margin-left: 10px;
+}
+
+.cardInstructionList {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    color: #252525;
+    margin-left: 35px;
+}
+
+.popupInfosCardContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popupInfosCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    width: 75%;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.informationsMainContainer {
+    height: 100%;
+    width: 90%;
+    overflow: scroll;
+}
+
+.informationsMainContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.InformationsOnPopupTop {
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.InformationsOnPopupAction {
+    font-size: 23px;
+}
+
+.informationsOnPopupContainerLogoAndText {
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.informationsOnPopupSubContainerTopLogoAndText {
+    display: flex;
+    margin: 15px;
+    margin-left: 45px;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.informationsOnPopupSubContainerBottomLogoAndText {
+    display: flex;
+    margin: 15px;
+    margin-left: 45px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 1000px) {
+
+    .serviceLogo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .listTitle {
+        font-size: 20px;
+    }
+
+    .listBody {
+        margin-top: 15px;
+        padding-left: 10px;
+    }
+
+    .cardContainer {
+        height: 150px;
+        width: 300px;
+        margin: 20px;
+    }
+
+    .cardSubtitle {
+        font-size: 18px;
+        margin: 6px;
+    }
+
+    .cardInstruction {
+        font-size: 16px;
+        margin-left: 30px;
+    }
+
+    .cardInstructionList {
+        font-size: 16px;
+        margin-left: 30px;
+    }
+
+    .InformationsOnPopupAction {
+        font-size: 20px;
+    }
+
+    .informationsOnPopupContainerLogoAndText {
+        font-size: 18px;
+    }
+
+    .informationsOnPopupSubContainerTopLogoAndText {
+        margin-left: 35px;
+    }
+
+    .informationsOnPopupSubContainerBottomLogoAndText {
+        margin-left: 35px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+    .serviceLogo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .listTitle {
+        font-size: 18px;
+    }
+
+    .listBody {
+        margin-top: 12px;
+        padding-left: 8px;
+    }
+
+    .cardContainer {
+        height: 130px;
+        width: 300px;
+        margin: 15px;
+        margin-right: 50px;
+        margin-left: 50px;
+    }
+
+    .cardSubtitle {
+        font-size: 16px;
+        margin: 6px;
+    }
+
+    .cardInstruction {
+        font-size: 14px;
+        margin-left: 25px;
+    }
+
+    .cardInstructionList {
+        font-size: 14px;
+        margin-left: 25px;
+    }
+
+    .blurEffect {
+        background: none;
+    }
+
+    .InformationsOnPopupAction {
+        font-size: 18px;
+    }
+
+    .informationsOnPopupContainerLogoAndText {
+        font-size: 16px;
+    }
+
+    .informationsOnPopupSubContainerTopLogoAndText {
+        margin-left: 30px;
+    }
+
+    .informationsOnPopupSubContainerBottomLogoAndText {
+        margin-left: 30px;
+    }
+
+}
