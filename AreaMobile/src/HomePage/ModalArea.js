@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, Switch, Modal, StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Switch, Modal, StyleSheet, Image, ScrollView } from 'react-native';
 import React from 'react';
 
 export default function ModalArea({ showSettings, setShowSettings, isSet, setIsSet, index, deleteCard, image }) {
@@ -9,17 +9,17 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
             transparent={true}>
             <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)', alignItems: "center" }}>
                 <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, height: '90%', backgroundColor: 'white', width: "100%" }}>
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <TouchableOpacity onPress={() => setShowSettings(false)}>
                             <Text style={styles.return}>Return</Text>
                         </TouchableOpacity>
                         <Switch trackColor={{ false: '#767577', true: '#0000FF' }}
                             thumbColor={isSet ? 'white' : '#f4f3f4'}
-                            ios_backgroundColor="#3e3e3e" style={{alignSelf: "center"}}
+                            ios_backgroundColor="#3e3e3e"
                             onValueChange={(e) => setIsSet(index.x, index.y, e.valueOf())}
                             value={isSet} />
                     </View>
-                    <View style={{ flex: 2 }}>
+                    <ScrollView style={{ flex: 0, height: "60%" }}>
                         <Text style={styles.title}>AREA Details</Text>
                         <Text style={styles.subTitle}>When</Text>
 
@@ -29,7 +29,7 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
                         </View>
 
                         <Text style={styles.subTitle}>Then</Text>
-                        {Array.from({ length: 3 }, (_, index) => {
+                        {Array.from({ length: 13 }, (_, index) => {
                             return (
                                 <View style={{ flexDirection: "row" }} key={index}>
                                     <Image source={image} style={styles.image} />
@@ -37,9 +37,8 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
                                 </View>
                             );
                         })}
-
-                    </View>
-                    <View style={{ flex: 1, alignItems: "center" }}>
+                    </ScrollView>
+                    <View style={{ flex: 1, alignItems: "center", paddingTop: 40 }}>
                         <TouchableOpacity style={styles.deleteButton} onPress={() => { deleteCard(index.x, index.y); setShowSettings(false) }}>
                             <Text style={{ color: '#fff' }}>Delete AREA</Text>
                         </TouchableOpacity>
