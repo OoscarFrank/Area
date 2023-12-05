@@ -35,6 +35,6 @@ export default function Pagination({ activeIndex, itemCount }) {
       backgroundColor: 'blue',
     },
     inactiveDot: {
-      backgroundColor: 'gray'
+      backgroundColor: 'rgba(0, 0, 255, 0.2)'
     },
   });
