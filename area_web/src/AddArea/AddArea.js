@@ -198,13 +198,11 @@ const array = [
 ];
 
 function ListItemsChooseReaction({ item, progression, setProgression }) {
-    // État pour suivre les checkboxes
     const [checkedState, setCheckedState] = useState(
         item.actionsAvailable.map(() => false)
     );
 
     const handleCheckboxChange = (index) => {
-        // Mettre à jour l'état de la checkbox correspondante
         const updatedCheckedState = checkedState.map((item, idx) =>
             idx === index ? !item : item
         );
