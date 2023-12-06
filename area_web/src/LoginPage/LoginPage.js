@@ -56,7 +56,7 @@ export default function Login() {
             <img src={LogoAREA} alt="Logo AREA" className={style.logoLoginPage} />
             <TextsFields email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
             <div className={style.forgottenPasswordButtonContainer}>
-                <button onClick={handleForgottenPassword} className={style.forgottenPasswordButton}>Forgotten password</button>
+                <button onClick={handleForgottenPassword} className={style.forgottenPasswordButton}>Forgot password ?</button>
             </div>
             <button className={style.loginButton} onClick={handleLogin}>Login</button>
             <div className={style.notRegisteredButtonContainer}>
