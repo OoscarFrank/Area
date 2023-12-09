@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, Dimensions, BackHandler, Alert } from 'react-native';
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,6 +9,7 @@ import HomePageCard from './HomePageCard';
 import discord from '../../assets/discord.png';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from './Pagination';
+import PopUpDetails from '../PopUpDetails/PopUpDetails';
 
 const backColor = "#fff";
 
@@ -35,6 +36,7 @@ const linelineItems = [
 export default function HomePage({ setCurrentScreen }) {
     const [lines, setLines] = useState(linelineItems);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
+    const [userDetailsVisible, setUserDetailsVisible] = useState(false);
     const width = Dimensions.get('window').width - 10;
 
     const deleteCard = (x, y) => {
@@ -48,10 +50,31 @@ export default function HomePage({ setCurrentScreen }) {
         oldLine[x].content[y].toggled = value;
         setLines(oldLine);
     }
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert('Revenir à la page de connection', 'Êtes-vous sûr de vouloir revenir à la page de connection ?', [
+            {
+              text: 'Annuler',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {text: 'Oui', onPress: () => setCurrentScreen('login')},
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction,
+        );
+    
+        return () => backHandler.remove();
+      }, []);
 
     return (
-        <GestureHandlerRootView style={styles.container}>
-            <HomePageBar setCurrentScreen={setCurrentScreen} />
+        <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
+            <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible}/>
+            <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
             <ScrollView>
                 {
                     lines.map((line, index) => {

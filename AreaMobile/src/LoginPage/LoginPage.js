@@ -63,7 +63,8 @@ input : {
   width: '100%', 
   borderRadius: 15, 
   paddingLeft: 10, 
-  marginRight: 10
+  marginRight: 10,
+  color: 'black'
 },
 fgtPassword : {
   marginTop: 50,
