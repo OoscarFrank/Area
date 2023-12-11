@@ -8,3 +8,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8081:80'
+  server:
+    container_name: API
+    build:
+      context: API
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
