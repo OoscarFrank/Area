@@ -10,6 +10,8 @@ services:
       - '8081:80'
   server:
     container_name: API
+    depends_on:
+      - client_web
     build:
       context: API
       dockerfile: Dockerfile
