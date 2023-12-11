@@ -55,10 +55,10 @@ export default function Login() {
                 if (data.msg === "ok") {
                     localStorage.setItem("jwt", data.jwt);
                     navigate("/home");
-                } else if (data.msg === "User already activated") {
-                    setErrorMessage("Cet utilisateur a déjà été activé");
+                } else if (data.msg === "Invalid credentials") {
+                    setErrorMessage("Utilisateur inconnu ou mot de passe incorrect");
                 } else {
-                    setErrorMessage("Erreur lors de l'ajout de l'utilisateur");
+                    setErrorMessage("Erreur lors de la connexion au serveur");
                 }
             })
             .catch((error) => {
@@ -78,6 +78,7 @@ export default function Login() {
         <div className={style.MainContainerLoginPage}>
             <img src={LogoAREA} alt="Logo AREA" className={style.logoLoginPage} />
             <TextsFields email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+            <span style={{color:'red'}}>{errorMessage}</span>
             <div className={style.forgottenPasswordButtonContainer}>
                 <button onClick={handleForgottenPassword} className={style.forgottenPasswordButton}>Forgot password ?</button>
             </div>
