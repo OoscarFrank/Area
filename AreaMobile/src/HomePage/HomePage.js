@@ -10,6 +10,7 @@ import discord from '../../assets/discord.png';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from './Pagination';
 import PopUpDetails from '../PopUpDetails/PopUpDetails';
+import CreateArea from './CreateArea';
 
 const backColor = "#fff";
 
@@ -37,6 +38,7 @@ export default function HomePage({ setCurrentScreen }) {
     const [lines, setLines] = useState(linelineItems);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
     const [userDetailsVisible, setUserDetailsVisible] = useState(false);
+    const [showCreateArea, setShowCreateArea] = useState(false);
     const width = Dimensions.get('window').width - 10;
 
     const deleteCard = (x, y) => {
@@ -75,6 +77,7 @@ export default function HomePage({ setCurrentScreen }) {
         <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible}/>
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
+            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} Areas={linelineItems}/>
             <ScrollView>
                 {
                     lines.map((line, index) => {
@@ -113,6 +116,11 @@ export default function HomePage({ setCurrentScreen }) {
                     })
                 }
             </ScrollView>
+            <View>
+                <TouchableOpacity onPress={() => setShowCreateArea(true)} style={{borderRadius: 30, backgroundColor: "blue", width: 50, height: 50, alignItems: "center", justifyContent: "center"}}>
+                    <MaterialCommunityIcons name='plus-circle-outline' size={45} color="white" />
+                </TouchableOpacity>
+            </View>
         </GestureHandlerRootView>
     );
 }
