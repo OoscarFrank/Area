@@ -14,16 +14,18 @@ const confirm = async (req, res) => {
     const params = {
         TableName: "Users",
         Key : {
-            "id" : req.body.id
+            "id" : req.body.userId
         }
     };
 
     let tmpUser = await dynamo.client().get(params).promise();
+
     if (tmpUser.Count == 0) {
         res.status(400).json({ msg: "Invalid userId" });
         return;
     }
     let user = tmpUser.Item;
+    
     if (user.checkoutId == null) {
         res.status(400).json({ msg: "Invalid checkoutId" });
         return;
@@ -35,6 +37,7 @@ const confirm = async (req, res) => {
     }
     user.confirmed = true;
     user.checkoutId = null;
+
     await dynamo
         .client()
         .put({
