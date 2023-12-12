@@ -8,6 +8,7 @@ import LoginPage from "./LoginPage/LoginPage";
 import HomePage from "./HomePage/HomePage";
 import RegisterPage from "./RegisterPage/RegisterPage";
 import Confirm from "./Confirm/confirm";
+import WaitingPage from "./RegisterPage/WaitingPage";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/confirm" element={<Confirm />} />
+                <Route path="/waitingConfirmation" element={<WaitingPage />} />
             </Routes>
         </Router>
     );
