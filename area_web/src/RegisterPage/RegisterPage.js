@@ -90,7 +90,7 @@ export default function Register() {
             .then((data) => {
                 if (data.msg === "ok") {
                     localStorage.setItem("jwt", data.jwt);
-                    navigate("/home");
+                    navigate("/waitingConfirmation");
                 } else if (data.msg === "Email already exists") {
                     setErrorMessage("Cet utilisateur a déjà été créé");
                 } else {
