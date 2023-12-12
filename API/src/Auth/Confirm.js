@@ -1,5 +1,4 @@
 const utils = require("../Utils");
-const bcrypt = require("bcryptjs");
 const dynamo = require("../../DB");
 
 const confirm = async (req, res) => {
