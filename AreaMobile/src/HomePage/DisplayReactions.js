@@ -1,8 +1,18 @@
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Checkbox from 'expo-checkbox';
 
-export default function DisplayActions({ Area, setStep, setAction, areaIndex }) {
+export default function DisplayReactions({ Area }) {
+    const [checked, setChecked] = useState([]);
+
+    useEffect(() => {
+        let tmpTab = [];
+        Area.content.forEach(_ => {
+            tmpTab.push(false);
+        });
+        setChecked(tmpTab);
+    }, [])
+
     const containerStyle = (index) => {
         let count = 0;
         Area.content.forEach(_ => {
@@ -13,16 +23,12 @@ export default function DisplayActions({ Area, setStep, setAction, areaIndex }) 
                 borderBottomColor: "#F3F2F8",
                 borderBottomWidth: 2,
                 backgroundColor: "#fff",
-                flexDirection: "row",
-                justifyContent: "space-between",
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
             } : {
                 borderBottomColor: "#F3F2F8",
                 borderBottomWidth: 2,
                 backgroundColor: "#fff",
-                flexDirection: "row",
-                justifyContent: "space-between",
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
             }
@@ -30,14 +36,13 @@ export default function DisplayActions({ Area, setStep, setAction, areaIndex }) 
             borderBottomColor: "#F3F2F8",
             borderBottomWidth: 2,
             backgroundColor: "#fff",
-            flexDirection: "row",
-            justifyContent: "space-between",
         }
     };
 
     const handlePress = (index) => {
-        setStep(1);
-        setAction([areaIndex, index]);
+        let tmpTab = Array.from(checked);
+        tmpTab[index] = !tmpTab[index];
+        setChecked(tmpTab);
     };
 
     return (
@@ -45,11 +50,13 @@ export default function DisplayActions({ Area, setStep, setAction, areaIndex }) 
             {Area.content.map((content, index) => (
                 <TouchableOpacity key={index} onPress={() => handlePress(index)}>
                     <View style={containerStyle(index)}>
-                        <View style={{ flexDirection: "row" }}>
-                            <Image source={Area.img} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
-                            <Text style={{ marginTop: 15, marginLeft: 15 }}>{content.when.action}</Text>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            <View style={{flexDirection: "row"}}>
+                                <Image source={Area.img} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
+                                <Text style={{ marginTop: 15, marginLeft: 15 }}>{content.then.reaction}</Text>
+                            </View>
+                            <Checkbox value={checked[index]} onValueChange={() => handlePress(index)} style={{marginRight: 15}}/>
                         </View>
-                        <MaterialCommunityIcons name='chevron-right' size={45} color="#F3F2F8" />
                     </View>
                 </TouchableOpacity>
             ))}

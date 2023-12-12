@@ -16,20 +16,20 @@ const backColor = "#fff";
 
 
 const lineItems = [
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true}
+    {when: {img: discord, action: 'test'}, then: {img: [discord, discord], reaction: 'test'}, toggled : true},
+    {when: {img: discord, action: 'test'}, then: {img: [discord, discord], reaction: 'test'}, toggled : true},
+    {when: {img: discord, action: 'test'}, then: {img: [discord, discord], reaction: 'test'}, toggled : true}
 ]
 const linelineItems = [
     {title : 'Discord', img : discord, content : [
-        {when: {img: discord, action: 'one'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'two'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'three'}, then: {img: [discord, discord]}, toggled : true}
+        {when: {img: discord, action: 'one'}, then: {img: [discord, discord], reaction: 'one'}, toggled : true},
+        {when: {img: discord, action: 'two'}, then: {img: [discord, discord], reaction: 'two'}, toggled : true},
+        {when: {img: discord, action: 'three'}, then: {img: [discord, discord], reaction: 'three'}, toggled : true}
     ]},
     {title : 'Disc', img : discord, content : [
-        {when: {img: discord, action: 'four f'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'four five'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'four six'}, then: {img: [discord, discord]}, toggled : true}
+        {when: {img: discord, action: 'four f'}, then: {img: [discord, discord], reaction: 'four'}, toggled : true},
+        {when: {img: discord, action: 'four five'}, then: {img: [discord, discord], reaction: 'five'}, toggled : true},
+        {when: {img: discord, action: 'four six'}, then: {img: [discord, discord], reaction: 'six'}, toggled : true}
     ]},
     {title : 'tmpTest', img : discord, content : Array.from(lineItems)},
 ]
