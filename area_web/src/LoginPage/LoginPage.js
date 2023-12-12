@@ -10,9 +10,9 @@ function TextsFields({ email, setEmail, password, setPassword }) {
         <div className={style.textFieldsContainer}>
             <div className={style.textFieldContainer}>
                 <TextField
-                    id="outlined-basic"
                     label="Email"
                     variant="outlined"
+                    type="email"
                     className={style.inputTextField}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -20,9 +20,9 @@ function TextsFields({ email, setEmail, password, setPassword }) {
             </div>
             <div className={style.textFieldContainer}>
                 <TextField
-                    id="outlined-basic"
                     label="Password"
                     variant="outlined"
+                    type="password"
                     className={style.inputTextField}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -35,12 +35,35 @@ function TextsFields({ email, setEmail, password, setPassword }) {
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        navigate("/home");
-        console.log("email : " + email + " password : " + password);
+        fetch("http://localhost:8080/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.msg === "ok") {
+                    localStorage.setItem("jwt", data.jwt);
+                    navigate("/home");
+                } else if (data.msg === "Invalid credentials") {
+                    setErrorMessage("Utilisateur inconnu ou mot de passe incorrect");
+                } else {
+                    setErrorMessage("Erreur lors de la connexion au serveur");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
     };
 
     const handleNotRegistered = () => {
@@ -55,6 +78,7 @@ export default function Login() {
         <div className={style.MainContainerLoginPage}>
             <img src={LogoAREA} alt="Logo AREA" className={style.logoLoginPage} />
             <TextsFields email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+            <span style={{color:'red'}}>{errorMessage}</span>
             <div className={style.forgottenPasswordButtonContainer}>
                 <button onClick={handleForgottenPassword} className={style.forgottenPasswordButton}>Forgot password ?</button>
             </div>
