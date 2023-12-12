@@ -9,7 +9,7 @@ export default function RegisterWaitingPage() {
     const navigate = useNavigate();
 
     const accountConfirmed = () => {
-        navigate("/login");
+        navigate("/");
     }
 
     return (
