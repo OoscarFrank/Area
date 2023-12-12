@@ -1,7 +1,8 @@
 FROM beevelop/android-nodejs:v2023.10.1 as build
 WORKDIR /app
+ARG EAS_CRED
 ENV PATH /app/node_modules/.bin:$PATH
-ENV EXPO_TOKEN=vnVJu-U6lbRAW-Wx7Z8CP3hSk9Qa5KyHsBqKfPkN
+ENV EXPO_TOKEN=${EAS_CRED}
 ENV EAS_NO_VCS=1
 COPY package.json ./
 COPY package-lock.json ./
@@ -14,5 +15,5 @@ RUN mv *.apk client.apk
 
 
 FROM beevelop/android-nodejs:v2023.10.1
-WORKDIR /app
-COPY --from=build /app .
+WORKDIR /mobile
+COPY --from=build /app/client.apk .
