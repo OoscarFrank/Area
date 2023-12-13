@@ -11,7 +11,7 @@ export default function HomePageBar({setCurrentScreen, setModalVisible}) {
         <View style={styles.contentContainer}>
             <View style={styles.leftContainer}>
                 <Logo width={50} height={50}/>
-                <Text style={styles.title}>AREA</Text>
+                <Text style={styles.title}>TEST</Text>
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <MaterialCommunityIcons name='account' size={50} color="black" />
