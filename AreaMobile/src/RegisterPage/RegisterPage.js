@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity } from '
 import React, {useState} from 'react';
 import Logo from '../../assets/logo.svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ApiRoute from '../ApiRoute/ApiRoute';
 const backColor = "#fff";
 
 export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
@@ -14,7 +15,7 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] = useState(false);
   const [inputsError, setInputsError] = useState([false, false, false, false]);
 
-  const submit = () => {
+  const submit = async() => {
     let tmpErrors = Array.from(inputsError);
     tmpErrors[0] = email === '' ? true : false;
     tmpErrors[3] = lastName === '' ? true : false;
@@ -24,6 +25,16 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
     for(let i = 0; i != tmpErrors.length; ++i)
       if (tmpErrors[i])
         return;
+
+    const res = await fetch(ApiRoute + '/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({email: email, password: password, firstName: firstName, lastName: lastName})
+    })
+    if (res.status != 200)
+      console.log("Error while creating user");
     setRegisterInfo("Please check your email to confirm your account.");
     setCurrentScreen("login");
   };
