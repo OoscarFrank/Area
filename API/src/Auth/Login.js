@@ -10,6 +10,7 @@ const login = async (req, res) => {
         ]);
     } catch (err) {
         res.status(err.status).json({ msg: err.msg });
+        return;
     }
 
     const params = {
