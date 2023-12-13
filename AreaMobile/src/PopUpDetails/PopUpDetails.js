@@ -2,7 +2,16 @@ import { Text, View, TouchableOpacity, Switch, StyleSheet, Image, ScrollView } f
 import Modal from "react-native-modal";
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
+
+
 export default function PopUpDetails({ showDetails, setShowDetails, setCurrentScreen}) {
+    const deconnect = () => {
+        SecureStore.deleteItemAsync("AreaToken").then(() => {
+            console.log("Token deleted");
+            setCurrentScreen('login');
+        })
+    }
     return (
         <Modal
             isVisible={showDetails}
@@ -23,8 +32,8 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
                 </View>
                 <Text style={styles.subTitle}>{'test@epitech.eu'}</Text>
                 <View style={{width: '100%', alignItems : 'center', marginTop : '10%'}}>
-                    <TouchableOpacity style={styles.logoutBtn} onPress={() => setCurrentScreen('login')}>
-                        <Text style={{color : 'white', fontSize : 22}}>Logout</Text>
+                    <TouchableOpacity style={styles.logoutBtn} onPress={() => deconnect()}>
+                        <Text style={{color : 'white', fontSize : 22}}>Déconnexion</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -2,12 +2,43 @@ import { SafeAreaView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOp
 import React, {useState, useEffect} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
+import ApiRoute from '../ApiRoute/ApiRoute';
+import * as SecureStore from 'expo-secure-store';
+
+
 const backColor = "#fff";
 
 export default function LoginPage({setCurrentScreen}) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [incorrectCred, setIncorrectCred] = useState(false);
+
+  const connect = async () => {
+    console.log(ApiRoute + '/auth/login')
+    const res = await fetch(ApiRoute + '/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: userName, password: password})
+    })
+    if (res.status != 200) {
+      console.log("Incorrect credentials");
+      setIncorrectCred(true);
+      return;
+    }
+    const data = await res.json();
+    SecureStore.setItemAsync("AreaToken", data.jwt);
+    setCurrentScreen('home');
+  }
+  useEffect(() => {
+    SecureStore.getItemAsync("AreaToken").then((token) => {
+      if (token) {
+        setCurrentScreen('home');
+      }
+    })
+  }, [])
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
@@ -18,7 +49,7 @@ export default function LoginPage({setCurrentScreen}) {
           onChangeText={text => setUserName(text)}
           value={userName}
           selectionColor={'#0000FF'}
-          placeholder='Login' />
+          placeholder='Email' />
           <MaterialCommunityIcons name='account' size={24} color="black" />
       </View>
       <View style={styles.passwordContainer}>
@@ -27,14 +58,14 @@ export default function LoginPage({setCurrentScreen}) {
           onChangeText={text => setPassword(text)}
           value={password}
           selectionColor={'#0000FF'}
-          placeholder='Password'
+          placeholder='Mot de passe'
           secureTextEntry={!passwordVisible}/>
         <MaterialCommunityIcons name={passwordVisible ? 'eye-off' : 'eye'} size={24} color="black" onPress={() => setPasswordVisible(!passwordVisible)}/>
       </View>
       <TouchableOpacity onPress={() => setCurrentScreen('home')}>
         <Text style={styles.fgtPassword}>Forgotten password</Text>
       </TouchableOpacity>
-      <TouchableOpacity  onPress={() => setCurrentScreen('home')} style={styles.connectionButton}>
+      <TouchableOpacity  onPress={() => connect()} style={styles.connectionButton}>
         <Text style={styles.connectionButtonText}>Login</Text> 
       </TouchableOpacity>
     </View>
