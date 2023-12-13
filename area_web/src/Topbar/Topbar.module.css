@@ -88,3 +88,41 @@
     font-weight: bold;
     margin-bottom: 15px;
 }
+
+.listItemLogo {
+    width: 25px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.bodyListItemFirst {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 90%;
+    border: 1px solid #252525;
+    padding: 10px;
+}
+
+.bodyListItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 90%;
+    border-left: 1px solid #252525;
+    border-right: 1px solid #252525;
+    border-bottom: 1px solid #252525;
+    padding: 10px;
+}
+
+.bodyListItemFirst, .bodyListItem {
+    cursor: pointer;
+}
+
+.bodyListItemFirst:hover, .bodyListItem:hover {
+    background-color: rgb(234, 234, 234)
+}
