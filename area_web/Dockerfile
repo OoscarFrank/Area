@@ -10,4 +10,5 @@ RUN npm run build
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
+RUN rm /usr/share/nginx/html/client.apk || true
 CMD cp /mobile/client.apk /usr/share/nginx/html && nginx -g "daemon off;"

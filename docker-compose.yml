@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   client_mobile:
-    container_name: AreaMobile
+    container_name: client_mobile
     build:
       context: AreaMobile
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
     volumes:
        - app_data:/mobile
   client_web:
-    container_name: area_web
+    container_name: client_web
     depends_on:
       - server
       - client_mobile
@@ -23,7 +23,7 @@ services:
     volumes:
       - app_data:/mobile
   server:
-    container_name: API
+    container_name: server
     build:
       context: API
       dockerfile: Dockerfile
