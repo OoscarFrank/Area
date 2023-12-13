@@ -7,7 +7,7 @@ const getMe = (req, res) => {
             console.log(err)
             return 
         } else {
-
+            
         }
     })
 }

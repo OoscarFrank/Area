@@ -26,6 +26,7 @@ const Register = async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
+            console.log(data);
             if (data.access_token) {
                 req.user.discord = {
                     access_token: data.access_token,
