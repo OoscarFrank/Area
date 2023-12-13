@@ -4,7 +4,7 @@
     "slug": "AreaMobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.svg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -32,6 +32,18 @@
       "eas": {
         "projectId": "cc3ccad0-b09e-459d-bab8-d51cb9b1aa19"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          },
+          "ios": {
+          }
+        }
+      ]
+    ]
   }
 }

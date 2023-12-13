@@ -29,6 +29,7 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
       body: JSON.stringify({email: userName, password: password})
     })
     if (res.status != 200) {
+      console.log(res.status);
       console.log("Incorrect credentials");
       setIncorrectCred(true);
       setTimeout(() => {
