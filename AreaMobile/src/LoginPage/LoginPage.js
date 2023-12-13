@@ -15,7 +15,6 @@ export default function LoginPage({setCurrentScreen}) {
   const [incorrectCred, setIncorrectCred] = useState(false);
 
   const connect = async () => {
-    console.log(ApiRoute + '/auth/login')
     const res = await fetch(ApiRoute + '/auth/login', {
       method: 'POST',
       headers: {
@@ -26,6 +25,9 @@ export default function LoginPage({setCurrentScreen}) {
     if (res.status != 200) {
       console.log("Incorrect credentials");
       setIncorrectCred(true);
+      setTimeout(() => {
+        setIncorrectCred(false);
+      }, 3000);
       return;
     }
     const data = await res.json();
@@ -62,6 +64,7 @@ export default function LoginPage({setCurrentScreen}) {
           secureTextEntry={!passwordVisible}/>
         <MaterialCommunityIcons name={passwordVisible ? 'eye-off' : 'eye'} size={24} color="black" onPress={() => setPasswordVisible(!passwordVisible)}/>
       </View>
+      {incorrectCred && <Text style={{color: 'red'}}>Incorrect credentials</Text>}
       <TouchableOpacity onPress={() => setCurrentScreen('home')}>
         <Text style={styles.fgtPassword}>Forgotten password</Text>
       </TouchableOpacity>

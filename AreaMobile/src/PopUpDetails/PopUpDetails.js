@@ -33,7 +33,7 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
                 <Text style={styles.subTitle}>{'test@epitech.eu'}</Text>
                 <View style={{width: '100%', alignItems : 'center', marginTop : '10%'}}>
                     <TouchableOpacity style={styles.logoutBtn} onPress={() => deconnect()}>
-                        <Text style={{color : 'white', fontSize : 22}}>Déconnexion</Text>
+                        <Text style={{color : 'white', fontSize : 22}}>Logout</Text>
                     </TouchableOpacity>
                 </View>
             </View>
