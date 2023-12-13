@@ -33,6 +33,11 @@ const login = async (req, res) => {
         return;
     }
 
+    if (!user.confirmed) {
+        res.status(400).json({ msg: "User not confirmed" });
+        return;
+    }
+
     res.status(200).json({ msg: "ok", "jwt" : utils.encodeToken(user) });
 }
 
