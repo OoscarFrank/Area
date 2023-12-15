@@ -1,7 +1,6 @@
 const dynamo = require("../../../DB");
 
-const getToken = (user, callback) => {
-    console.log(user.discord);
+const getToken = async (user) => {
     const data = {
         client_id: process.env.DISCORD_CLIENT_ID,
         client_secret: process.env.DISCORD_CLIENT_SECRET,
@@ -16,7 +15,7 @@ const getToken = (user, callback) => {
             "Content-Type": "application/x-www-form-urlencoded",
         },
     })
-        .then((response) => response.json())
+        .then(async (response) => await response.json())
         .then(async (data) => {
             user.discord = {
                 access_token: data.access_token,
@@ -30,53 +29,39 @@ const getToken = (user, callback) => {
                     TableName: "Users",
                     Item: user,
                 })
-                .promise()
-            return callback(data.access_token);
+                .promise();
+            return data.access_token;
         })
         .catch((err) => {
-            return callback(null);
+            return null;
         });
 };
 
-const request = (url, content, user, callback) => {
-    if (!user.discord || !user.discord.access_token) {
-        return callback(null, { msg: "Missing acess token", status: 500 });
-    }
-
+const request = async (url, user, content) => {
+    if (!user.discord || !user.discord.access_token)
+        throw { msg: "Missing acess token", status: 500 };
+    if (!content) content = {};
     if (!content.headers) content.headers = {};
     content.headers["Authorization"] = `Bearer ${user.discord.access_token}`;
-    fetch(url, content)
-        .then(async (response) => {
-            if (response.status == 401 || response.status == 403) {
-                getToken(user, async (token) => {
-                    if (token == null) {
-                        return callback(null, {
-                            msg: "Cannot refresh the token",
-                            status: 500,
-                        });
-                    }
-                    
-                    content.headers["Authorization"] = `Bearer ${token}`;
-                    fetch(url, content)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            return callback(data, null);
-                        })
-                        .catch((err) => {
-                            console.err(err);
-                            return callback(null, { status: 500, msg: err });
-                        });
-                });
+
+    try {
+        let response = await fetch(url, content);
+        if (response.status == 401 || response.status == 403) {
+            let token = await getToken(user);
+            if (token == null)
+                throw { msg: "Cannot refresh the token", status: 500 };
+            content.headers["Authorization"] = `Bearer ${token}`;
+            try {
+                return await (await fetch(url, content)).json();
+            } catch (err) {
+                throw { msg: err, status: 500 };
             }
-            return response.json();
-        })
-        .then((data) => {
-            return callback(data, null);
-        })
-        .catch((err) => {
-            console.err(err);
-            return callback(null, { status: 500, msg: err });
-        });
+        }
+        let data = await response.json();
+        return data;
+    } catch (err) {
+        throw { msg: err, status: 500 };
+    }
 };
 
 module.exports = request;
