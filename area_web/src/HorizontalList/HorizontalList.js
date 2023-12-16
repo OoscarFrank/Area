@@ -331,6 +331,21 @@ function InformationsOnPopup({ item, itemLogo }) {
 }
 
 function CardTop({ item, itemLogo }) {
+    // Fonction pour gérer le changement d'état du commutateur avec ENTRER
+    const handleKeyDown = (event, checked, setChecked) => {
+        if (event.key === 'Enter') {
+            setChecked(!checked);
+        }
+    };
+
+    // Vous aurez besoin d'un état pour gérer l'état du commutateur
+    const [checked, setChecked] = React.useState(false);
+
+    // Fonction pour gérer le changement d'état du commutateur
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+    };
+
     return (
         <div className={style.cardTop}>
             <div className={style.cardTopSubcontainer1}>
@@ -341,25 +356,29 @@ function CardTop({ item, itemLogo }) {
                 </div>
             </div>
             <div className={style.cardTopSubcontainer2}>
-            <Switch
-                {...label}
-                sx={{
-                    width: 62,
-                    height: 40,
-                    '& .MuiSwitch-switchBase': {
-                        '&.Mui-checked': {
-                            transform: 'translateX(24px)',
+                <Switch
+                    {...label}
+                    checked={checked}
+                    onChange={handleChange}
+                    onKeyDown={(event) => handleKeyDown(event, checked, setChecked)}
+                    tabIndex={0} // Permet la navigation au clavier
+                    sx={{
+                        width: 62,
+                        height: 40,
+                        '& .MuiSwitch-switchBase': {
+                            '&.Mui-checked': {
+                                transform: 'translateX(24px)',
+                            },
                         },
-                    },
-                    '& .MuiSwitch-thumb': {
-                        width: 24,
-                        height: 24,
-                    },
-                    '& .MuiSwitch-track': {
-                        borderRadius: 26 / 2,
-                    },
-                }}
-            />
+                        '& .MuiSwitch-thumb': {
+                            width: 24,
+                            height: 24,
+                        },
+                        '& .MuiSwitch-track': {
+                            borderRadius: 26 / 2,
+                        },
+                    }}
+                />
             </div>
         </div>
     );

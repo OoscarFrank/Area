@@ -209,6 +209,12 @@ function ListItemsChooseReaction({ item, progression, setProgression }) {
         setCheckedState(updatedCheckedState);
     };
 
+    const handleKeyDown = (event, index) => {
+        if (event.key === 'Enter') {
+            handleCheckboxChange(index);
+        }
+    };
+
     return (
         <div className={style.listItemContainer}>
             <div className={style.headerRowList}>
@@ -216,13 +222,18 @@ function ListItemsChooseReaction({ item, progression, setProgression }) {
                 {item.ServiceName}
             </div>
             {item.actionsAvailable.map((action, index) => (
-                <div className={index === 0 ? style.bodyListItemFirst : index === (item.actionsAvailable.length - 1) ? style.bodyListItemLast : style.bodyListItem} key={index} onClick={() => handleCheckboxChange(index)}>
-                    <div style={{display:'flex', justifyContent:'center'}}>
+                <div className={index === 0 ? style.bodyListItemFirst : index === (item.actionsAvailable.length - 1) ? style.bodyListItemLast : style.bodyListItem} key={index}>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
                         <img src={item.ServiceLogo} alt={item.ServiceName} className={style.listItemLogo} />
                         <span>{action.actionName}</span>
                     </div>
-                    <div style={{display:'flex', justifyContent:'center'}}>
-                        <Checkbox checked={checkedState[index]} />
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <Checkbox
+                            checked={checkedState[index]}
+                            onChange={() => handleCheckboxChange(index)}
+                            onKeyDown={(event) => handleKeyDown(event, index)}
+                            tabIndex={0}
+                        />
                     </div>
                 </div>
             ))}
@@ -238,6 +249,12 @@ function ListItemsChooseAction({ item, setProgression, setSelectedAction, setSel
         setProgression(1);
     };
 
+    const handleKeyDown = (event, actionName) => {
+        if (event.key === 'Enter') {
+            handleClick(actionName);
+        }
+    };
+
     return (
         <div className={style.listItemContainer}>
             <div className={style.headerRowList}>
@@ -245,14 +262,19 @@ function ListItemsChooseAction({ item, setProgression, setSelectedAction, setSel
                 {item.ServiceName}
             </div>
             {item.actionsAvailable.map((action, index) => (
-                <div className={index === 0 ? style.bodyListItemFirst : index === (item.actionsAvailable.length - 1) ? style.bodyListItemLast : style.bodyListItem} key={index} onClick={() => handleClick(action.actionName)}>
-                    <div style={{display:'flex', justifyContent:'center'}}>
+                <div
+                    className={index === 0 ? style.bodyListItemFirst : index === (item.actionsAvailable.length - 1) ? style.bodyListItemLast : style.bodyListItem}
+                    key={index}
+                    onClick={() => handleClick(action.actionName)}
+                    onKeyDown={(event) => handleKeyDown(event, action.actionName)}
+                    tabIndex={0} // Permet la navigation au clavier
+                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img src={item.ServiceLogo} alt={item.ServiceName} className={style.listItemLogo} />
                         <span>{action.actionName}</span>
                     </div>
-                    <div style={{display:'flex', justifyContent:'center'}}>
-                        <ChevronRightIcon />
-                    </div>
+                    <ChevronRightIcon />
                 </div>
             ))}
         </div>
