@@ -331,17 +331,14 @@ function InformationsOnPopup({ item, itemLogo }) {
 }
 
 function CardTop({ item, itemLogo }) {
-    // Fonction pour gérer le changement d'état du commutateur avec ENTRER
     const handleKeyDown = (event, checked, setChecked) => {
         if (event.key === 'Enter') {
             setChecked(!checked);
         }
     };
 
-    // Vous aurez besoin d'un état pour gérer l'état du commutateur
     const [checked, setChecked] = React.useState(false);
 
-    // Fonction pour gérer le changement d'état du commutateur
     const handleChange = (event) => {
         setChecked(event.target.checked);
     };
