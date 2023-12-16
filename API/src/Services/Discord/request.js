@@ -1,11 +1,11 @@
 const dynamo = require("../../../DB");
 
-const getToken = async (user) => {
+const getToken = async (discordUser) => {
     const data = {
         client_id: process.env.DISCORD_CLIENT_ID,
         client_secret: process.env.DISCORD_CLIENT_SECRET,
         grant_type: "refresh_token",
-        refresh_token: user.discord.refresh_token,
+        refresh_token: discordUser.refresh_token,
     };
 
     fetch("https://discord.com/api/oauth2/token", {
@@ -17,17 +17,20 @@ const getToken = async (user) => {
     })
         .then(async (response) => await response.json())
         .then(async (data) => {
-            user.discord = {
+            discordUser = {
+                userId : discordUser.userId,
                 access_token: data.access_token,
                 refresh_token: data.refresh_token,
                 expire: Date.now() + data.expires_in * 1000,
+                id : discordUser.id,
+                name : discordUser.name
             };
 
             await dynamo
                 .client()
                 .put({
-                    TableName: "Users",
-                    Item: user,
+                    TableName: "DiscordUsers",
+                    Item: discordUser,
                 })
                 .promise();
             return data.access_token;
@@ -37,17 +40,17 @@ const getToken = async (user) => {
         });
 };
 
-const request = async (url, user, content) => {
-    if (!user.discord || !user.discord.access_token)
+const request = async (url, discordUser, content) => {
+    if (!discordUser || !discordUser.access_token)
         throw { msg: "Missing acess token", status: 500 };
     if (!content) content = {};
     if (!content.headers) content.headers = {};
-    content.headers["Authorization"] = `Bearer ${user.discord.access_token}`;
+    content.headers["Authorization"] = `Bearer ${discordUser.access_token}`;
 
     try {
         let response = await fetch(url, content);
         if (response.status == 401 || response.status == 403) {
-            let token = await getToken(user);
+            let token = await getToken(discordUser);
             if (token == null)
                 throw { msg: "Cannot refresh the token", status: 500 };
             content.headers["Authorization"] = `Bearer ${token}`;

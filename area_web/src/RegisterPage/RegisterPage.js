@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import LogoAREA from "../assets/Logo_AREA.png";
 import TextField from '@mui/material/TextField';
 
+import { API_URL } from "../utils";
+
 function TextsFields({ email, setEmail, firstName, setFirstName, lastName, setLastName, password, setPassword, passwordConfirmation, setPasswordConfirmation }) {
     return (
         <div className={style.textFieldsContainer}>
@@ -74,7 +76,7 @@ export default function Register() {
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        fetch("http://localhost:8080/auth/register", {
+        fetch(API_URL + "/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

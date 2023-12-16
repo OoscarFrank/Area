@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
 
+import React, {useEffect} from "react";
+import { API_URL } from "../utils";
 function getQueryParams() {
     let queryParams = {};
     let queryString = window.location.search.substring(1);
@@ -14,7 +15,7 @@ function ConfirmDiscord() {
     useEffect(() => {
         let query = getQueryParams();
         let code = query.code;
-        fetch("http://localhost:8080/api/discord/register", {
+        fetch( API_URL + "/api/discord/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

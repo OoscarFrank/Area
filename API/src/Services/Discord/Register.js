@@ -27,27 +27,29 @@ const Register = async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
-            console.log(data);
             if (data.access_token) {
                 let me = null;
-                req.user.discord = {
+                
+                discordUsr = {
+                    userId : req.user.id,
                     access_token: data.access_token,
                     refresh_token: data.refresh_token,
                     expire: Date.now() + data.expires_in * 1000,
                 };
                 try {
-                    me = await request("https://discord.com/api/users/@me", req.user, {})
+                    me = await request("https://discord.com/api/users/@me", discordUsr, {})
                 } catch (err) {
                     res.status(err.status).send(err.msg)
                     return
                 }
 
-                req.user.discord.id = me.id;
+                discordUsr.id = me.id;
+                discordUsr.name = me.global_name;
                 await dynamo
                     .client()
                     .put({
-                        TableName: "Users",
-                        Item: req.user,
+                        TableName: "DiscordUsers",
+                        Item: discordUsr,
                     })
                     .promise();
                 res.status(200).send({ msg: "ok" });
