@@ -15,23 +15,7 @@ function InfosUser({ showInfos, setShowInfos, onClose }) {
     const [me, setMe] = useState(null);
 
     useEffect(() => {
-        fetch(API_URL + "/api/me", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: localStorage.getItem("jwt"),
-            },
-        })
-            .then((response) => response.json())
-            .then(async (data) => {
-                if (data.msg === "ok") {
-                    setMe(data.data);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
+        setMe(window.user)
     }, []);
 
     const logout = () => {

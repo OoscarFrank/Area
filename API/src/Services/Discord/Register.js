@@ -10,6 +10,13 @@ const Register = async (req, res) => {
         return;
     }
 
+    for (let i = 0 ; i < req.user.connected.length ; i++) {
+        if (req.user.connected[i] === "discord") {
+            res.status(400).send({ msg: "Already connected" });
+            return;
+        }
+    }
+
     const data = {
         client_id: process.env.DISCORD_CLIENT_ID,
         client_secret: process.env.DISCORD_CLIENT_SECRET,
@@ -50,6 +57,15 @@ const Register = async (req, res) => {
                     .put({
                         TableName: "DiscordUsers",
                         Item: discordUsr,
+                    })
+                    .promise();
+                if (!req.user.connected) req.user.connected = [];
+                req.user.connected.push("discord")
+                await dynamo
+                    .client()
+                    .put({
+                        TableName: "Users",
+                        Item: req.user,
                     })
                     .promise();
                 res.status(200).send({ msg: "ok" });
