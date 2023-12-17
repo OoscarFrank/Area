@@ -10,6 +10,8 @@ const getUserByDiscordId = async (id) => {
     };
     let tmpUser = await db.client().get(params).promise();
     if (tmpUser.Count == 0) return null;
+
+    if (!user) return null;
     let user = tmpUser.Item;
     if (!user.userId) return null;
     params = {
