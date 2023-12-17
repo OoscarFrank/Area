@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
@@ -21,25 +21,39 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
   }, []);
 
   const connect = async () => {
-    const res = await fetch(ApiRoute + '/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({email: userName, password: password})
-    })
-    if (res.status != 200) {
-      console.log(res.status);
-      console.log("Incorrect credentials");
-      setIncorrectCred(true);
-      setTimeout(() => {
-        setIncorrectCred(false);
-      }, 3000);
-      return;
+    try {
+      const res = await fetch(ApiRoute + '/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: userName, password: password})
+      })
+      console.log(ApiRoute);
+      if (res.status != 200) {
+        console.log(res.status);
+        console.log("Incorrect credentials");
+        setIncorrectCred(true);
+        setTimeout(() => {
+          setIncorrectCred(false);
+        }, 3000);
+        return;
+      }
+      const data = await res.json();
+      SecureStore.setItemAsync("AreaToken", data.jwt);
+      setCurrentScreen('home');
+    } catch (err) {
+      console.log(err);
+      Alert.alert("error" + err, [
+          {
+            text: 'Annuler',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'Oui', onPress: () => setCurrentScreen('login')},
+        ]);
+        return true;
     }
-    const data = await res.json();
-    SecureStore.setItemAsync("AreaToken", data.jwt);
-    setCurrentScreen('home');
   }
   useEffect(() => {
     SecureStore.getItemAsync("AreaToken").then((token) => {
