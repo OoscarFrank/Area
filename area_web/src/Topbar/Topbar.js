@@ -14,7 +14,7 @@ function InfosUser({ showInfos, setShowInfos, onClose }) {
     const navigate = useNavigate();
 
     const logout = () => {
-        navigate("/");
+        navigate("/login");
     }
 
     const togglePopUp = () => {

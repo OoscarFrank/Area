@@ -55,7 +55,7 @@ export default function Login() {
             .then((data) => {
                 if (data.msg === "ok") {
                     localStorage.setItem("jwt", data.jwt);
-                    navigate("/home");
+                    navigate("/");
                 } else if (data.msg === "User not confirmed") {
                     setErrorMessage("Veuillez confirmer votre compte");
                 } else if (data.msg === "Invalid credentials") {

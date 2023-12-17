@@ -28,7 +28,7 @@ function ConfirmDiscord() {
             .then((res) => res.json())
             .then((data) => {
                 if (data.msg === "ok") {
-                    window.location.href = "/home";
+                    window.location.href = "/";
                 }
             });
     }, []);
