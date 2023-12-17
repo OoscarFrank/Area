@@ -279,16 +279,16 @@ function ListItemsChooseReaction({ item, setReactions, reactions }) {
 
 function ListItemsChooseAction({
     item,
-    setProgression, 
+    setProgression,
     setSelectedAction,
     setSelectedActionLogo,
 }) {
     const handleClick = (action) => {
         let actionOut = {
-            "code": action.code,
-            "displayName": action.displayName,
-            "app": item.app
-        }
+            code: action.code,
+            displayName: action.displayName,
+            app: item.app,
+        };
         setSelectedAction(actionOut);
         setSelectedActionLogo(item.icon);
         setProgression(1);
@@ -361,6 +361,8 @@ export default function AddArea() {
 
     const toggleOpen = () => {
         setOpen(!open);
+        setReactions([]);
+        setSelectedAction(null);
     };
 
     const handleSubmit = () => {
@@ -373,14 +375,15 @@ export default function AddArea() {
             body: JSON.stringify({
                 action: selectedAction.code,
                 reactions: reactions,
-                app : selectedAction.app
+                app: selectedAction.app,
             }),
         })
             .then((response) => response.json())
             .then(async (data) => {
                 setOpen(!open);
+                setReactions([]);
+                setSelectedAction(null);
                 setProgression(0);
-        
             })
             .catch((err) => {
                 console.log(err);
@@ -389,6 +392,12 @@ export default function AddArea() {
         // console.log(selectedAction);
         // console.log(reactions);
     };
+
+    const goBack = () => {
+        setReactions([]);
+        setSelectedAction(null);
+        setProgression(0)
+    }
 
     return (
         <>
@@ -442,7 +451,7 @@ export default function AddArea() {
                             >
                                 <button
                                     className={style.buttonBack}
-                                    onClick={() => setProgression(0)}
+                                    onClick={goBack}
                                 >
                                     <ChevronLeftIcon />
                                 </button>

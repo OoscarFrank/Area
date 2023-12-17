@@ -18,7 +18,7 @@ const getReaction = async (action, user) => {
     let data = await db.client().query(params).promise();
     
     if (data.Count == 0) return null;
-    let areas = data.Items.filter(item => item.action === action);
+    let areas = data.Items.filter(item => item.action.action === action && item.active === true);
     let out = [];
     for (let i = 0; i < areas.length; i++) {
         for (let j = 0; j < areas[i].reactions.length; j++) {
