@@ -17,8 +17,6 @@ import { API_URL } from "../utils";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
-
-
 const array = [
     {
         logo: DiscordLogo,
@@ -78,9 +76,9 @@ const array = [
                     {
                         serviceName: "spotify",
                         serviceLogo: DiscordLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message sent2",
@@ -100,9 +98,9 @@ const array = [
                     {
                         serviceName: "spotify",
                         serviceLogo: DiscordLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message sent3",
@@ -110,9 +108,9 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message received4",
@@ -120,9 +118,9 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message sent5",
@@ -142,9 +140,9 @@ const array = [
                     {
                         serviceName: "spotify",
                         serviceLogo: DiscordLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message received6",
@@ -164,9 +162,9 @@ const array = [
                     {
                         serviceName: "spotify",
                         serviceLogo: DiscordLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
         ],
     },
@@ -180,9 +178,9 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message received",
@@ -202,9 +200,9 @@ const array = [
                     {
                         serviceName: "spotify",
                         serviceLogo: DiscordLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
         ],
     },
@@ -230,9 +228,9 @@ const array = [
                     {
                         serviceName: "spotify",
                         serviceLogo: DiscordLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message sent",
@@ -240,9 +238,9 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message received",
@@ -250,9 +248,9 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
             {
                 when: "Message sent",
@@ -260,15 +258,13 @@ const array = [
                     {
                         serviceName: "trello",
                         serviceLogo: TrelloLogo,
-                    }
+                    },
                 ],
-                isActive: "true"
+                isActive: "true",
             },
         ],
     },
 ];
-
-
 
 function InformationsOnPopup({ item, itemLogo }) {
     const delArea = () => {
@@ -291,7 +287,7 @@ function InformationsOnPopup({ item, itemLogo }) {
             .catch((error) => {
                 console.error("Error:", error);
             });
-    }
+    };
 
     return (
         <div className={style.informationsMainContainer}>
@@ -557,6 +553,12 @@ function CardBottom({ item, itemLogo }) {
 }
 
 function Card({ item, itemLogo }) {
+    if (item === null) {
+        return (
+            <div className={style.cardContainer}>
+            </div>
+        );
+    }
     return (
         <div className={style.cardContainer}>
             <CardTop item={item} itemLogo={itemLogo} />
@@ -567,21 +569,30 @@ function Card({ item, itemLogo }) {
 
 function ListContainer({ item }) {
     const [startIndex, setStartIndex] = useState(0);
-    const cardsPerGroup = 3;
+    const [displayedCards, setDisplayedCards] = useState([]);
 
-    const modifiedCards = [
-        item.cardList[item.cardList.length - 1],
-        ...item.cardList,
-        item.cardList[0],
-    ];
+    useEffect(() => {
+        if (!item) return;
+        if (!item.cardList) return;
+        let cardsPerGroup = 3;
 
-    const displayedCards = [];
-    console.log(item.cardList.length);
-    for (let i = 0; i < cardsPerGroup && i < item.cardList.length; i++) {
-        displayedCards.push(
-            modifiedCards[(startIndex + i) % modifiedCards.length]
-        );
-    }
+        let display = [];
+        if (startIndex === 0)
+            display.push(null);
+        if (startIndex === 0 || startIndex === item.cardList.length - 1)
+            cardsPerGroup = 2;
+
+        for (let i = 0; i < cardsPerGroup; ++i) {
+            display.push(
+                item.cardList[i + startIndex + (startIndex > 0 ? -1 : 0)]
+            );
+        }
+        for (let i = 0; i < 3 - display.length; ++i)
+            display.push(null);
+
+        setDisplayedCards(display);
+    }, [startIndex, item]);
+
 
     const handleDisplayCard = (direction) => {
         setStartIndex((prevIndex) => {
