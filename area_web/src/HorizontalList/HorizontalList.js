@@ -582,13 +582,14 @@ function ListContainer({ item }) {
         if (startIndex === 0 || startIndex === item.cardList.length - 1)
             cardsPerGroup = 2;
 
-        for (let i = 0; i < cardsPerGroup; ++i) {
+        for (let i = 0; i < cardsPerGroup && i < item.cardList.length; ++i) {
             display.push(
                 item.cardList[i + startIndex + (startIndex > 0 ? -1 : 0)]
             );
         }
         for (let i = 0; i < 3 - display.length; ++i)
             display.push(null);
+
 
         setDisplayedCards(display);
     }, [startIndex, item]);
@@ -625,7 +626,7 @@ function ListContainer({ item }) {
                         <div
                             className={`${style.blurEffect} ${style.left}`}
                         ></div>
-                        {displayedCards.map((cardItem, index) => (
+                        {displayedCards && displayedCards.map((cardItem, index) => (
                             <Card
                                 key={`card-${index}`}
                                 item={cardItem}
