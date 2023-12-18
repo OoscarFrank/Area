@@ -238,6 +238,12 @@ function ListItemsChooseReaction({ item, setReactions, reactions }) {
         setReactions([...reactions, { app: item.app, reaction: elem.code }]);
     };
 
+    const handleKeyDown = (event, index) => {
+        if (event.key === 'Enter') {
+            handleCheckboxChange(index);
+        }
+    };
+
     return (
         <div className={style.listItemContainer}>
             <div className={style.headerRowList}>
@@ -248,6 +254,7 @@ function ListItemsChooseReaction({ item, setReactions, reactions }) {
                 />
                 {item.app}
             </div>
+
             {item.reactions.map((reaction, index) => (
                 <div
                     className={
@@ -294,6 +301,12 @@ function ListItemsChooseAction({
         setProgression(1);
     };
 
+    const handleKeyDown = (event, actionName) => {
+        if (event.key === 'Enter') {
+            handleClick(actionName);
+        }
+    };
+
     return (
         <div className={style.listItemContainer}>
             <div className={style.headerRowList}>
@@ -304,6 +317,7 @@ function ListItemsChooseAction({
                 />
                 {item.app}
             </div>
+
             {item.actions.map((action, index) => (
                 <div
                     className={
@@ -313,6 +327,8 @@ function ListItemsChooseAction({
                             ? style.bodyListItemLast
                             : style.bodyListItem
                     }
+                    // onKeyDown={(event) => handleKeyDown(event, action.actionName)}
+                    // tabIndex={0} // Permet la navigation au clavier
                     key={index}
                     onClick={() => handleClick(action)}
                 >

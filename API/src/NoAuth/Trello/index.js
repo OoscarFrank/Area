@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => res.send({ msg: "NoAuth" }));
+
+router.head("/webhook", require("./Head"));
+router.post("/webhook", require("./Post"));
 
 module.exports = router;

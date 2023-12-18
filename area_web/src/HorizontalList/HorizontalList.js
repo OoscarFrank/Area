@@ -403,6 +403,14 @@ function InformationsOnPopup({ item, itemLogo }) {
 }
 
 function CardTop({ item, itemLogo }) {
+
+   // const handleKeyDown = (event, checked, setChecked) => {
+  //      if (event.key === 'Enter') {
+   //         setChecked(!checked);
+    //    }
+   // };
+
+  
     const [active, setActive] = useState(item.isActive);
     const toggleSwitch = (event) => {
         fetch(API_URL + "/api/area", {
@@ -444,8 +452,11 @@ function CardTop({ item, itemLogo }) {
             </div>
             <div className={style.cardTopSubcontainer2}>
                 <Switch
+
                     checked={active}
                     onChange={toggleSwitch}
+                    //onKeyDown={(event) => handleKeyDown(event, checked, setChecked)}
+                    //tabIndex={0} // Permet la navigation au clavier
                     {...label}
                     sx={{
                         width: 62,
