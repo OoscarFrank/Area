@@ -10,6 +10,7 @@ import GetImages from '../GetImages/GetImages';
 export default function CreateArea({ showCreateArea, setShowCreateArea }) {
     const [step, setStep] = useState(0);
     const [action, setAction] = useState([0, 0]);
+    const [reactions, setReactions] = useState([]);
     const [Areas, setAreas] = useState([]);
     const getAvailableAreas = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
@@ -108,7 +109,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea }) {
                         </View>
                         {Areas.map((area, index) => (
                             <View style={{ marginBottom: 15 }} key={index}>
-                                <DisplayReactions Area={area} />
+                                <DisplayReactions Area={area} setReactions={setReactions}/>
                             </View>
                         ))}
                     </ScrollView>
