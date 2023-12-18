@@ -18,7 +18,7 @@ import { API_URL } from "../utils";
 function ListItemsChooseReaction({ item, setReactions, reactions }) {
     const [checkedState, setCheckedState] = useState(
         item.reactions.map((i) => {
-            return { status: false, code: i.code };
+            return { status: false, code: i.code, name : i.displayName};
         })
     );
 
@@ -51,8 +51,7 @@ function ListItemsChooseReaction({ item, setReactions, reactions }) {
             setReactions(newReactions);
             return;
         }
-
-        setReactions([...reactions, { app: item.app, reaction: elem.code }]);
+        setReactions([...reactions, { app: item.app, reaction: elem.code, name : elem.name }]);
     };
 
     const handleKeyDown = (event, index) => {
