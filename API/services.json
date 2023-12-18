@@ -30,6 +30,10 @@
                 "code" : "trelloCreateCard"
             },
             {
+                "displayName" : "Card deleted",
+                "code" : "trelloDeleteCard"
+            },
+            {
                 "displayName" : "Card moved",
                 "code" : "trelloMovedCard"
             }
