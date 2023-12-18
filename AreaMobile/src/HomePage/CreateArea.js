@@ -1,36 +1,61 @@
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from "react-native-modal";
 import DisplayActions from './DisplayActions';
 import DisplayReactions from './DisplayReactions';
+import * as SecureStore from 'expo-secure-store';
+import ApiRoute from '../ApiRoute/ApiRoute';
+
 
 export default function CreateArea({ showCreateArea, setShowCreateArea }) {
     const [step, setStep] = useState(0);
     const [action, setAction] = useState([0, 0]);
-
-    const Areas = [
-        {
-            "app": "Discord",
-            "icon": "DiscordLogo.png",
-            "authUrl": "https://discord.com/api/oauth2/authorize?client_id=1183779111005597766&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FconfirmDiscord&scope=identify+email",
-            "actions": [
-                {
-                    "displayName": "Envoyer un message privé au bot",
-                    "code": "discordReceiveMp"
-                },
-                {
-                    "displayName": "Envoyer un message dans le serveur",
-                    "code": "discordReceiveServer"
-                }
-            ],
-            "reactions": [
-                {
-                    "displayName": "Recevoir un message privé",
-                    "code": "discordSendMp"
-                }
-            ]
+    const [Areas, setAreas] = useState([]);
+    const getAvailableAreas = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token)
+            return setCurrentScreen('login');
+        try {
+            const res = await fetch(ApiRoute + "/api/services", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
+            if (res.status != 200) {
+                SecureStore.deleteItemAsync("AreaToken");
+                return setCurrentScreen('login');
+            }
+            const data = await res.json();
+            // console.log(data);
+            setAreas(data);
+        } catch (err) {
+            console.log(err);
+            return;
         }
-    ]
+
+    }
+    useEffect(() => {
+        getAvailableAreas();
+    }, []);
+    // const Areas = [
+    //     {
+    //         "app": "Discord",
+    //         "icon": "DiscordLogo.png",
+    //         "authUrl": "https://discord.com/api/oauth2/authorize?client_id=1183779111005597766&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FconfirmDiscord&scope=identify+email",
+    //         "actions": [
+    //             {
+    //                 "displayName": "Envoyer un message privé au bot",
+    //                 "code": "discordReceiveMp"
+    //             },
+    //             {
+    //                 "displayName": "Envoyer un message dans le serveur",
+    //                 "code": "discordReceiveServer"
+    //             }
+    //         ],
+    //         "reactions": [
+    //             {
+    //                 "displayName": "Recevoir un message privé",
+    //                 "code": "discordSendMp"
+    //             }
+    //         ]
+    //     }
+    // ]
 
     const closeModal = () => {
         setStep(0);

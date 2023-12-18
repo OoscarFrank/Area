@@ -18,26 +18,6 @@ import GetImages from '../GetImages/GetImages';
 
 const backColor = "#fff";
 
-
-const lineItems = [
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord], reaction: 'test'}, toggled : true},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord], reaction: 'test'}, toggled : true},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord], reaction: 'test'}, toggled : true}
-]
-const linelineItems = [
-    {title : 'Discord', img : discord, content : [
-        {when: {img: discord, action: 'one'}, then: {img: [discord, discord], reaction: 'one'}, toggled : true},
-        {when: {img: discord, action: 'two'}, then: {img: [discord, discord], reaction: 'two'}, toggled : true},
-        {when: {img: discord, action: 'three'}, then: {img: [discord, discord], reaction: 'three'}, toggled : true}
-    ]},
-    {title : 'Disc', img : discord, content : [
-        {when: {img: discord, action: 'four f'}, then: {img: [discord, discord], reaction: 'four'}, toggled : true},
-        {when: {img: discord, action: 'four five'}, then: {img: [discord, discord], reaction: 'five'}, toggled : true},
-        {when: {img: discord, action: 'four six'}, then: {img: [discord, discord], reaction: 'six'}, toggled : true}
-    ]},
-    {title : 'tmpTest', img : discord, content : Array.from(lineItems)},
-]
-
 export default function HomePage({ setCurrentScreen }) {
     const [lines, setLines] = useState([]);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
@@ -80,7 +60,6 @@ export default function HomePage({ setCurrentScreen }) {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token)
             return setCurrentScreen('login');
-        console.log(token);
         try {
             const res = await fetch(ApiRoute + "/api/area", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
             if (res.status != 200) {
@@ -88,7 +67,6 @@ export default function HomePage({ setCurrentScreen }) {
                 return setCurrentScreen('login');
             }
             const data = await res.json();
-            console.log(data.data);
             var newData = Array.from(data.data);
             for (let i in newData) {
                 for (let j in newData[i].reactions)
