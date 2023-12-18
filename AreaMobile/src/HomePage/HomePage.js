@@ -32,10 +32,19 @@ export default function HomePage({ setCurrentScreen }) {
         setLines(oldLine);
     }
 
-    const setIsSet = (x, y, value) => {
+    const setIsSet = async (x, y, value) => {
         let oldLine = Array.from(lines);
-        oldLine[x].content[y].toggled = value;
-        setLines(oldLine);
+        try {
+            fetch(ApiRoute + '/api/area/', {method : 'PUT', headers : {'Authorization' : 'Bearer ' + await SecureStore.getItemAsync("AreaToken"), 
+            'Content-Type' : 'application/json'}, 
+            body : JSON.stringify({id : oldLine[x].content[y].id, active : value})});
+            oldLine[x].content[y].active = value;
+            console.log(oldLine[x].content[y]);
+            setLines(oldLine);
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 
     const filterAreasByApp = (data) => {
