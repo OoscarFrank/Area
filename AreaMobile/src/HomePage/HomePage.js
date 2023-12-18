@@ -39,7 +39,6 @@ export default function HomePage({ setCurrentScreen }) {
             'Content-Type' : 'application/json'}, 
             body : JSON.stringify({id : oldLine[x].content[y].id, active : value})});
             oldLine[x].content[y].active = value;
-            console.log(oldLine[x].content[y]);
             setLines(oldLine);
         } catch (err) {
             console.log(err);
@@ -83,7 +82,6 @@ export default function HomePage({ setCurrentScreen }) {
                     newData[i].reactions[j].img = GetImages(newData[i].reactions[j].app);
                 newData[i].action.img = GetImages(newData[i].action.app);
             }
-            console.log("data", newData);
             setLines(filterAreasByApp(newData));
         } catch (err) {
             console.log(err);
@@ -141,7 +139,6 @@ export default function HomePage({ setCurrentScreen }) {
                                     onSnapToItem={(ind) => {
                                         let oldIndex = Array.from(activeIndex);
                                         oldIndex[index] = ind;
-                                        console.log(oldIndex, activeIndex);
                                         setActiveIndex(oldIndex)
                                     }}
                                     renderItem={(it) => (

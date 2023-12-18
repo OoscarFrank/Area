@@ -11,14 +11,15 @@ export default function HomePageCard({isSet, setIsSet, when, then, index, delete
   return (
     <View style={styles.container}>
         <ModalArea setShowSettings={setShowSettings} showSettings={showSettings}
-        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img}/>
+        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img} when={when} then={then}/>
         <Text style={styles.textTitle}>When</Text>
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>
                 {
                     when.img && <Image source={when.img} style={styles.image}/>
                 }
-                <Text style={{marginLeft : 10, fontSize : 17, fontWeight : '400'}}>{when.displayName}</Text>
+                <Text         numberOfLines={3}
+                ellipsizeMode="tail" style={{marginLeft : 10, fontSize : 17, fontWeight : '400', width : '70%'}}>{when.displayName}</Text>
             </View>
             <Switch
                 trackColor={{false: '#767577', true: '#0000FF'}}

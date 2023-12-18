@@ -46,18 +46,28 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
 
     const create = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
-        if (!token)
+        if (!token) {
+            console.log("No token");
             return setCurrentScreen('login');
+        }
+        console.log(JSON.stringify({
+            app: Areas[action[0]].app,
+            action: Areas[action[0]].actions[action[1]].code,
+            reactions: reactions    
+        }));
         try {
             const res = await fetch(ApiRoute + "/api/area", {
-            method : 'POST',
-            headers : { 'Authorization': 'Bearer ' + token },
-            body: JSON.stringify({
-                app: Areas[action[0]].app,
-                action: Areas[action[0]].actions[action[1]].code,
-                reactions: reactions,    
-            })});
-            if (res.status != 200) {
+                method : 'POST',
+                headers : { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    app: Areas[action[0]].app,
+                    action: Areas[action[0]].actions[action[1]].code,
+                    reactions: reactions
+                })
+            });
+            if (res.status != 201) {
+                let data = await res.json();
+                console.log(res.status, data);
                 SecureStore.deleteItemAsync("AreaToken");
                 return setCurrentScreen('login');
             }
@@ -77,14 +87,17 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
     };
 
     return (
-        <Modal animationType="slide"
-            visible={showCreateArea}
-            onBackdropPress={() => closeModal()}
-            onBackButtonPress={() => closeModal()}
-            onAccessibilityEscape={() => closeModal()}
-            backdropOpacity={0.2}
-            onAccessibilityAction={() => closeModal()}
-            transparent={showCreateArea}>
+        <Modal isVisible={showCreateArea}
+        backdropOpacity={0.5}
+        backdropTransitionInTiming={200}
+        backdropTransitionOutTiming={200}
+        animationIn='slideInUp'
+        animationOut='slideOutDown'
+        animationInTiming={100}
+        onBackdropPress={() => closeModal()}
+        onBackButtonPress={() => closeModal()}
+        onAccessibilityEscape={() => closeModal()}
+        onAccessibilityAction={() => closeModal()}>
             {step == 0 ?
                 <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top: "10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
