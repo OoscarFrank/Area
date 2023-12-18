@@ -1,5 +1,5 @@
 const utils = require("../../Utils");
-const dynamo = require("../../../DB");
+const db = require("../../../DB");
 const router = require("./../../Services/Router");
 
 const getUserByTrelloId = async (id) => {
