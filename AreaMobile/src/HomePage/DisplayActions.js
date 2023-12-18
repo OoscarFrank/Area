@@ -5,7 +5,7 @@ import React from 'react';
 export default function DisplayActions({ Area, setStep, setAction, areaIndex }) {
     const containerStyle = (index) => {
         let count = 0;
-        Area.content.forEach(_ => {
+        Area.actions.forEach(_ => {
             ++count;
         });
         if (index == 0 || index == count - 1)
@@ -42,12 +42,12 @@ export default function DisplayActions({ Area, setStep, setAction, areaIndex }) 
 
     return (
         <View style={{ width: "95%", alignSelf: "center" }}>
-            {Area.content.map((content, index) => (
+            {Area.actions.map((action, index) => (
                 <TouchableOpacity key={index} onPress={() => handlePress(index)}>
                     <View style={containerStyle(index)}>
                         <View style={{ flexDirection: "row" }}>
-                            <Image source={Area.img} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
-                            <Text style={{ marginTop: 15, marginLeft: 15 }}>{content.when.action}</Text>
+                            <Image source={Area.icon} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
+                            <Text style={{ marginTop: 15, marginLeft: 15 }}>{action.displayName}</Text>
                         </View>
                         <MaterialCommunityIcons name='chevron-right' size={45} color="#F3F2F8" />
                     </View>

@@ -114,7 +114,7 @@ export default function HomePage({ setCurrentScreen }) {
         <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible}/>
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
-            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} Areas={linelineItems}/>
+            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea}/>
             <ScrollView>
                 {
                     lines.map((line, index) => {

@@ -7,7 +7,7 @@ export default function DisplayReactions({ Area }) {
 
     useEffect(() => {
         let tmpTab = [];
-        Area.content.forEach(_ => {
+        Area.reactions.forEach(_ => {
             tmpTab.push(false);
         });
         setChecked(tmpTab);
@@ -15,7 +15,7 @@ export default function DisplayReactions({ Area }) {
 
     const containerStyle = (index) => {
         let count = 0;
-        Area.content.forEach(_ => {
+        Area.reactions.forEach(_ => {
             ++count;
         });
         if (index == 0 || index == count - 1)
@@ -47,13 +47,13 @@ export default function DisplayReactions({ Area }) {
 
     return (
         <View style={{ width: "95%", alignSelf: "center" }}>
-            {Area.content.map((content, index) => (
+            {Area.reactions.map((reaction, index) => (
                 <TouchableOpacity key={index} onPress={() => handlePress(index)}>
                     <View style={containerStyle(index)}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <View style={{flexDirection: "row"}}>
-                                <Image source={Area.img} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
-                                <Text style={{ marginTop: 15, marginLeft: 15 }}>{content.then.reaction}</Text>
+                                <Image source={Area.icon} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
+                                <Text style={{ marginTop: 15, marginLeft: 15 }}>{reaction.displayName}</Text>
                             </View>
                             <Checkbox value={checked[index]} onValueChange={() => handlePress(index)} style={{marginRight: 15}}/>
                         </View>
