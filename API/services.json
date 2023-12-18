@@ -5,18 +5,39 @@
         "authUrl" : "https://discord.com/api/oauth2/authorize?client_id=1183779111005597766&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FconfirmDiscord&scope=identify+email",
         "actions" : [
             {
-                "displayName" : "Envoyer un message privé au bot",
+                "displayName" : "Send a private message to the bot",
                 "code" : "discordReceiveMp"
-            }, 
+            },
             {
-                "displayName" : "Envoyer un message dans le serveur",
+                "displayName" : "Send a message to the server",
                 "code" : "discordReceiveServer"
             }
         ],
         "reactions" : [
             {
-                "displayName" : "Recevoir un message privé",
+                "displayName" : "Received a private message",
                 "code" : "discordSendMp"
+            }
+        ]
+    },
+    {
+        "app" : "Trello",
+        "icon" : "TrelloLogo.png",
+        "authUrl" : "https://trello.com/1/authorize?expiration=never&name=Area&scope=read,write&response_type=token&key=5514e3ab1f2a77b0fac7475c09686a05&redirect_uri=http://localhost:3000/confirmTrello",
+        "actions" : [
+            {
+                "displayName" : "Card created",
+                "code" : "trelloCreateCard"
+            },
+            {
+                "displayName" : "Card moved",
+                "code" : "trelloMovedCard"
+            }
+        ],
+        "reactions" : [
+            {
+                "displayName" : "Create new board",
+                "code" : "trelloCreateNewBoard"
             }
         ]
     }
