@@ -11,6 +11,7 @@ import Confirm from "./Confirm/confirm";
 import WaitingPage from "./RegisterPage/WaitingPage";
 import ConfirmTrello from "./Confirm/confirmTrello";
 import ConfirmDiscord from "./Confirm/confirmDiscord";
+import ConfirmGithub from "./Confirm/confirmGithub";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/confirm" element={<Confirm />} />
                 <Route path="/confirmTrello" element={<ConfirmTrello />} />
                 <Route path="/confirmDiscord" element={<ConfirmDiscord />} />
+                <Route path="/confirmGithub" element={<ConfirmGithub />} />
                 <Route path="/waitingConfirmation" element={<WaitingPage />} />
             </Routes>
         </Router>
