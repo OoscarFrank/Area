@@ -10,10 +10,12 @@ const Register = async (req, res) => {
         return;
     }
 
-    for (let i = 0 ; i < req.user.connected.length ; i++) {
-        if (req.user.connected[i] === "discord") {
-            res.status(400).send({ msg: "Already connected" });
-            return;
+    if (req.user.connected) {
+        for (let i = 0 ; i < req.user.connected.length ; i++) {
+            if (req.user.connected[i] === "discord") {
+                res.status(400).send({ msg: "Already connected" });
+                return;
+            }
         }
     }
 
