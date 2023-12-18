@@ -11,6 +11,10 @@ import Carousel from 'react-native-reanimated-carousel';
 import Pagination from './Pagination';
 import PopUpDetails from '../PopUpDetails/PopUpDetails';
 import CreateArea from './CreateArea';
+import * as SecureStore from 'expo-secure-store';
+import ApiRoute from '../ApiRoute/ApiRoute';
+import GetImages from '../GetImages/GetImages';
+
 
 const backColor = "#fff";
 
@@ -35,7 +39,7 @@ const linelineItems = [
 ]
 
 export default function HomePage({ setCurrentScreen }) {
-    const [lines, setLines] = useState(linelineItems);
+    const [lines, setLines] = useState([]);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
     const [userDetailsVisible, setUserDetailsVisible] = useState(false);
     const [showCreateArea, setShowCreateArea] = useState(false);
@@ -51,6 +55,38 @@ export default function HomePage({ setCurrentScreen }) {
         let oldLine = Array.from(lines);
         oldLine[x].content[y].toggled = value;
         setLines(oldLine);
+    }
+
+    const filterAreasByApp = (data) => {
+        const apps = new Array();
+    }
+    const getAreas = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token)
+            return setCurrentScreen('login');
+        console.log(token);
+        try {
+            const res = await fetch(ApiRoute + "/api/area", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
+            if (res.status != 200) {
+                SecureStore.deleteItemAsync("AreaToken");
+                return setCurrentScreen('login');
+            }
+            const data = await res.json();
+            console.log(data.data);
+            var newData = Array.from(data.data);
+            for (let i in newData) {
+                for (let j in newData[i].reactions)
+                    newData[i].reactions[j].img = GetImages(newData[i].reactions[j].app);
+                newData[i].action.img = GetImages(newData[i].action.app);
+            }
+            console.log(newData);
+            setLines([{title : 'Disc', img : discord, content : newData}]);
+
+        } catch (err) {
+            console.log(err);
+            return;
+        }
+
     }
     useEffect(() => {
         const backAction = () => {
@@ -69,7 +105,8 @@ export default function HomePage({ setCurrentScreen }) {
           'hardwareBackPress',
           backAction,
         );
-    
+
+        getAreas();
         return () => backHandler.remove();
       }, []);
 
@@ -104,7 +141,7 @@ export default function HomePage({ setCurrentScreen }) {
                                         setActiveIndex(oldIndex)
                                     }}
                                     renderItem={(it) => (
-                                        <HomePageCard isSet={it.item.toggled} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.when} then={it.item.then} deleteCard={deleteCard}/>
+                                        <HomePageCard isSet={it.item.active} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.action} then={it.item.reactions} deleteCard={deleteCard}/>
                                     )}
                                     panGestureHandlerProps={{
                                         activeOffsetX: [-1, 1],

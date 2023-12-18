@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const backColor = "#fff";
 
 export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard}) {
+    
   const [showSettings, setShowSettings] = useState(false);
 
   return (
@@ -17,7 +18,7 @@ export default function HomePageCard({isSet, setIsSet, when, then, index, delete
                 {
                     when.img && <Image source={when.img} style={styles.image}/>
                 }
-                <Text style={{marginLeft : 10, fontSize : 17, fontWeight : '400'}}>{when.action}</Text>
+                <Text style={{marginLeft : 10, fontSize : 17, fontWeight : '400'}}>{when.displayName}</Text>
             </View>
             <Switch
                 trackColor={{false: '#767577', true: '#0000FF'}}
@@ -31,7 +32,7 @@ export default function HomePageCard({isSet, setIsSet, when, then, index, delete
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>    
                 {
-                    then.img.map((img, index) => <Image source={img} style={styles.image} key={index}/>)
+                    then.map(({img}, index) => <Image source={img} style={styles.image} key={index}/>)
                 }
             </View>
             <TouchableOpacity onPress={() => setShowSettings(true)}>

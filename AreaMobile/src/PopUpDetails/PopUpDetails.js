@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         elevation: 35,
         alignItems: "left",
         width : '75%',
-        height : '20%',
+        height : 'auto',
         position: 'absolute',
         right: '1%',
         top : '2%',
@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: "center",
         borderRadius: 15,
+        marginBottom: '5%   ',
     },
 });
