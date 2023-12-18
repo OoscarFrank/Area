@@ -43,13 +43,13 @@ export default function DisplayReactions({ Area, setReactions }) {
         let tmpTab = Array.from(checked);
         tmpTab[index] = !tmpTab[index];
         setChecked(tmpTab);
-        let test = { "app": "", "reaction": "" };
-        test["app"] = Area.app;
-        test["reaction"] = reaction;
+        let tmpReaction = { "app": "", "reaction": "" };
+        tmpReaction["app"] = Area.app;
+        tmpReaction["reaction"] = reaction;
         if (!checked[index]) {
             setReactions((prevReactions) => {
                 const tmpReactions = [...prevReactions];
-                tmpReactions.push(test);
+                tmpReactions.push(tmpReaction);
                 return tmpReactions;
             });
         } else {
@@ -57,7 +57,7 @@ export default function DisplayReactions({ Area, setReactions }) {
                 const tmpReactions = [...prevReactions];
                 const res = [];
                 for (let i = 0; i != tmpReactions.length; ++i)
-                    tmpReactions[i].reaction != test["reaction"] ? res.push(tmpReactions) : 0;
+                    tmpReactions[i].reaction != tmpReaction["reaction"] ? res.push(tmpReactions) : 0;
                 return res;
             });
         }
