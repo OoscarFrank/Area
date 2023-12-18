@@ -69,9 +69,10 @@ const Register = async (req, res) => {
                     })
                     .promise();
                 res.status(200).send({ msg: "ok" });
-            } else {
-                res.status(400).send({ msg: "Invalid code" });
+                return
             }
+            res.status(400).send({ msg: "Invalid code" });
+            
         })
         .catch((err) => {
             console.log(err);

@@ -8,16 +8,29 @@ const Register = async (req, res) => {
         res.status(err.status).send(err.msg);
         return;
     }
-    req.user.trello = {
+    let me =  await fetch(`https://api.trello.com/1/tokens/${req.body.token}/member?key=${process.env.TRELLO_KEY}&token=${req.body.token}`)
+
+    if (me.status !== 200) {
+        res.status(400).send({ msg: "Invalid token" });
+        return;
+    }
+
+    me = await me.json()
+
+
+    let trelloUser = {
         token: req.body.token,
+        id: me.id,
+        fullName: me.fullName,
+        userId: req.user.id,
     };
 
     try {
         await dynamo
             .client()
             .put({
-                TableName: "Users",
-                Item: req.user,
+                TableName: "TrelloUsers",
+                Item: trelloUser,
             })
             .promise();
         res.status(200).send({ msg: "ok" });
