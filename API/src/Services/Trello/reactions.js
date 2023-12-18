@@ -1,16 +1,19 @@
 const db = require("../../../DB");
 
 const TrelloCreateNewBoard = async (user, boardName = "New board") => {
-    const params = {
+
+    let params =  {
         TableName: "TrelloUsers",
-        Key: {
-            id: user.id,
+        IndexName: "userId",
+        KeyConditionExpression: "userId = :n",
+        ExpressionAttributeValues: {
+            ":n": user.id,
         },
     };
-    let tmpUser = await db.client().get(params).promise();
+    let tmpUser = await db.client().query(params).promise();
     if (tmpUser.Count == 0) return null;
 
-    let trelloUser = tmpUser.Item;
+    let trelloUser = tmpUser.Items[0];
     if (!trelloUser) return null;
     if (!trelloUser.token) return null;
 
