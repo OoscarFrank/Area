@@ -1,11 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => res.send({ msg: "Discord" }));
+// router.get("/", require("./getMe"));
 router.post("/register", require("./Register"));
 
+require("./actions")()
 
 module.exports = router;
 
 
-// https://discord.com/oauth2/authorize?client_id=1183779111005597766&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000&scope=identify+email
+// action
+// j'ennvoie un mp au bot
+// Un utilisateur à parler dans le serveur
+
+// reaction:
+// recevoir un mp du bot
+// le bot annonce sur le serveur

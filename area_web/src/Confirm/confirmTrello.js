@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { API_URL } from "../utils";
 
 function getTokenFromUrl() {
     let hash = window.location.hash.substring(1);
@@ -9,7 +10,7 @@ function getTokenFromUrl() {
 function ConfirmTrello() {
     useEffect(() => {
         let token = getTokenFromUrl();
-        fetch("http://localhost:8080/api/trello/register", {
+        fetch(API_URL + "/api/trello/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -22,7 +23,7 @@ function ConfirmTrello() {
             .then((res) => res.json())
             .then((data) => {
                 if (data.msg === "ok") {
-                    window.location.href = "/home";
+                    window.location.href = "/";
                 }
             });
     }, []);
