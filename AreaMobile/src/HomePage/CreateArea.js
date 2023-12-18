@@ -7,11 +7,12 @@ import * as SecureStore from 'expo-secure-store';
 import ApiRoute from '../ApiRoute/ApiRoute';
 import GetImages from '../GetImages/GetImages';
 
-export default function CreateArea({ showCreateArea, setShowCreateArea }) {
+export default function CreateArea({ showCreateArea, setShowCreateArea, setCurrentScreen }) {
     const [step, setStep] = useState(0);
     const [action, setAction] = useState([0, 0]);
     const [reactions, setReactions] = useState([]);
     const [Areas, setAreas] = useState([]);
+
     const getAvailableAreas = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token)
@@ -31,8 +32,8 @@ export default function CreateArea({ showCreateArea, setShowCreateArea }) {
             console.log(err);
             return;
         }
-
     }
+
     useEffect(() => {
         getAvailableAreas();
     }, []);
@@ -43,11 +44,31 @@ export default function CreateArea({ showCreateArea, setShowCreateArea }) {
         setShowCreateArea(false);
     };
 
-    const create = () => {
-        console.log(step)
-        console.log(action)
+    const create = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token)
+            return setCurrentScreen('login');
+        try {
+            const res = await fetch(ApiRoute + "/api/area", {
+            method : 'POST',
+            headers : { 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({
+                app: Areas[action[0]].app,
+                action: Areas[action[0]].actions[action[1]].code,
+                reactions: reactions,    
+            })});
+            if (res.status != 200) {
+                SecureStore.deleteItemAsync("AreaToken");
+                return setCurrentScreen('login');
+            }
+        } catch (err) {
+            console.log(err);
+            return;
+        }
+        setReactions([]);
         closeModal();
     }
+
     const truncateReaction = (str) => {
         let res = 0;
         while (str.indexOf(" ", res + 1) <= 18)
