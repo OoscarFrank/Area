@@ -17,7 +17,7 @@ const TrelloCreateNewBoard = async (user, boardName = "New board") => {
     if (!trelloUser) return null;
     if (!trelloUser.token) return null;
 
-    await fetch(`https://api.trello.com/1/boards/?name=${boardName}&key=${process.env.TRELLO_KEY}&token=${trelloUser.token}`)
+    await fetch(`https://api.trello.com/1/boards/?name=${boardName}&key=${process.env.TRELLO_KEY}&token=${trelloUser.token}`, {method: "POST"})
 };
 
 module.exports = { TrelloCreateNewBoard };
