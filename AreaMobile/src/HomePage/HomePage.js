@@ -155,7 +155,7 @@ export default function HomePage({ setCurrentScreen }) {
                 }
             </ScrollView>
             <View>
-                <TouchableOpacity onPress={() => setShowCreateArea(true)} style={{borderRadius: 30, backgroundColor: "blue", width: 50, height: 50, alignItems: "center", justifyContent: "center"}}>
+                <TouchableOpacity onPress={() => setShowCreateArea(true)} style={{borderRadius: 30, backgroundColor: "blue", width: 50, height: 50, alignItems: "center", justifyContent: "center", marginBottom : '2%'}}>
                     <MaterialCommunityIcons name='plus-circle-outline' size={45} color="white" />
                 </TouchableOpacity>
             </View>
