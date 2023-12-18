@@ -23,9 +23,8 @@ export default function CreateArea({ showCreateArea, setShowCreateArea }) {
             }
             const data = await res.json();
             let newData = Array.from(data);
-            for (let i in newData) {
+            for (let i in newData)
                 newData[i].icon = GetImages(newData[i].app);
-            }
             setAreas(data);
         } catch (err) {
             console.log(err);
@@ -43,6 +42,11 @@ export default function CreateArea({ showCreateArea, setShowCreateArea }) {
         setShowCreateArea(false);
     };
 
+    const create = () => {
+        console.log(step)
+        console.log(action)
+        closeModal();
+    }
     const truncateReaction = (str) => {
         let res = 0;
         while (str.indexOf(" ", res + 1) <= 18)
@@ -81,7 +85,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea }) {
                         <TouchableOpacity onPress={() => setStep(0)}>
                             <Text style={styles.return}>Return</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => closeModal()}>
+                        <TouchableOpacity onPress={() => create()}>
                             <Text style={styles.return}>Confirm</Text>
                         </TouchableOpacity>
                     </View>
