@@ -31,7 +31,7 @@ const postWebhook = async (req, res) => {
     const data = req.body;
     const actionType = data.action.type;
 
-    if (data.action.type == "6579fd17888c2ae55bd84e54") {
+    if (data.action.type == "createCard") {
         let user = await getUserByTrelloId(data.action.memberCreator.id);
         if (!user) return;
         router("trelloCreateCard", user);
