@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
 const backColor = "#fff";
 
-export default function HomePageBar({setCurrentScreen, setModalVisible}) {
+export default function HomePageBar({setCurrentScreen, setModalVisible, setServicesConnexionsModalVisible}) {
   return (
     <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
@@ -13,9 +13,14 @@ export default function HomePageBar({setCurrentScreen, setModalVisible}) {
                 <Logo width={50} height={50}/>
                 <Text style={styles.title}>AREA</Text>
             </View>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <MaterialCommunityIcons name='account' size={50} color="black" />
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center', paddingRight : '1%', justifyContent : 'space-between'}}>
+                <TouchableOpacity onPress={() => setServicesConnexionsModalVisible(true)} >
+                    <MaterialCommunityIcons name='link' size={50} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setModalVisible(true)} style={{marginLeft : '10%'}}>
+                    <MaterialCommunityIcons name='account' size={50} color="black" />
+                </TouchableOpacity>
+            </View>
         </View>
     </View>
   );

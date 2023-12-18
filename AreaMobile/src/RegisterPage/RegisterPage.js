@@ -15,7 +15,7 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] = useState(false);
   const [inputsError, setInputsError] = useState([false, false, false, false]);
 
-  const submit = async() => {
+  const submit = async () => {
     let tmpErrors = Array.from(inputsError);
     tmpErrors[0] = email === '' ? true : false;
     tmpErrors[3] = lastName === '' ? true : false;
@@ -33,7 +33,7 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
     },
     body: JSON.stringify({email: email, password: password, firstName: firstName, lastName: lastName})
     })
-    if (res.status != 200)
+    if (res.status != 201)
       console.log("Error while creating user");
     setRegisterInfo("Please check your email to confirm your account.");
     setCurrentScreen("login");

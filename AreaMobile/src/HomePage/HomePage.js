@@ -14,7 +14,7 @@ import CreateArea from './CreateArea';
 import * as SecureStore from 'expo-secure-store';
 import ApiRoute from '../ApiRoute/ApiRoute';
 import GetImages from '../GetImages/GetImages';
-
+import ServiceConnexions from '../ServiceConnexions/ServiceConnexions';
 
 const backColor = "#fff";
 
@@ -23,6 +23,7 @@ export default function HomePage({ setCurrentScreen }) {
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
     const [userDetailsVisible, setUserDetailsVisible] = useState(false);
     const [showCreateArea, setShowCreateArea] = useState(false);
+    const [showServiceConnexions, setShowServiceConnexions] = useState(false);
     const width = Dimensions.get('window').width - 10;
 
     const deleteCard = (x, y) => {
@@ -73,7 +74,7 @@ export default function HomePage({ setCurrentScreen }) {
                     newData[i].reactions[j].img = GetImages(newData[i].reactions[j].app);
                 newData[i].action.img = GetImages(newData[i].action.app);
             }
-            console.log(newData);
+            console.log("data", newData);
             setLines(filterAreasByApp(newData));
         } catch (err) {
             console.log(err);
@@ -105,9 +106,10 @@ export default function HomePage({ setCurrentScreen }) {
 
     return (
         <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
-            <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible}/>
+            <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible} setServicesConnexionsModalVisible={setShowServiceConnexions}/>
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
             <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea}/>
+            <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions}/>
             <ScrollView>
                 {
                     lines.map((line, index) => {

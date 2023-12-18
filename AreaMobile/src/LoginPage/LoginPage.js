@@ -29,7 +29,6 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
         },
         body: JSON.stringify({email: userName, password: password})
       })
-      console.log(ApiRoute);
       if (res.status != 200) {
         console.log(res.status);
         console.log("Incorrect credentials");
@@ -43,16 +42,8 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
       SecureStore.setItemAsync("AreaToken", data.jwt);
       setCurrentScreen('home');
     } catch (err) {
-      console.log(err);
-      Alert.alert("error" + err, [
-          {
-            text: 'Annuler',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {text: 'Oui', onPress: () => setCurrentScreen('login')},
-        ]);
-        return true;
+      console.log('error', err);
+        return;
     }
   }
   useEffect(() => {
