@@ -59,6 +59,22 @@ export default function HomePage({ setCurrentScreen }) {
 
     const filterAreasByApp = (data) => {
         const apps = new Array();
+        for (let i in data) {
+            let tmpName = data[i].action.app;
+            let j = 0;
+            let breaked = false;
+            for (j in apps)
+                if (tmpName === apps[j].title) {
+                    breaked = true;
+                    break;
+                }
+            if (!breaked) {
+                apps.push({title : tmpName, img : GetImages(tmpName), content : []});
+                j = apps.length - 1;
+            }
+            apps[j].content.push(data[i]);
+        }
+        return apps;
     }
     const getAreas = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
@@ -80,8 +96,7 @@ export default function HomePage({ setCurrentScreen }) {
                 newData[i].action.img = GetImages(newData[i].action.app);
             }
             console.log(newData);
-            setLines([{title : 'Disc', img : discord, content : newData}]);
-
+            setLines(filterAreasByApp(newData));
         } catch (err) {
             console.log(err);
             return;
