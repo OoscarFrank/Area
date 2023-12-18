@@ -40,5 +40,14 @@
                 "code" : "trelloCreateNewBoard"
             }
         ]
+    },
+    {
+        "app" : "Github",
+        "icon" : "GithubLogo.png",
+        "authUrl" : "https://github.com/login/oauth/authorize?client_id=1ed7db428103fa43e40a&redirect_uri=http://localhost:3000/confirmGithub&scope=read:user,user:email",
+        "actions" : [
+        ],
+        "reactions" : [
+        ]
     }
 ]
