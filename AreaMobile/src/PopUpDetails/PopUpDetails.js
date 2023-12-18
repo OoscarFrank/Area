@@ -1,9 +1,12 @@
 import { Text, View, TouchableOpacity, Switch, StyleSheet, Image, ScrollView } from 'react-native';
 import Modal from "react-native-modal";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
+import { jwtDecode } from 'jwt-decode';
+import { decode } from "base-64";
 
+global.atob = decode;
 
 export default function PopUpDetails({ showDetails, setShowDetails, setCurrentScreen}) {
     const deconnect = () => {
@@ -12,6 +15,19 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
             setCurrentScreen('login');
         })
     }
+    const [decodedToken, setDecodedToken] = useState({});
+    console.log("here");
+    useEffect(() => {
+        SecureStore.getItemAsync("AreaToken").then((token) => {
+            if (token) {
+                let decoded = jwtDecode(token);
+                console.log(decoded);
+                setDecodedToken(decoded);
+            } else {
+                setCurrentScreen('login');
+            }
+        })
+    }, []);
     return (
         <Modal
             isVisible={showDetails}
@@ -25,12 +41,12 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
             >
             <View style={styles.baseModal}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding : '5%', alignItems : 'center'}}>
-                    <Text style={styles.titleName}>Name - First Names</Text>
+                    <Text style={styles.titleName}>{decodedToken && decodedToken.lastName} {decodedToken && decodedToken.firstName}</Text>
                     <TouchableOpacity style={styles.closeButton} onPress={() => setShowDetails(false)}>
                         <MaterialCommunityIcons name='window-close' size={30} color="white" />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.subTitle}>{'test@epitech.eu'}</Text>
+                <Text style={styles.subTitle}>{decodedToken && decodedToken.email}</Text>
                 <View style={{width: '100%', alignItems : 'center', marginTop : '10%'}}>
                     <TouchableOpacity style={styles.logoutBtn} onPress={() => deconnect()}>
                         <Text style={{color : 'white', fontSize : 22}}>Logout</Text>
@@ -88,6 +104,6 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: "center",
         borderRadius: 15,
-        marginBottom: '5%   ',
+        marginBottom: '5%',
     },
 });
