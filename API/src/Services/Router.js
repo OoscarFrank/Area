@@ -1,4 +1,5 @@
 const { discordSendMp }  = require("./Discord/reactions")
+const { TrelloCreateNewBoard } = require("./Trello/reactions")
 const db = require("../../DB");
 
 const getReaction = async (action, user) => {
@@ -34,6 +35,9 @@ const router = async (action, user) => {
     for (let i = 0; i < reactions.length; i++) {
         if (reactions[i].reaction === "discordSendMp") {
             discordSendMp(user);
+        }
+        if (reactions[i].reaction === "trelloCreateNewBoard") {
+            TrelloCreateNewBoard(user);
         }
     }
 }
