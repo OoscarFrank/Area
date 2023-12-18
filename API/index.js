@@ -8,6 +8,7 @@ dotenv.config({ path: path.join(__dirname, ".env") });
 const app = express();
 
 
+
 dynamo.connect(() => {
     app.use(
         cors({
@@ -21,6 +22,7 @@ dynamo.connect(() => {
     app.use("/api/", require("./src/Middlewares/CheckConfirm"));
 
     app.use("/api/", require("./src/Services"));
+    app.use("/api/", require("./src/Area"));
 
     app.listen(parseInt(process.env.API_PORT), () => {
         console.log("server running");

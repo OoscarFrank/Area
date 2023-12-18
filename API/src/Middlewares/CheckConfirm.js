@@ -13,8 +13,12 @@ const checkConfirm = async (req, res, next) => {
         res.status(400).json({ msg: "Invalid Token" });
         return;
     }
+    if (!tmpUser.Item) {
+        res.status(400).json({ msg: "Invalid Token" });
+        return;
+    
+    }
     req.user = tmpUser.Item;
-
     if (!req.user.confirmed) {
         res.status(400).json({ msg: "User not confirmed" });
         return;

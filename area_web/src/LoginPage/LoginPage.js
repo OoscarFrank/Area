@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import LogoAREA from "../assets/Logo_AREA.png";
 import TextField from '@mui/material/TextField';
+import { API_URL } from "../utils";
 
 function TextsFields({ email, setEmail, password, setPassword }) {
     return (
@@ -40,7 +41,7 @@ export default function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        fetch("http://localhost:8080/auth/login", {
+        fetch(API_URL + "/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export default function Login() {
             .then((data) => {
                 if (data.msg === "ok") {
                     localStorage.setItem("jwt", data.jwt);
-                    navigate("/home");
+                    navigate("/");
                 } else if (data.msg === "User not confirmed") {
                     setErrorMessage("Veuillez confirmer votre compte");
                 } else if (data.msg === "Invalid credentials") {

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-
+import { API_URL } from "../utils";
 
 function getQueryParams() {
     let queryParams = {};
@@ -15,7 +15,7 @@ function getQueryParams() {
 function Confirm() {
     useEffect(() => {
         let params = getQueryParams();
-        fetch("http://localhost:8080/auth/confirm", {
+        fetch( API_URL + "/auth/confirm", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
