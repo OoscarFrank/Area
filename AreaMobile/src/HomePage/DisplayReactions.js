@@ -2,7 +2,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Checkbox from 'expo-checkbox';
 
-export default function DisplayReactions({ Area }) {
+export default function DisplayReactions({ Area, setReactions }) {
     const [checked, setChecked] = useState([]);
 
     useEffect(() => {
@@ -39,23 +39,41 @@ export default function DisplayReactions({ Area }) {
         }
     };
 
-    const handlePress = (index) => {
+    const handlePress = (index, reaction) => {
         let tmpTab = Array.from(checked);
         tmpTab[index] = !tmpTab[index];
         setChecked(tmpTab);
+        let test = { "app": "", "reaction": "" };
+        test["app"] = Area.app;
+        test["reaction"] = reaction;
+        if (!checked[index]) {
+            setReactions((prevReactions) => {
+                const tmpReactions = [...prevReactions];
+                tmpReactions.push(test);
+                return tmpReactions;
+            });
+        } else {
+            setReactions((prevReactions) => {
+                const tmpReactions = [...prevReactions];
+                const res = [];
+                for (let i = 0; i != tmpReactions.length; ++i)
+                    tmpReactions[i].reaction != test["reaction"] ? res.push(tmpReactions) : 0;
+                return res;
+            });
+        }
     };
 
     return (
         <View style={{ width: "95%", alignSelf: "center" }}>
             {Area.reactions.map((reaction, index) => (
-                <TouchableOpacity key={index} onPress={() => handlePress(index)}>
+                <TouchableOpacity key={index} onPress={() => handlePress(index, reaction.code)}>
                     <View style={containerStyle(index)}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                            <View style={{flexDirection: "row"}}>
+                            <View style={{ flexDirection: "row" }}>
                                 <Image source={Area.icon} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
                                 <Text style={{ marginTop: 15, marginLeft: 15 }}>{reaction.displayName}</Text>
                             </View>
-                            <Checkbox value={checked[index]} onValueChange={() => handlePress(index)} style={{marginRight: 15}}/>
+                            <Checkbox value={checked[index]} onValueChange={() => handlePress(index, reaction.code)} style={{ marginRight: 15 }} />
                         </View>
                     </View>
                 </TouchableOpacity>
