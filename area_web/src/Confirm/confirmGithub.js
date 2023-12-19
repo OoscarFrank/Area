@@ -7,7 +7,6 @@ function Confirm() {
         let params = (new URL(document.location)).searchParams;
         let code = params.get("code");
 
-        console.log(code)
         if (!code) return;
         fetch( API_URL + "/api/github/register", {
             method: "POST",
