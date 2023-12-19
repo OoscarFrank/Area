@@ -111,7 +111,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
                 </View> :
                 <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top: "10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <TouchableOpacity onPress={() => setStep(0)}>
+                        <TouchableOpacity onPress={() => {setStep(0), setReactions([])}}>
                             <Text style={styles.return}>Return</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => create()}>

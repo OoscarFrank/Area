@@ -47,7 +47,7 @@ export default function DisplayReactions({ Area, setReactions }) {
         tmpReaction["app"] = Area.app;
         tmpReaction["reaction"] = reaction.code;
         tmpReaction["name"] = reaction.displayName;
-        if (!checked[index]) {
+        if (tmpTab[index]) {
             setReactions((prevReactions) => {
                 const tmpReactions = [...prevReactions];
                 tmpReactions.push(tmpReaction);
@@ -56,9 +56,7 @@ export default function DisplayReactions({ Area, setReactions }) {
         } else {
             setReactions((prevReactions) => {
                 const tmpReactions = [...prevReactions];
-                const res = [];
-                for (let i = 0; i != tmpReactions.length; ++i)
-                    tmpReactions[i].reaction != tmpReaction["reaction"] ? res.push(tmpReactions) : 0;
+                const res = tmpReactions.filter((item) => item.reaction !== tmpReaction.reaction);
                 return res;
             });
         }
@@ -67,7 +65,7 @@ export default function DisplayReactions({ Area, setReactions }) {
     return (
         <View style={{ width: "95%", alignSelf: "center" }}>
             {Area.reactions.map((reaction, index) => (
-                <TouchableOpacity key={index} onPress={() => handlePress(index, reaction.code)}>
+                <TouchableOpacity key={index} onPress={() => handlePress(index, reaction)}>
                     <View style={containerStyle(index)}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <View style={{ flexDirection: "row" }}>
