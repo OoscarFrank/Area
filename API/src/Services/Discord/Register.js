@@ -10,10 +10,12 @@ const Register = async (req, res) => {
         return;
     }
 
-    for (let i = 0 ; i < req.user.connected.length ; i++) {
-        if (req.user.connected[i] === "discord") {
-            res.status(400).send({ msg: "Already connected" });
-            return;
+    if (req.user.connected) {
+        for (let i = 0 ; i < req.user.connected.length ; i++) {
+            if (req.user.connected[i] === "discord") {
+                res.status(400).send({ msg: "Already connected" });
+                return;
+            }
         }
     }
 
@@ -60,7 +62,7 @@ const Register = async (req, res) => {
                     })
                     .promise();
                 if (!req.user.connected) req.user.connected = [];
-                req.user.connected.push("discord")
+                req.user.connected.push("Discord")
                 await dynamo
                     .client()
                     .put({
@@ -69,9 +71,10 @@ const Register = async (req, res) => {
                     })
                     .promise();
                 res.status(200).send({ msg: "ok" });
-            } else {
-                res.status(400).send({ msg: "Invalid code" });
+                return
             }
+            res.status(400).send({ msg: "Invalid code" });
+            
         })
         .catch((err) => {
             console.log(err);

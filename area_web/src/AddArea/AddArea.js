@@ -15,193 +15,10 @@ import x from "../assets/Logo_AREA.png";
 import Popup from "../Components/PopupInfosCard";
 import { API_URL } from "../utils";
 
-const array = [
-    {
-        ServiceName: "Discord",
-        ServiceLogo: discord,
-        actionsAvailable: [
-            {
-                actionName: "Message sent",
-            },
-            {
-                actionName: "Message received",
-            },
-            {
-                actionName: "Server created",
-            },
-        ],
-    },
-    {
-        ServiceName: "Trello",
-        ServiceLogo: trello,
-        actionsAvailable: [
-            {
-                actionName: "Card created",
-            },
-            {
-                actionName: "Card removed",
-            },
-            {
-                actionName: "New workspace",
-            },
-        ],
-    },
-    {
-        ServiceName: "Github",
-        ServiceLogo: github,
-        actionsAvailable: [
-            {
-                actionName: "Repository created",
-            },
-            {
-                actionName: "Repository deleted",
-            },
-            {
-                actionName: "New push on repository",
-            },
-        ],
-    },
-    {
-        ServiceName: "X",
-        ServiceLogo: x,
-        actionsAvailable: [
-            {
-                actionName: "Repository created",
-            },
-            {
-                actionName: "Repository deleted",
-            },
-            {
-                actionName: "New push on repository",
-            },
-        ],
-    },
-    {
-        ServiceName: "Discord",
-        ServiceLogo: discord,
-        actionsAvailable: [
-            {
-                actionName: "Message sent",
-            },
-            {
-                actionName: "Message received",
-            },
-            {
-                actionName: "Server created",
-            },
-        ],
-    },
-    {
-        ServiceName: "Trello",
-        ServiceLogo: trello,
-        actionsAvailable: [
-            {
-                actionName: "Card created",
-            },
-            {
-                actionName: "Card removed",
-            },
-            {
-                actionName: "New workspace",
-            },
-        ],
-    },
-    {
-        ServiceName: "Github",
-        ServiceLogo: github,
-        actionsAvailable: [
-            {
-                actionName: "Repository created",
-            },
-            {
-                actionName: "Repository deleted",
-            },
-            {
-                actionName: "New push on repository",
-            },
-        ],
-    },
-    {
-        ServiceName: "X",
-        ServiceLogo: x,
-        actionsAvailable: [
-            {
-                actionName: "Repository created",
-            },
-            {
-                actionName: "Repository deleted",
-            },
-            {
-                actionName: "New push on repository",
-            },
-        ],
-    },
-    {
-        ServiceName: "Discord",
-        ServiceLogo: discord,
-        actionsAvailable: [
-            {
-                actionName: "Message sent",
-            },
-            {
-                actionName: "Message received",
-            },
-            {
-                actionName: "Server created",
-            },
-        ],
-    },
-    {
-        ServiceName: "Trello",
-        ServiceLogo: trello,
-        actionsAvailable: [
-            {
-                actionName: "Card created",
-            },
-            {
-                actionName: "Card removed",
-            },
-            {
-                actionName: "New workspace",
-            },
-        ],
-    },
-    {
-        ServiceName: "Github",
-        ServiceLogo: github,
-        actionsAvailable: [
-            {
-                actionName: "Repository created",
-            },
-            {
-                actionName: "Repository deleted",
-            },
-            {
-                actionName: "New push on repository",
-            },
-        ],
-    },
-    {
-        ServiceName: "X",
-        ServiceLogo: x,
-        actionsAvailable: [
-            {
-                actionName: "Repository created",
-            },
-            {
-                actionName: "Repository deleted",
-            },
-            {
-                actionName: "New push on repository",
-            },
-        ],
-    },
-];
-
 function ListItemsChooseReaction({ item, setReactions, reactions }) {
     const [checkedState, setCheckedState] = useState(
         item.reactions.map((i) => {
-            return { status: false, code: i.code };
+            return { status: false, code: i.code, name : i.displayName};
         })
     );
 
@@ -234,8 +51,13 @@ function ListItemsChooseReaction({ item, setReactions, reactions }) {
             setReactions(newReactions);
             return;
         }
+        setReactions([...reactions, { app: item.app, reaction: elem.code, name : elem.name }]);
+    };
 
-        setReactions([...reactions, { app: item.app, reaction: elem.code }]);
+    const handleKeyDown = (event, index) => {
+        if (event.key === 'Enter') {
+            handleCheckboxChange(index);
+        }
     };
 
     return (
@@ -248,6 +70,7 @@ function ListItemsChooseReaction({ item, setReactions, reactions }) {
                 />
                 {item.app}
             </div>
+
             {item.reactions.map((reaction, index) => (
                 <div
                     className={
@@ -294,6 +117,12 @@ function ListItemsChooseAction({
         setProgression(1);
     };
 
+    const handleKeyDown = (event, actionName) => {
+        if (event.key === 'Enter') {
+            handleClick(actionName);
+        }
+    };
+
     return (
         <div className={style.listItemContainer}>
             <div className={style.headerRowList}>
@@ -304,6 +133,7 @@ function ListItemsChooseAction({
                 />
                 {item.app}
             </div>
+
             {item.actions.map((action, index) => (
                 <div
                     className={
@@ -313,6 +143,8 @@ function ListItemsChooseAction({
                             ? style.bodyListItemLast
                             : style.bodyListItem
                     }
+                    // onKeyDown={(event) => handleKeyDown(event, action.actionName)}
+                    // tabIndex={0} // Permet la navigation au clavier
                     key={index}
                     onClick={() => handleClick(action)}
                 >
@@ -352,12 +184,22 @@ export default function AddArea() {
         })
             .then((response) => response.json())
             .then(async (data) => {
-                setAreas(data);
+                let newData = []
+                if (window.user && window.user.connected) {
+                    for (let i = 0; i < data.length; i++) {
+                        for (let j = 0; j < window.user.connected.length; j++) {
+                            if (data[i].app === window.user.connected[j]) {
+                                newData.push(data[i])
+                            }
+                        }
+                    }
+                }
+                setAreas(newData);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [window.user]);
 
     const toggleOpen = () => {
         setOpen(!open);
@@ -384,6 +226,7 @@ export default function AddArea() {
                 setReactions([]);
                 setSelectedAction(null);
                 setProgression(0);
+                window.location.reload();
             })
             .catch((err) => {
                 console.log(err);

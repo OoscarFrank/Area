@@ -1,28 +1,21 @@
-
 import React, {useEffect} from "react";
 import { API_URL } from "../utils";
-function getQueryParams() {
-    let queryParams = {};
-    let queryString = window.location.search.substring(1);
-    let queryParamsArray = queryString.split('&');
-    for (let i = 0; i < queryParamsArray.length; i++) {
-        let pair = queryParamsArray[i].split('=');
-        queryParams[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
-    }
-    return queryParams;
-}
-function ConfirmDiscord() {
+
+
+function Confirm() {
     useEffect(() => {
-        let query = getQueryParams();
-        let code = query.code;
-        fetch( API_URL + "/api/discord/register", {
+        let params = (new URL(document.location)).searchParams;
+        let code = params.get("code");
+
+        if (!code) return;
+        fetch( API_URL + "/api/github/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
             },
             body: JSON.stringify({
-                code : code
+                code: code,
             }),
         })
             .then((res) => res.json())
@@ -34,10 +27,10 @@ function ConfirmDiscord() {
                     window.location.href = "/login?redirect=" + redirect;
                 }
             });
+
     }, []);
 
     return (<></>)
 }
 
-export default ConfirmDiscord;
-
+export default Confirm;

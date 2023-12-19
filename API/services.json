@@ -2,22 +2,56 @@
     {
         "app" : "Discord",
         "icon" : "DiscordLogo.png",
-        "authUrl" : "https://discord.com/api/oauth2/authorize?client_id=1183779111005597766&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FconfirmDiscord&scope=identify+email",
+        "authUrl" : "https://discord.com/api/oauth2/authorize?client_id=1183779111005597766&response_type=code&redirect_uri=http%3A%2F%2Fec2-13-38-85-194.eu-west-3.compute.amazonaws.com%2FconfirmDiscord&scope=identify+email",
         "actions" : [
             {
-                "displayName" : "Envoyer un message privé au bot",
+                "displayName" : "Send a private message to the bot",
                 "code" : "discordReceiveMp"
-            }, 
+            },
             {
-                "displayName" : "Envoyer un message dans le serveur",
+                "displayName" : "Send a message to the server",
                 "code" : "discordReceiveServer"
             }
         ],
         "reactions" : [
             {
-                "displayName" : "Recevoir un message privé",
+                "displayName" : "Received a private message",
                 "code" : "discordSendMp"
             }
+        ]
+    },
+    {
+        "app" : "Trello",
+        "icon" : "TrelloLogo.png",
+        "authUrl" : "https://trello.com/1/authorize?expiration=never&name=Area&scope=read,write&response_type=token&key=5514e3ab1f2a77b0fac7475c09686a05&redirect_uri=http://ec2-13-38-85-194.eu-west-3.compute.amazonaws.com/confirmTrello",
+        "actions" : [
+            {
+                "displayName" : "Card created",
+                "code" : "trelloCreateCard"
+            },
+            {
+                "displayName" : "Card deleted",
+                "code" : "trelloDeleteCard"
+            },
+            {
+                "displayName" : "Card moved",
+                "code" : "trelloUpdateCard"
+            }
+        ],
+        "reactions" : [
+            {
+                "displayName" : "Create new board",
+                "code" : "trelloCreateNewBoard"
+            }
+        ]
+    },
+    {
+        "app" : "Github",
+        "icon" : "GithubLogo.png",
+        "authUrl" : "https://github.com/login/oauth/authorize?client_id=1ed7db428103fa43e40a&redirect_uri=http://ec2-13-38-85-194.eu-west-3.compute.amazonaws.com/confirmGithub&scope=read:user,user:email",
+        "actions" : [
+        ],
+        "reactions" : [
         ]
     }
 ]

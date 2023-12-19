@@ -17,255 +17,6 @@ import { API_URL } from "../utils";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
-const array = [
-    {
-        logo: DiscordLogo,
-        name: "Discord",
-        cardList: [
-            {
-                when: "Message received1",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message sent2",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message sent3",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message received4",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message sent5",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message received6",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-        ],
-    },
-    {
-        logo: TrelloLogo,
-        name: "Trello",
-        cardList: [
-            {
-                when: "Message sent",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message received",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-        ],
-    },
-    {
-        logo: GithubLogo,
-        name: "Github",
-        cardList: [
-            {
-                when: "Message received",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message sent",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message received",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-            {
-                when: "Message sent",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                ],
-                isActive: "true",
-            },
-        ],
-    },
-];
-
 function InformationsOnPopup({ item, itemLogo }) {
     const delArea = () => {
         fetch(API_URL + "/api/area", {
@@ -369,7 +120,7 @@ function InformationsOnPopup({ item, itemLogo }) {
                                         src={thenItem.serviceLogo}
                                         alt={thenItem.serviceLogo}
                                     />
-                                    <span>{item.when}</span>
+                                    <span>{thenItem.reactionName}</span>
                                 </div>
                             ))}
                     </div>
@@ -403,6 +154,14 @@ function InformationsOnPopup({ item, itemLogo }) {
 }
 
 function CardTop({ item, itemLogo }) {
+
+   // const handleKeyDown = (event, checked, setChecked) => {
+  //      if (event.key === 'Enter') {
+   //         setChecked(!checked);
+    //    }
+   // };
+
+  
     const [active, setActive] = useState(item.isActive);
     const toggleSwitch = (event) => {
         fetch(API_URL + "/api/area", {
@@ -444,8 +203,11 @@ function CardTop({ item, itemLogo }) {
             </div>
             <div className={style.cardTopSubcontainer2}>
                 <Switch
+
                     checked={active}
                     onChange={toggleSwitch}
+                    //onKeyDown={(event) => handleKeyDown(event, checked, setChecked)}
+                    //tabIndex={0} // Permet la navigation au clavier
                     {...label}
                     sx={{
                         width: 62,
@@ -679,6 +441,8 @@ function ListContainer({ item }) {
 
 const IconRouter = (app) => {
     if (app === "Discord") return DiscordLogo;
+    if (app === "Trello") return TrelloLogo;
+    if (app === "Github") return GithubLogo;
 };
 
 export default function HorizontalList() {
@@ -722,6 +486,7 @@ export default function HorizontalList() {
                         newCard.then.push({
                             serviceName: item.reactions[i].app,
                             serviceLogo: IconRouter(item.reactions[i].app),
+                            reactionName: item.reactions[i].name,
                         });
                     }
                     newInfo.cardList.push(newCard);
