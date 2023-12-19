@@ -37,10 +37,14 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    
 
     const navigate = useNavigate();
 
     const handleLogin = () => {
+        let params = (new URL(document.location)).searchParams;
+        let redirect_uri = params.get("redirect");
+
         fetch(API_URL + "/auth/login", {
             method: "POST",
             headers: {
@@ -54,8 +58,11 @@ export default function Login() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.msg === "ok") {
-                    localStorage.setItem("jwt", data.jwt);
-                    navigate("/");
+                    localStorage.setItem("jwt", data.jwt); 
+                    if (redirect_uri)
+                        window.location.href = redirect_uri;
+                    else
+                        window.location.href = "/"
                 } else if (data.msg === "User not confirmed") {
                     setErrorMessage("Veuillez confirmer votre compte");
                 } else if (data.msg === "Invalid credentials") {

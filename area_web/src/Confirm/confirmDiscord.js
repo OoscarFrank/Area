@@ -29,6 +29,9 @@ function ConfirmDiscord() {
             .then((data) => {
                 if (data.msg === "ok" || data.msg === "Already connected") {
                     window.location.href = "/";
+                } else {
+                    let redirect = window.location.href;
+                    window.location.href = "/login?redirect=" + redirect;
                 }
             });
     }, []);
