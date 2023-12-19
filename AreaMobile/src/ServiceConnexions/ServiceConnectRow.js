@@ -1,14 +1,17 @@
 import { Text, View, TouchableOpacity, Switch, StyleSheet, Image, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 
 export default function ServiceConnectRow({area})
 {
     const {app, icon, authUrl} = area;
 
-    const openService = () => {
-        Linking.openURL(authUrl);
-    }
+    const openService = async () => {
+      let result = await WebBrowser.openBrowserAsync(authUrl);
+      if (result.type !== 'opened')
+        return Linking.openURL(authUrl);
+    };
     return (
 
         <TouchableOpacity onPress={() =>openService()} 

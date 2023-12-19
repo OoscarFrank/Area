@@ -5,17 +5,20 @@ import Modal from "react-native-modal";
 export default function ModalArea({ showSettings, setShowSettings, isSet, setIsSet, index, deleteCard, image, when, then }) {
     const deleteArea = () => {
         deleteCard(index.x, index.y);
-        setShowSettings(false);
+        setShowSettingsSettings(false);
     }
     return (
-        <Modal animationType="slide"
-            visible={showSettings}
-            onBackdropPress={() => setShowSettings(false)}
-            onBackButtonPress={() => setShowSettings(false)}
-            onAccessibilityEscape={() => setShowSettings(false)}
-            backdropOpacity={0.2}
-            onAccessibilityAction={() => setShowSettings(false)}
-            transparent={showSettings}>
+        <Modal             isVisible={showSettings}
+        backdropOpacity={0.5}
+        backdropTransitionInTiming={200}
+        backdropTransitionOutTiming={200}
+        animationIn='slideInUp'
+        animationOut='slideOutDown'
+        animationInTiming={100}
+        onBackdropPress={() => setShowSettings(false)}
+        onBackButtonPress={() => setShowSettings(false)}
+        onAccessibilityEscape={() => setShowSettings(false)}
+        onAccessibilityAction={() => setShowSettings(false)}>
             <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top:"10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                     <TouchableOpacity onPress={() => setShowSettings(false)}>
