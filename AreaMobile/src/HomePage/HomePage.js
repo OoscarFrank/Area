@@ -2,11 +2,8 @@ import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, 
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import PagerView from 'react-native-pager-view';
 import HomePageBar from './HomePageBar';
-import Logo from '../../assets/logo.svg';
 import HomePageCard from './HomePageCard';
-import discord from '../../assets/discord.png';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from './Pagination';
 import PopUpDetails from '../PopUpDetails/PopUpDetails';
@@ -18,12 +15,13 @@ import ServiceConnexions from '../ServiceConnexions/ServiceConnexions';
 
 const backColor = "#fff";
 
-export default function HomePage({ setCurrentScreen }) {
+export default function HomePage({ setCurrentScreen}) {
     const [lines, setLines] = useState([]);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
     const [userDetailsVisible, setUserDetailsVisible] = useState(false);
     const [showCreateArea, setShowCreateArea] = useState(false);
     const [showServiceConnexions, setShowServiceConnexions] = useState(false);
+    const [refreshAreas, setRefreshAreas] = useState(false);
     const width = Dimensions.get('window').width - 10;
 
     const deleteCard = (x, y) => {
@@ -107,15 +105,17 @@ export default function HomePage({ setCurrentScreen }) {
           backAction,
         );
 
-        getAreas();
         return () => backHandler.remove();
       }, []);
+      useEffect(() => {
+        getAreas();
+      }, [refreshAreas])
 
     return (
         <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible} setServicesConnexionsModalVisible={setShowServiceConnexions}/>
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
-            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen}/>
+            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen} refresh={refreshAreas} setRefresh={setRefreshAreas}/>
             <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions}/>
             <ScrollView>
                 {

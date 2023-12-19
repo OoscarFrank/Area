@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 import ApiRoute from '../ApiRoute/ApiRoute';
 import GetImages from '../GetImages/GetImages';
 
-export default function CreateArea({ showCreateArea, setShowCreateArea, setCurrentScreen }) {
+export default function CreateArea({ showCreateArea, setShowCreateArea, setCurrentScreen,  setRefresh, refresh  }) {
     const [step, setStep] = useState(0);
     const [action, setAction] = useState([0, 0]);
     const [reactions, setReactions] = useState([]);
@@ -71,6 +71,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
                 SecureStore.deleteItemAsync("AreaToken");
                 return setCurrentScreen('login');
             }
+            setRefresh(!refresh);
         } catch (err) {
             console.log(err);
             return;

@@ -16,12 +16,10 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
         })
     }
     const [decodedToken, setDecodedToken] = useState({});
-    console.log("here");
     useEffect(() => {
         SecureStore.getItemAsync("AreaToken").then((token) => {
             if (token) {
                 let decoded = jwtDecode(token);
-                console.log(decoded);
                 setDecodedToken(decoded);
             } else {
                 setCurrentScreen('login');
