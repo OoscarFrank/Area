@@ -8,7 +8,7 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
     const deleteArea = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token) {
-            console.log("No token");
+            console.error("No token");
             return setCurrentScreen('login');
         }
         try {
@@ -24,14 +24,15 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
             }
             setRefresh(!refresh);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
         deleteCard(index.x, index.y);
         setShowSettingsSettings(false);
     }
+
     return (
-        <Modal             isVisible={showSettings}
+        <Modal isVisible={showSettings}
         backdropOpacity={0.5}
         backdropTransitionInTiming={200}
         backdropTransitionOutTiming={200}

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, Dimensions, BackHandler, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions, BackHandler, Alert } from 'react-native';
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -39,9 +39,8 @@ export default function HomePage({ setCurrentScreen}) {
             oldLine[x].content[y].active = value;
             setLines(oldLine);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
-
     }
 
     const filterAreasByApp = (data) => {
@@ -63,6 +62,7 @@ export default function HomePage({ setCurrentScreen}) {
         }
         return apps;
     }
+
     const getAreas = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token)
@@ -82,11 +82,11 @@ export default function HomePage({ setCurrentScreen}) {
             }
             setLines(filterAreasByApp(newData));
         } catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
-
     }
+
     useEffect(() => {
         const backAction = () => {
           Alert.alert('Revenir à la page de connection', 'Êtes-vous sûr de vouloir revenir à la page de connection ?', [
@@ -173,4 +173,3 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
-

@@ -29,7 +29,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
                 newData[i].icon = GetImages(newData[i].app);
             setAreas(data);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
     }
@@ -47,7 +47,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
     const create = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token) {
-            console.log("No token");
+            console.error("No token");
             return setCurrentScreen('login');
         }
         try {
@@ -62,13 +62,12 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
             });
             if (res.status != 201) {
                 let data = await res.json();
-                console.log(res.status, data);
                 SecureStore.deleteItemAsync("AreaToken");
                 return setCurrentScreen('login');
             }
             setRefresh(!refresh);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
         setReactions([]);
@@ -109,8 +108,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
                             </View>
                         ))}
                     </ScrollView>
-                </View>
-                :
+                </View> :
                 <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top: "10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <TouchableOpacity onPress={() => setStep(0)}>

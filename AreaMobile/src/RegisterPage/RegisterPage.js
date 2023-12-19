@@ -34,7 +34,7 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
     body: JSON.stringify({email: email, password: password, firstName: firstName, lastName: lastName})
     })
     if (res.status != 201)
-      console.log("Error while creating user");
+      console.error("Error while creating user");
     setRegisterInfo("Please check your email to confirm your account.");
     setCurrentScreen("login");
   };
@@ -116,43 +116,42 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     alignItems: 'center', 
     marginTop: 20,
-},
-input : {
-  height: 40, 
-  borderColor: 'black', 
-  borderWidth: 2, 
-  width: '100%', 
-  borderRadius: 15, 
-  paddingLeft: 10, 
-  marginRight: 10,
-  color: 'black'
-},
-inputError: {
-  height: 40, 
-  borderColor: 'red', 
-  borderWidth: 2, 
-  width: '100%', 
-  borderRadius: 15, 
-  paddingLeft: 10, 
-  marginRight: 10,
-  color: 'black'
-},
-fgtPassword : {
-  marginTop: 50,
-  color: 'blue'
-},
-connectionButton : {
-  marginTop: 50,
-  backgroundColor: 'blue',
-  width: '100%',
-  height: 40,
-  borderRadius: 25,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-connectionButtonText : {
-  color: 'white',
-  fontSize : 20
-}
+  },
+  input : {
+    height: 40, 
+    borderColor: 'black', 
+    borderWidth: 2, 
+    width: '100%', 
+    borderRadius: 15, 
+    paddingLeft: 10, 
+    marginRight: 10,
+    color: 'black'
+  },
+  inputError: {
+    height: 40, 
+    borderColor: 'red', 
+    borderWidth: 2, 
+    width: '100%', 
+    borderRadius: 15, 
+    paddingLeft: 10, 
+    marginRight: 10,
+    color: 'black'
+  },
+  fgtPassword : {
+    marginTop: 50,
+    color: 'blue'
+  },
+  connectionButton : {
+    marginTop: 50,
+    backgroundColor: 'blue',
+    width: '100%',
+    height: 40,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  connectionButtonText : {
+    color: 'white',
+    fontSize : 20
+  }
 });
-

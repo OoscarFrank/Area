@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const backColor = "#fff";
 
 export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard, id, setCurrentScreen, setRefresh, refresh}) {
-    
   const [showSettings, setShowSettings] = useState(false);
 
   return (

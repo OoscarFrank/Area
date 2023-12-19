@@ -1,10 +1,9 @@
-import { Text, View, TouchableOpacity, Switch, StyleSheet, Image, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 
-export default function ServiceConnectRow({area})
-{
+export default function ServiceConnectRow({area}) {
     const {app, icon, authUrl} = area;
 
     const openService = async () => {
@@ -12,8 +11,8 @@ export default function ServiceConnectRow({area})
       if (result.type !== 'opened')
         return Linking.openURL(authUrl);
     };
-    return (
 
+    return (
         <TouchableOpacity onPress={() =>openService()} 
         style={{flexDirection : 'row', alignItems : 'center', height : 'auto', width : '100%', paddingTop : 10, 
         paddingBottom : 10, borderWidth : 1, borderLeftWidth : 0, borderRightWidth : 0, marginTop : 20}}>

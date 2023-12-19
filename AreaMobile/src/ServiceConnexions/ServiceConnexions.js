@@ -23,21 +23,19 @@ export default function ServiceConnexions({ show, setShow}) {
             let newData = Array.from(data);
             for (let i in newData)
                 newData[i].icon = GetImages(newData[i].app);
-            console.log(newData)
             setAvailableServices(newData);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
-    
     }
 
     useEffect(() => {
         setNewServices();
     }, []);
+
     return (
         <Modal 
-            // animationType="slide"
             isVisible={show}
             backdropOpacity={0.5}
             backdropTransitionInTiming={200}
@@ -48,8 +46,7 @@ export default function ServiceConnexions({ show, setShow}) {
             onBackdropPress={() => setShow(false)}
             onBackButtonPress={() => setShow(false)}
             onAccessibilityEscape={() => setShow(false)}
-            onAccessibilityAction={() => setShow(false)}
-            >
+            onAccessibilityAction={() => setShow(false)}>
             <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top:"10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
                 <TouchableOpacity onPress={() => setShow(false)} style={{ alignSelf: "flex-start", marginLeft: 20, marginTop: 20, }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'blue' }}>Close</Text>
@@ -65,5 +62,4 @@ export default function ServiceConnexions({ show, setShow}) {
 }
 
 const styles = StyleSheet.create({
-
 });
