@@ -30,7 +30,6 @@ const Register = async (req, res) => {
 
     data = await data.json();
     if (data.access_token) {
-        console.log(data.access_token);
         let me = null;
         try {
             me = await fetch("https://api.github.com/user", {
