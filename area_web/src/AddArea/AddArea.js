@@ -185,10 +185,12 @@ export default function AddArea() {
             .then((response) => response.json())
             .then(async (data) => {
                 let newData = []
-                for (let i = 0; i < data.length; i++) {
-                    for (let j = 0; j < window.user.connected.length; j++) {
-                        if (data[i].app === window.user.connected[j]) {
-                            newData.push(data[i])
+                if (window.user && window.user.connected) {
+                    for (let i = 0; i < data.length; i++) {
+                        for (let j = 0; j < window.user.connected.length; j++) {
+                            if (data[i].app === window.user.connected[j]) {
+                                newData.push(data[i])
+                            }
                         }
                     }
                 }
@@ -197,7 +199,7 @@ export default function AddArea() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [window.user]);
 
     const toggleOpen = () => {
         setOpen(!open);
