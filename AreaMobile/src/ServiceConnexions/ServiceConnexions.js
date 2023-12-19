@@ -9,6 +9,7 @@ import GetImages from '../GetImages/GetImages';
 export default function ServiceConnexions({ show, setShow}) {
     const [availableServices, setAvailableServices] = useState([]);
     const [me, setMe] = useState({});
+    const [refresh, setRefresh] = useState(false);
     const setNewServices = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token)
@@ -48,7 +49,9 @@ export default function ServiceConnexions({ show, setShow}) {
         setNewServices();
         setMeInfo();
     }, []);
-
+    useEffect(() => {
+        setMeInfo();
+    }, [refresh]);
     return (
         <Modal 
             isVisible={show}
@@ -69,7 +72,7 @@ export default function ServiceConnexions({ show, setShow}) {
                 </TouchableOpacity>
                 <ScrollView>
                 {
-                    availableServices.map((elem, index) => <ServiceConnectRow area={elem} key={index} me={me}/>)
+                    availableServices.map((elem, index) => <ServiceConnectRow area={elem} key={index} me={me} reloadMe={refresh} setReloadMe={setRefresh}/>)
                 }
                 </ScrollView>
             </View>

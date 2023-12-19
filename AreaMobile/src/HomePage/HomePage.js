@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions, BackHandler, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions, BackHandler, Alert, RefreshControl, } from 'react-native';
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -117,7 +117,12 @@ export default function HomePage({ setCurrentScreen}) {
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
             <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen} refresh={refreshAreas} setRefresh={setRefreshAreas}/>
             <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions}/>
-            <ScrollView style={{width : '100%', height : '100%'}}>
+            <ScrollView style={{width : '100%', height : '100%'}} refreshControl={
+                <RefreshControl refreshing={refreshAreas} onRefresh={() => {    setRefreshAreas(true);
+                    setTimeout(() => {
+                      setRefreshAreas(false);
+                    }, 2000);}} />
+                }>
                 {
                     lines.map((line, index) => {
                         return (

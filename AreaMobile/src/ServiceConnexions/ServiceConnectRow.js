@@ -4,14 +4,15 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function ServiceConnectRow({area, me}) {
+export default function ServiceConnectRow({area, me, reloadMe, setReloadMe}) {
     const [alreadyGot, setAlreadyGot] = useState(false);
     const {app, icon, authUrl} = area;
     console.log("me", me)
     const openService = async () => {
       let result = await WebBrowser.openBrowserAsync(authUrl);
-      if (result.type !== 'opened')
-        return Linking.openURL(authUrl);
+    //   if (result.type !== 'opened')
+    //     return Linking.openURL(authUrl);
+        setReloadMe(!reloadMe);
     };
     useEffect(() => {
         if (!me)
