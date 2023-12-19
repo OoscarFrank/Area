@@ -62,6 +62,15 @@ const Register = async (req, res) => {
                 Item: githubUsr,
             })
             .promise();
+        if (!req.user.connected) req.user.connected = [];
+        req.user.connected.push("Github");
+        await dynamo
+            .client()
+            .put({
+                TableName: "Users",
+                Item: req.user,
+            })
+            .promise();
         res.status(200).send({ msg: "ok" });
         return;
     }

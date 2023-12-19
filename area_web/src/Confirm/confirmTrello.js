@@ -22,8 +22,11 @@ function ConfirmTrello() {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.msg === "ok") {
+                if (data.msg === "ok" || data.msg === "Already connected") {
                     window.location.href = "/";
+                } else {
+                    let redirect = window.location.href;
+                    window.location.href = "/login?redirect=" + redirect;
                 }
             });
     }, []);
