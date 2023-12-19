@@ -2,9 +2,19 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Checkbox from 'expo-checkbox';
 
-export default function DisplayReactions({ Area, setReactions }) {
+export default function DisplayReactions({ Area, setReactions, me }) {
     const [checked, setChecked] = useState([]);
 
+    const [active, setActive] = useState(false);
+    useEffect(() => {
+        if (!me)
+            return;
+
+        for (let i in me.connected) {
+            if (me.connected[i].toLowerCase() === Area.app.toLowerCase())
+                return setActive(true);
+        }
+    }, [])
     useEffect(() => {
         let tmpTab = [];
         Area.reactions.forEach(_ => {
@@ -63,9 +73,9 @@ export default function DisplayReactions({ Area, setReactions }) {
     };
 
     return (
-        <View style={{ width: "95%", alignSelf: "center" }}>
+        <View style={{ width: "95%", alignSelf: "center", opacity : active ? 1 : 0.3 }}>
             {Area.reactions.map((reaction, index) => (
-                <TouchableOpacity key={index} onPress={() => handlePress(index, reaction)}>
+                <TouchableOpacity key={index} onPress={() => {active ? handlePress(index, reaction) : ''}}>
                     <View style={containerStyle(index)}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <View style={{ flexDirection: "row" }}>

@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 import ApiRoute from '../ApiRoute/ApiRoute';
 import GetImages from '../GetImages/GetImages';
 
-export default function CreateArea({ showCreateArea, setShowCreateArea, setCurrentScreen,  setRefresh, refresh  }) {
+export default function CreateArea({ showCreateArea, setShowCreateArea, setCurrentScreen,  setRefresh, refresh, me  }) {
     const [step, setStep] = useState(0);
     const [action, setAction] = useState([0, 0]);
     const [reactions, setReactions] = useState([]);
@@ -104,7 +104,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
                         <Text style={styles.title}>Choose an action</Text>
                         {Areas.map((area, index) => (
                             <View style={{ marginBottom: 15 }} key={index}>
-                                <DisplayActions Area={area} setStep={setStep} setAction={setAction} areaIndex={index}/>
+                                <DisplayActions Area={area} setStep={setStep} setAction={setAction} areaIndex={index} me={me}/>
                             </View>
                         ))}
                     </ScrollView>
@@ -137,7 +137,7 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
                         </View>
                         {Areas.map((area, index) => (
                             <View style={{ marginBottom: 15 }} key={index}>
-                                <DisplayReactions Area={area} setReactions={setReactions}/>
+                                <DisplayReactions Area={area} setReactions={setReactions} me={me}/>
                             </View>
                         ))}
                     </ScrollView>

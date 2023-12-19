@@ -6,10 +6,8 @@ import * as SecureStore from 'expo-secure-store';
 import ServiceConnectRow from './ServiceConnectRow';
 import GetImages from '../GetImages/GetImages';
 
-export default function ServiceConnexions({ show, setShow}) {
+export default function ServiceConnexions({ show, setShow, me, refresh, setRefresh}) {
     const [availableServices, setAvailableServices] = useState([]);
-    const [me, setMe] = useState({});
-    const [refresh, setRefresh] = useState(false);
     const setNewServices = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token)
@@ -30,28 +28,10 @@ export default function ServiceConnexions({ show, setShow}) {
             return;
         }
     }
-    const setMeInfo = async () => {
-        const token = await SecureStore.getItemAsync("AreaToken");
-        if (!token)
-            return
-        try {
-            const res = await fetch(ApiRoute + "/api/me", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
-            if (res.status != 200)
-                return
-            const data = await res.json();
-            setMe(data.data);
-        } catch (err) {
-            console.error(err);
-            return;
-        }
-    }
+
     useEffect(() => {
         setNewServices();
-        setMeInfo();
     }, []);
-    useEffect(() => {
-        setMeInfo();
-    }, [refresh]);
     return (
         <Modal 
             isVisible={show}

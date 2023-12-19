@@ -23,7 +23,27 @@ export default function HomePage({ setCurrentScreen}) {
     const [showServiceConnexions, setShowServiceConnexions] = useState(false);
     const [refreshAreas, setRefreshAreas] = useState(false);
     const width = Dimensions.get('window').width - 10;
-
+    const [me, setMe] = useState(null);
+    const [refreshMe, setRefreshMe] = useState(false);
+    const [showRefresh, setShowRefresh] = useState(false);
+    const setMeInfo = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token)
+            return
+        try {
+            const res = await fetch(ApiRoute + "/api/me", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
+            if (res.status != 200)
+                return
+            const data = await res.json();
+            setMe(data.data);
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+    }
+    useEffect(() => {
+        setMeInfo();
+    }, [refreshMe]);
     const deleteCard = (x, y) => {
         let oldLine = Array.from(lines);
         oldLine[x].content.splice(y, y + 1);
@@ -115,13 +135,13 @@ export default function HomePage({ setCurrentScreen}) {
         <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
             <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible} setServicesConnexionsModalVisible={setShowServiceConnexions}/>
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
-            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen} refresh={refreshAreas} setRefresh={setRefreshAreas}/>
-            <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions}/>
+            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen} refresh={refreshAreas} setRefresh={setRefreshAreas} me={me}/>
+            <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions} me={me} refresh={refreshMe} setRefresh={setRefreshMe}/>
             <ScrollView style={{width : '100%', height : '100%'}} refreshControl={
-                <RefreshControl refreshing={refreshAreas} onRefresh={() => {    setRefreshAreas(true);
+                <RefreshControl refreshing={showRefresh} onRefresh={() => {setShowRefresh(true);setRefreshAreas(!refreshAreas);
                     setTimeout(() => {
-                      setRefreshAreas(false);
-                    }, 2000);}} />
+                        setShowRefresh(false);
+                    }, 1000);}} />
                 }>
                 {
                     lines.map((line, index) => {

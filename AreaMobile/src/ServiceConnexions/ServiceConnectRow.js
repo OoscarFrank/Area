@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, Image } from 'react-native';
+import { Text, TouchableOpacity, Image, AppState } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
@@ -10,9 +10,6 @@ export default function ServiceConnectRow({area, me, reloadMe, setReloadMe}) {
     console.log("me", me)
     const openService = async () => {
       let result = await WebBrowser.openBrowserAsync(authUrl);
-    //   if (result.type !== 'opened')
-    //     return Linking.openURL(authUrl);
-        setReloadMe(!reloadMe);
     };
     useEffect(() => {
         if (!me)
@@ -21,7 +18,13 @@ export default function ServiceConnectRow({area, me, reloadMe, setReloadMe}) {
             if (me.connected[i].toLowerCase() === app.toLowerCase())
                 return setAlreadyGot(true);
         }
-    })
+    }, [])
+    useEffect(()=> {
+        if (AppState.currentState === 'active') {
+            setReloadMe(!reloadMe);
+            console.log("???");
+        }
+    }, [AppState.currentState])
     return (
         <TouchableOpacity onPress={() => {return !alreadyGot ? openService() : ''}} 
         style={{flexDirection : 'row', alignItems : 'center', height : 'auto', width : '100%', paddingTop : 10, 
