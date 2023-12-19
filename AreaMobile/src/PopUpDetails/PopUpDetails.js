@@ -9,13 +9,15 @@ import { decode } from "base-64";
 global.atob = decode;
 
 export default function PopUpDetails({ showDetails, setShowDetails, setCurrentScreen}) {
+    const [decodedToken, setDecodedToken] = useState({});
+    
     const deconnect = () => {
         SecureStore.deleteItemAsync("AreaToken").then(() => {
-            console.log("Token deleted");
+            console.error("Token deleted");
             setCurrentScreen('login');
         })
     }
-    const [decodedToken, setDecodedToken] = useState({});
+    
     useEffect(() => {
         SecureStore.getItemAsync("AreaToken").then((token) => {
             if (token) {
@@ -26,6 +28,7 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
             }
         })
     }, []);
+
     return (
         <Modal
             isVisible={showDetails}
@@ -35,8 +38,7 @@ export default function PopUpDetails({ showDetails, setShowDetails, setCurrentSc
             backdropOpacity={0.0}
             onAccessibilityEscape={() => setShowDetails(false)}
             onAccessibilityAction={() => setShowDetails(false)}
-            onBackButtonPress={() => setShowDetails(false)}
-            >
+            onBackButtonPress={() => setShowDetails(false)}>
             <View style={styles.baseModal}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding : '5%', alignItems : 'center'}}>
                     <Text style={styles.titleName}>{decodedToken && decodedToken.lastName} {decodedToken && decodedToken.firstName}</Text>

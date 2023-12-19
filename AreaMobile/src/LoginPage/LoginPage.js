@@ -1,10 +1,9 @@
-import { SafeAreaView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Alert, Keyboard, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Keyboard, ScrollView} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
 import ApiRoute from '../ApiRoute/ApiRoute';
 import * as SecureStore from 'expo-secure-store';
-
 
 const backColor = "#fff";
 
@@ -50,8 +49,7 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
         body: JSON.stringify({email: userName, password: password})
       })
       if (res.status != 200) {
-        console.log(res.status);
-        console.log("Incorrect credentials");
+        console.error("Incorrect credentials");
         setIncorrectCred(true);
         setTimeout(() => {
           setIncorrectCred(false);
@@ -62,17 +60,19 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
       SecureStore.setItemAsync("AreaToken", data.jwt);
       setCurrentScreen('home');
     } catch (err) {
-      console.log('error', err);
+      console.error('error: ', err);
         return;
     }
   }
+
   useEffect(() => {
     SecureStore.getItemAsync("AreaToken").then((token) => {
       if (token) {
         setCurrentScreen('home');
       }
     })
-  }, [])
+  }, []);
+
   return (
     <ScrollView contentContainerStyle ={styles.container} scrollEnabled={false} ref={scrollRef}>
       <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
@@ -132,36 +132,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     alignItems: 'center', 
     marginTop: 50, 
-},
-input : {
-  height: 40, 
-  borderColor: 'black', 
-  borderWidth: 2, 
-  width: '100%', 
-  borderRadius: 15, 
-  paddingLeft: 10, 
-  marginRight: 10,
-  color: 'black'
-},
-fgtPassword : {
-  marginTop: 50,
-  color: 'blue'
-},
-notRegistered: {
-  marginTop: 20,
-  color: 'blue',
-},
-connectionButton : {
-  marginTop: 50,
-  backgroundColor: 'blue',
-  width: '100%',
-  height: 40,
-  borderRadius: 25,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-connectionButtonText : {
-  color: 'white',
-  fontSize : 20
-}
+  },
+  input : {
+    height: 40, 
+    borderColor: 'black', 
+    borderWidth: 2, 
+    width: '100%', 
+    borderRadius: 15, 
+    paddingLeft: 10, 
+    marginRight: 10,
+    color: 'black'
+  },
+  fgtPassword : {
+    marginTop: 50,
+    color: 'blue'
+  },
+  notRegistered: {
+    marginTop: 20,
+    color: 'blue',
+  },
+  connectionButton : {
+    marginTop: 50,
+    backgroundColor: 'blue',
+    width: '100%',
+    height: 40,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  connectionButtonText : {
+    color: 'white',
+    fontSize : 20
+  }
 });
