@@ -4,20 +4,21 @@ import React, {useState} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 const backColor = "#fff";
 
-export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard}) {
+export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard, id, setCurrentScreen, setRefresh, refresh}) {
   const [showSettings, setShowSettings] = useState(false);
 
   return (
     <View style={styles.container}>
-        <ModalArea setShowSettings={setShowSettings} showSettings={showSettings}
-        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img}/>
+        <ModalArea setShowSettings={setShowSettings} showSettings={showSettings} id={id} setCurrentScreen={setCurrentScreen} setRefresh={setRefresh}
+        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img} when={when} then={then} refresh={refresh}/>
         <Text style={styles.textTitle}>When</Text>
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>
                 {
                     when.img && <Image source={when.img} style={styles.image}/>
                 }
-                <Text style={{marginLeft : 10, fontSize : 17, fontWeight : '400'}}>{when.action}</Text>
+                <Text         numberOfLines={3}
+                ellipsizeMode="tail" style={{marginLeft : 10, fontSize : 17, fontWeight : '400', width : '70%'}}>{when.displayName}</Text>
             </View>
             <Switch
                 trackColor={{false: '#767577', true: '#0000FF'}}
@@ -31,7 +32,7 @@ export default function HomePageCard({isSet, setIsSet, when, then, index, delete
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>    
                 {
-                    then.img.map((img, index) => <Image source={img} style={styles.image} key={index}/>)
+                    then.map(({img}, index) => <Image source={img} style={styles.image} key={index}/>)
                 }
             </View>
             <TouchableOpacity onPress={() => setShowSettings(true)}>

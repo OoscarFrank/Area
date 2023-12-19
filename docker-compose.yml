@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  client_mobile:
+    container_name: client_mobile
+    build:
+      context: AreaMobile
+      dockerfile: Dockerfile
+      args:
+        EAS_CRED: ${EAS_CRED}
+    volumes:
+       - app_data:/mobile
+  client_web:
+    container_name: client_web
+    depends_on:
+      - server
+      - client_mobile
+    build:
+      context: area_web
+      dockerfile: Dockerfile
+    ports:
+      - '8081:80'
+    volumes:
+      - app_data:/mobile
+  server:
+    container_name: server
+    build:
+      context: API
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+
+
+volumes:
+    app_data:
