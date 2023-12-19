@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView, Dimensions, Keyboard } from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
 import Logo from '../../assets/logo.svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ApiRoute from '../ApiRoute/ApiRoute';
 const backColor = "#fff";
+
+
 
 export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
   const [email, setEmail] = useState('');
@@ -14,6 +16,30 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] = useState(false);
   const [inputsError, setInputsError] = useState([false, false, false, false]);
+  const scrollRef = useRef();
+
+  const onRemoveKeyboard = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }
+
+  useEffect(() => {
+
+    
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        console.log("Keyboard hidden");
+        onRemoveKeyboard();
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const submit = async () => {
     let tmpErrors = Array.from(inputsError);
@@ -40,7 +66,7 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle ={styles.container} scrollEnabled={false} ref={scrollRef}>
       <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
       <View style={{position: "absolute", top: 10, left: 10}}>
         <TouchableOpacity onPress={() => setCurrentScreen("login")}>
@@ -98,19 +124,20 @@ export default function RegisterPage({setCurrentScreen, setRegisterInfo}) {
       <TouchableOpacity  onPress={() => submit()} style={styles.connectionButton}>
         <Text style={styles.connectionButtonText}>Register</Text> 
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: backColor,
     alignItems: 'center',
     paddingTop: 100,
     paddingBottom: 100,
     paddingLeft: 75,
     paddingRight: 75,
+    height: Dimensions.get("window").height * 2.25
+
   },
   passwordContainer: { 
     flexDirection: 'row', 

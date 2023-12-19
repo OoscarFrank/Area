@@ -4,10 +4,23 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
 const backColor = "#fff";
 
+
 export default function HomePageBar({setCurrentScreen, setModalVisible, setServicesConnexionsModalVisible}) {
   return (
     <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
+    {
+        Platform.OS === 'ios' && <View style={{
+            width: "100%",
+            height: 20,
+            backgroundColor: {backColor}
+        }}>
+            <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
+        </View>
+    }
+
+    {
+        Platform.OS === 'android' && <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
+    }
         <View style={styles.contentContainer}>
             <View style={styles.leftContainer}>
                 <Logo width={50} height={50}/>

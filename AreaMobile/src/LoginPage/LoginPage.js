@@ -1,5 +1,5 @@
-import { SafeAreaView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Alert } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Alert, Keyboard, ScrollView} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
 import ApiRoute from '../ApiRoute/ApiRoute';
@@ -13,6 +13,26 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [incorrectCred, setIncorrectCred] = useState(false);
+  const scrollRef = useRef();
+  const onRemoveKeyboard = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        console.log("Keyboard hidden");
+        onRemoveKeyboard();
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,7 +74,7 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
     })
   }, [])
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle ={styles.container} scrollEnabled={false} ref={scrollRef}>
       <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
       <Logo width={150} height={150} />
       {registerInfo !== '' ?
@@ -93,19 +113,20 @@ export default function LoginPage({setCurrentScreen, registerInfo, setRegisterIn
       <TouchableOpacity  onPress={() => connect()} style={styles.connectionButton}>
         <Text style={styles.connectionButtonText}>Login</Text> 
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: backColor,
     alignItems: 'center',
     paddingTop: 100,
     paddingBottom: 100,
     paddingLeft: 75,
     paddingRight: 75,
+    height: '100%',
+    width : '100%'
   },
   passwordContainer: { 
     flexDirection: 'row', 
