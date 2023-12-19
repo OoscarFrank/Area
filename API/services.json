@@ -6,17 +6,20 @@
         "actions" : [
             {
                 "displayName" : "Send a private message to the bot",
-                "code" : "discordReceiveMp"
+                "code" : "discordReceiveMp",
+                "description" : "This action check if the bot received a private message from a user"
             },
             {
                 "displayName" : "Send a message to the server",
-                "code" : "discordReceiveServer"
+                "code" : "discordReceiveServer",
+                "description" : "This action check if a user send a message to the server"
             }
         ],
         "reactions" : [
             {
                 "displayName" : "Received a private message",
-                "code" : "discordSendMp"
+                "code" : "discordSendMp",
+                "description" : "This reaction send a private message to a user"
             }
         ]
     },
@@ -27,28 +30,32 @@
         "actions" : [
             {
                 "displayName" : "Card created",
-                "code" : "trelloCreateCard"
+                "code" : "trelloCreateCard",
+                "description" : "This action check if a card is created in the board"
             },
             {
                 "displayName" : "Card deleted",
-                "code" : "trelloDeleteCard"
+                "code" : "trelloDeleteCard",
+                "description" : "This action check if a card is deleted in the board"
             },
             {
                 "displayName" : "Card moved",
-                "code" : "trelloUpdateCard"
+                "code" : "trelloUpdateCard",
+                "description" : "This action check if a card is moved in the board"
             }
         ],
         "reactions" : [
             {
                 "displayName" : "Create new board",
-                "code" : "trelloCreateNewBoard"
+                "code" : "trelloCreateNewBoard",
+                "description" : "This reaction create a new board"
             }
         ]
     },
     {
         "app" : "Github",
         "icon" : "GithubLogo.png",
-        "authUrl" : "https://github.com/login/oauth/authorize?client_id=1ed7db428103fa43e40a&redirect_uri=http://ec2-13-38-85-194.eu-west-3.compute.amazonaws.com/confirmGithub&scope=read:user,user:email",
+        "authUrl" : "https://github.com/login/oauth/authorize?client_id=1ed7db428103fa43e40a&redirect_uri=http://ec2-13-38-85-194.eu-west-3.compute.amazonaws.com/confirmGithub&scope=read:user,user:email,repo",
         "actions" : [
         ],
         "reactions" : [

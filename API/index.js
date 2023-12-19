@@ -16,6 +16,10 @@ dynamo.connect(() => {
         })
     );
     app.use(express.json());
+
+
+    app.get("/about", require("./src/about"));
+
     app.use("/auth", require("./src/Auth"));
     app.use("/api/", require("./src/NoAuth"));
     app.use("/api/", require("./src/Middlewares/CheckToken"));
