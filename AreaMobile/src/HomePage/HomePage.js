@@ -1,40 +1,27 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions, BackHandler, Alert, RefreshControl, } from 'react-native';
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import PagerView from 'react-native-pager-view';
 import HomePageBar from './HomePageBar';
-import Logo from '../../assets/logo.svg';
 import HomePageCard from './HomePageCard';
-import discord from '../../assets/discord.png';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from './Pagination';
+import PopUpDetails from '../PopUpDetails/PopUpDetails';
+import CreateArea from './CreateArea';
+import * as SecureStore from 'expo-secure-store';
+import ApiRoute from '../ApiRoute/ApiRoute';
+import GetImages from '../GetImages/GetImages';
+import ServiceConnexions from '../ServiceConnexions/ServiceConnexions';
 
 const backColor = "#fff";
 
-
-const lineItems = [
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true},
-    {when: {img: discord, action: 'test'}, then: {img: [discord, discord]}, toggled : true}
-]
-const linelineItems = [
-    {title : 'Discord', img : discord, content : [
-        {when: {img: discord, action: 'one'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'two'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'three'}, then: {img: [discord, discord]}, toggled : true}
-    ]},
-    {title : 'Disc', img : discord, content : [
-        {when: {img: discord, action: 'four f'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'four five'}, then: {img: [discord, discord]}, toggled : true},
-        {when: {img: discord, action: 'four six'}, then: {img: [discord, discord]}, toggled : true}
-    ]},
-    {title : 'tmpTest', img : discord, content : Array.from(lineItems)},
-]
-
-export default function HomePage({ setCurrentScreen }) {
-    const [lines, setLines] = useState(linelineItems);
+export default function HomePage({ setCurrentScreen}) {
+    const [lines, setLines] = useState([]);
     const [activeIndex, setActiveIndex] = useState([0, 0, 0]);
+    const [userDetailsVisible, setUserDetailsVisible] = useState(false);
+    const [showCreateArea, setShowCreateArea] = useState(false);
+    const [showServiceConnexions, setShowServiceConnexions] = useState(false);
+    const [refreshAreas, setRefreshAreas] = useState(false);
     const width = Dimensions.get('window').width - 10;
 
     const deleteCard = (x, y) => {
@@ -43,16 +30,99 @@ export default function HomePage({ setCurrentScreen }) {
         setLines(oldLine);
     }
 
-    const setIsSet = (x, y, value) => {
+    const setIsSet = async (x, y, value) => {
         let oldLine = Array.from(lines);
-        oldLine[x].content[y].toggled = value;
-        setLines(oldLine);
+        try {
+            fetch(ApiRoute + '/api/area/', {method : 'PUT', headers : {'Authorization' : 'Bearer ' + await SecureStore.getItemAsync("AreaToken"), 
+            'Content-Type' : 'application/json'}, 
+            body : JSON.stringify({id : oldLine[x].content[y].id, active : value})});
+            oldLine[x].content[y].active = value;
+            setLines(oldLine);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
+    const filterAreasByApp = (data) => {
+        const apps = new Array();
+        for (let i in data) {
+            let tmpName = data[i].action.app;
+            let j = 0;
+            let breaked = false;
+            for (j in apps)
+                if (tmpName === apps[j].title) {
+                    breaked = true;
+                    break;
+                }
+            if (!breaked) {
+                apps.push({title : tmpName, img : GetImages(tmpName), content : []});
+                j = apps.length - 1;
+            }
+            apps[j].content.push(data[i]);
+        }
+        return apps;
+    }
+
+    const getAreas = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token)
+            return setCurrentScreen('login');
+        try {
+            const res = await fetch(ApiRoute + "/api/area", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
+            if (res.status != 200) {
+                SecureStore.deleteItemAsync("AreaToken");
+                return setCurrentScreen('login');
+            }
+            const data = await res.json();
+            var newData = Array.from(data.data);
+            for (let i in newData) {
+                for (let j in newData[i].reactions)
+                    newData[i].reactions[j].img = GetImages(newData[i].reactions[j].app);
+                newData[i].action.img = GetImages(newData[i].action.app);
+            }
+            setLines(filterAreasByApp(newData));
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+    }
+
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert('Revenir à la page de connection', 'Êtes-vous sûr de vouloir revenir à la page de connection ?', [
+            {
+              text: 'Annuler',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {text: 'Oui', onPress: () => setCurrentScreen('login')},
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction,
+        );
+
+        return () => backHandler.remove();
+      }, []);
+      useEffect(() => {
+        getAreas();
+      }, [refreshAreas])
+
     return (
-        <GestureHandlerRootView style={styles.container}>
-            <HomePageBar setCurrentScreen={setCurrentScreen} />
-            <ScrollView>
+        <GestureHandlerRootView onAccessibilityEscape={() => setCurrentScreen('login')} style={styles.container}>
+            <HomePageBar setCurrentScreen={setCurrentScreen} setModalVisible={setUserDetailsVisible} setServicesConnexionsModalVisible={setShowServiceConnexions}/>
+            <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
+            <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen} refresh={refreshAreas} setRefresh={setRefreshAreas}/>
+            <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions}/>
+            <ScrollView style={{width : '100%', height : '100%'}} refreshControl={
+                <RefreshControl refreshing={refreshAreas} onRefresh={() => {    setRefreshAreas(true);
+                    setTimeout(() => {
+                      setRefreshAreas(false);
+                    }, 2000);}} />
+                }>
                 {
                     lines.map((line, index) => {
                         return (
@@ -74,11 +144,10 @@ export default function HomePage({ setCurrentScreen }) {
                                     onSnapToItem={(ind) => {
                                         let oldIndex = Array.from(activeIndex);
                                         oldIndex[index] = ind;
-                                        console.log(oldIndex, activeIndex);
                                         setActiveIndex(oldIndex)
                                     }}
                                     renderItem={(it) => (
-                                        <HomePageCard isSet={it.item.toggled} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.when} then={it.item.then} deleteCard={deleteCard}/>
+                                        <HomePageCard id={it.item.id} isSet={it.item.active} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.action} then={it.item.reactions} deleteCard={deleteCard} setCurrentScreen={setCurrentScreen} setRefresh={setRefreshAreas} refresh={refreshAreas}/>
                                     )}
                                     panGestureHandlerProps={{
                                         activeOffsetX: [-1, 1],
@@ -90,13 +159,19 @@ export default function HomePage({ setCurrentScreen }) {
                     })
                 }
             </ScrollView>
+            <View style={{flexDirection : 'row', alignItems : 'center', width : '85%', display : 'flex', justifyContent : 'flex-end'}}>
+                <TouchableOpacity onPress={() => setShowCreateArea(true)} style={{borderRadius: 30, backgroundColor: "blue", width: 50, height: 50, alignItems: "center", justifyContent: "center", marginBottom : '5%'}}>
+                    <MaterialCommunityIcons name='plus-circle-outline' size={45} color="white" />
+                </TouchableOpacity>
+            </View>
         </GestureHandlerRootView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width : '100%',
+        height : '100%',
         backgroundColor: backColor,
         alignItems: 'center',
     },
@@ -104,4 +179,3 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
-

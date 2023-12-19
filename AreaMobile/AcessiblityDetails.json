@@ -1,0 +1,20 @@
+{
+    "colorContrasts" : {
+        "loginInput" : {
+            "background" : "#FFFFFF",
+            "foreground" : "#000000",
+            "value" : 21
+        },
+        "forgottenPassword" : {
+            "background" : "#FFFFFF",
+            "foreground" : "#0000FF",
+            "value" : 8.59
+        },
+        "loginButton" : {
+            "foreground" : "#FFFFFF",
+            "background" : "#000000",
+            "value" : 8.59
+        }
+    }
+        
+}
