@@ -234,12 +234,10 @@ export default function Topbar() {
 
     const handleShowInfos = () => {
         setShowInfos(!showInfos);
-        console.log(showInfos);
     };
 
     const handleShowLinks = () => {
         setShowLinks(!showLinks);
-        console.log(showLinks);
     };
 
     return (
