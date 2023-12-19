@@ -14,6 +14,7 @@ const register = async (req, res) => {
         ]);
     } catch (err) {
         res.status(err.status).json({ msg: err.msg });
+        return;
     }
 
     const params = {
@@ -40,6 +41,7 @@ const register = async (req, res) => {
         checkoutId: uuidv4(),
         confirmed: false,
         createdTime: Date.now(),
+        connected : []
     };
 
     await dynamo

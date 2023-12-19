@@ -1,329 +1,152 @@
 import React, { useState, useEffect } from "react";
 import style from "./HorizontalList.module.css";
 
-import Switch from '@mui/material/Switch';
-import IconButton from '@mui/material/IconButton';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Switch from "@mui/material/Switch";
+import IconButton from "@mui/material/IconButton";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import DiscordLogo from "../assets/DiscordLogo.png";
 import TrelloLogo from "../assets/TrelloLogo.png";
 import GithubLogo from "../assets/GithubLogo.png";
 import IMG from "../assets/IMG....png";
-
 import PopupWoverlay from "../Components/PopupInfosCard";
+import { API_URL } from "../utils";
 
-const array = [
-    {
-        logo: DiscordLogo,
-        name: "Discord",
-        cardList: [
-            {
-                when: "Message received1",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message sent2",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message sent3",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message received4",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message sent5",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message received6",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-        ],
-    },
-    {
-        logo: TrelloLogo,
-        name: "Trello",
-        cardList: [
-            {
-                when: "Message sent",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message received",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-        ],
-    },
-    {
-        logo: GithubLogo,
-        name: "Github",
-        cardList: [
-            {
-                when: "Message received",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    },
-                    {
-                        serviceName: "github",
-                        serviceLogo: GithubLogo,
-                    },
-                    {
-                        serviceName: "X",
-                        serviceLogo: DiscordLogo,
-                    },
-                    {
-                        serviceName: "spotify",
-                        serviceLogo: DiscordLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message sent",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message received",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-            {
-                when: "Message sent",
-                then: [
-                    {
-                        serviceName: "trello",
-                        serviceLogo: TrelloLogo,
-                    }
-                ],
-                isActive: "true"
-            },
-        ],
-    },
-];
-
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
+const label = { inputProps: { "aria-label": "Switch demo" } };
 
 function InformationsOnPopup({ item, itemLogo }) {
+    const delArea = () => {
+        fetch(API_URL + "/api/area", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("jwt"),
+            },
+            body: JSON.stringify({
+                id: item.id,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.msg === "ok") {
+                    window.location.reload();
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
     return (
         <div className={style.informationsMainContainer}>
-            <div className={style.InformationsOnPopupTop} >
-                <div style={{display:'flex', justifyContent:'space-between'}}>
-                    <span className={style.InformationsOnPopupAction}><b>When</b></span>
-                    <Switch
+            <div className={style.InformationsOnPopupTop}>
+                <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                    <span className={style.InformationsOnPopupAction}>
+                        <b>When</b>
+                    </span>
+                    {/* <Switch
                         {...label}
                         sx={{
                             width: 62,
                             height: 40,
-                            '& .MuiSwitch-switchBase': {
-                                '&.Mui-checked': {
-                                    transform: 'translateX(24px)',
+                            "& .MuiSwitch-switchBase": {
+                                "&.Mui-checked": {
+                                    transform: "translateX(24px)",
                                 },
                             },
-                            '& .MuiSwitch-thumb': {
+                            "& .MuiSwitch-thumb": {
                                 width: 24,
                                 height: 24,
                             },
-                            '& .MuiSwitch-track': {
+                            "& .MuiSwitch-track": {
                                 borderRadius: 26 / 2,
                             },
                         }}
-                    />
+                    /> */}
                 </div>
-                <div className={style.informationsOnPopupContainerLogoAndText} >
-                    <div className={style.informationsOnPopupSubContainerTopLogoAndText}>
-                        <img src={itemLogo} alt={itemLogo} style={{width:'25px', height:'auto', marginRight:'15px'}} />
+                <div className={style.informationsOnPopupContainerLogoAndText}>
+                    <div
+                        className={
+                            style.informationsOnPopupSubContainerTopLogoAndText
+                        }
+                    >
+                        <img
+                            src={itemLogo}
+                            alt={itemLogo}
+                            style={{
+                                width: "25px",
+                                height: "auto",
+                                marginRight: "15px",
+                            }}
+                        />
                         {item.when}
                     </div>
                 </div>
             </div>
-            <div style={{width:'90%'}}>
-                <span className={style.InformationsOnPopupAction}><b>Then</b></span>
+            <div style={{ width: "90%" }}>
+                <span className={style.InformationsOnPopupAction}>
+                    <b>Then</b>
+                </span>
                 <div className={style.informationsOnPopupContainerLogoAndText}>
-                    <div className={style.informationsOnPopupSubContainerBottomLogoAndText}>
-                        {item && item.then && item.then.map((thenItem, index) => (
-                            <div key={index} style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'20px'}}>
-                                <img style={{width:'25px', height:'auto', marginRight:'5px'}} key={index} src={thenItem.serviceLogo} alt={thenItem.serviceLogo}/>
-                                <span>{item.when}</span>
-                            </div>
-                        ))}
+                    <div
+                        className={
+                            style.informationsOnPopupSubContainerBottomLogoAndText
+                        }
+                    >
+                        {item &&
+                            item.then &&
+                            item.then.map((thenItem, index) => (
+                                <div
+                                    key={index}
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                        marginBottom: "20px",
+                                    }}
+                                >
+                                    <img
+                                        style={{
+                                            width: "25px",
+                                            height: "auto",
+                                            marginRight: "5px",
+                                        }}
+                                        key={index}
+                                        src={thenItem.serviceLogo}
+                                        alt={thenItem.serviceLogo}
+                                    />
+                                    <span>{thenItem.reactionName}</span>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>
-            <div style={{position:'fixed',display : "flex", justifyContent: "center", bottom : "12%", width : "100%", left: "22%"}}>
-
+            <div
+                style={{
+                    position: "fixed",
+                    display: "flex",
+                    justifyContent: "center",
+                    bottom: "12%",
+                    width: "100%",
+                    left: "22%",
+                }}
+            >
                 <IconButton
                     size="large"
                     style={{
                         backgroundColor: "#FF0000",
                         color: "#fff",
                         margin: "10px",
-                        position: "relative"
+                        position: "relative",
                     }}
+                    onClick={delArea}
                 >
-                    <DeleteIcon/>
+                    <DeleteIcon />
                 </IconButton>
             </div>
         </div>
@@ -331,35 +154,78 @@ function InformationsOnPopup({ item, itemLogo }) {
 }
 
 function CardTop({ item, itemLogo }) {
+
+   // const handleKeyDown = (event, checked, setChecked) => {
+  //      if (event.key === 'Enter') {
+   //         setChecked(!checked);
+    //    }
+   // };
+
+  
+    const [active, setActive] = useState(item.isActive);
+    const toggleSwitch = (event) => {
+        fetch(API_URL + "/api/area", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("jwt"),
+            },
+            body: JSON.stringify({
+                id: item.id,
+                active: event.target.checked,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.msg === "ok") {
+                    setActive(event.target.checked);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
+        setActive(event.target.checked);
+    };
+
     return (
         <div className={style.cardTop}>
             <div className={style.cardTopSubcontainer1}>
                 <span className={style.cardSubtitle}>When</span>
                 <div className={style.cardInstructionList}>
-                    <img src={itemLogo} alt={itemLogo} style={{width:'25px', height:'auto'}} />
+                    <img
+                        src={itemLogo}
+                        alt={itemLogo}
+                        style={{ width: "25px", height: "auto" }}
+                    />
                     <span className={style.cardInstruction}> {item.when} </span>
                 </div>
             </div>
             <div className={style.cardTopSubcontainer2}>
-            <Switch
-                {...label}
-                sx={{
-                    width: 62,
-                    height: 40,
-                    '& .MuiSwitch-switchBase': {
-                        '&.Mui-checked': {
-                            transform: 'translateX(24px)',
+                <Switch
+
+                    checked={active}
+                    onChange={toggleSwitch}
+                    //onKeyDown={(event) => handleKeyDown(event, checked, setChecked)}
+                    //tabIndex={0} // Permet la navigation au clavier
+                    {...label}
+                    sx={{
+                        width: 62,
+                        height: 40,
+                        "& .MuiSwitch-switchBase": {
+                            "&.Mui-checked": {
+                                transform: "translateX(24px)",
+                            },
                         },
-                    },
-                    '& .MuiSwitch-thumb': {
-                        width: 24,
-                        height: 24,
-                    },
-                    '& .MuiSwitch-track': {
-                        borderRadius: 26 / 2,
-                    },
-                }}
-            />
+                        "& .MuiSwitch-thumb": {
+                            width: 24,
+                            height: 24,
+                        },
+                        "& .MuiSwitch-track": {
+                            borderRadius: 26 / 2,
+                        },
+                    }}
+                />
             </div>
         </div>
     );
@@ -377,7 +243,7 @@ function CardBottom({ item, itemLogo }) {
             }
             tempNewThen.push({
                 serviceName: "...",
-                serviceLogo: IMG, // Make sure IMG is defined or imported
+                serviceLogo: IMG,
             });
         }
         setNewThen(tempNewThen);
@@ -392,15 +258,33 @@ function CardBottom({ item, itemLogo }) {
             <div className={style.cardTopSubcontainer1}>
                 <span className={style.cardSubtitle}>Then</span>
                 <div className={style.cardInstructionList}>
-                {newThen.length > 0 ? (
-                    newThen.map((thenItem, index) => (
-                        <img key={index} style={{width:'25px', height:'auto', marginRight:'5px'}} src={thenItem.serviceLogo} alt={thenItem.serviceName}/>
-                        ))
-                    ) : (
-                        item && item.then && item.then.map((thenItem, index) => (
-                            <img key={index} style={{width:'25px', height:'auto', marginRight:'5px'}} src={thenItem.serviceLogo} alt={thenItem.serviceName}/>
-                        ))
-                    )}
+                    {newThen.length > 0
+                        ? newThen.map((thenItem, index) => (
+                              <img
+                                  key={index}
+                                  style={{
+                                      width: "25px",
+                                      height: "auto",
+                                      marginRight: "5px",
+                                  }}
+                                  src={thenItem.serviceLogo}
+                                  alt={thenItem.serviceName}
+                              />
+                          ))
+                        : item &&
+                          item.then &&
+                          item.then.map((thenItem, index) => (
+                              <img
+                                  key={index}
+                                  style={{
+                                      width: "25px",
+                                      height: "auto",
+                                      marginRight: "5px",
+                                  }}
+                                  src={thenItem.serviceLogo}
+                                  alt={thenItem.serviceName}
+                              />
+                          ))}
                 </div>
             </div>
             <div className={style.cardTopSubcontainer3}>
@@ -413,7 +297,7 @@ function CardBottom({ item, itemLogo }) {
                     }}
                     onClick={toggleShowInformationsCard}
                 >
-                    <SettingsIcon/>
+                    <SettingsIcon />
                 </IconButton>
             </div>
             {showInformationsCard && (
@@ -431,6 +315,12 @@ function CardBottom({ item, itemLogo }) {
 }
 
 function Card({ item, itemLogo }) {
+    if (item === null) {
+        return (
+            <div className={style.cardContainer}>
+            </div>
+        );
+    }
     return (
         <div className={style.cardContainer}>
             <CardTop item={item} itemLogo={itemLogo} />
@@ -441,56 +331,107 @@ function Card({ item, itemLogo }) {
 
 function ListContainer({ item }) {
     const [startIndex, setStartIndex] = useState(0);
-    const cardsPerGroup = 3;
+    const [displayedCards, setDisplayedCards] = useState([]);
 
-    const modifiedCards = [
-        item.cardList[item.cardList.length - 1],
-        ...item.cardList,
-        item.cardList[0],
-    ];
+    useEffect(() => {
+        if (!item) return;
+        if (!item.cardList) return;
+        let cardsPerGroup = 3;
 
-    const displayedCards = [];
-    for (let i = 0; i < cardsPerGroup; i++) {
-        displayedCards.push(modifiedCards[(startIndex + i) % modifiedCards.length]);
-    }
+        let display = [];
+        if (startIndex === 0)
+            display.push(null);
+        if (startIndex === 0 || startIndex === item.cardList.length - 1)
+            cardsPerGroup = 2;
+
+        for (let i = 0; i < cardsPerGroup && i < item.cardList.length; ++i) {
+            display.push(
+                item.cardList[i + startIndex + (startIndex > 0 ? -1 : 0)]
+            );
+        }
+        for (let i = 0; i < 3 - display.length; ++i)
+            display.push(null);
+
+
+        setDisplayedCards(display);
+    }, [startIndex, item]);
+
 
     const handleDisplayCard = (direction) => {
-        setStartIndex(prevIndex => {
-            if (direction === 'next') {
+        setStartIndex((prevIndex) => {
+            if (direction === "next") {
                 return (prevIndex + 1) % item.cardList.length;
             } else {
-                return (prevIndex - 1 + item.cardList.length) % item.cardList.length;
+                return (
+                    (prevIndex - 1 + item.cardList.length) %
+                    item.cardList.length
+                );
             }
         });
-    }
+    };
 
     return (
         <div className={style.listContainer}>
             <div className={style.listHeaderContainer}>
                 <div className={style.listHeader}>
-                    <img src={item.logo} alt="serviceLogo" className={style.serviceLogo} />
+                    <img
+                        src={item.logo}
+                        alt="serviceLogo"
+                        className={style.serviceLogo}
+                    />
                     <p className={style.listTitle}>{item.name}</p>
                 </div>
             </div>
             <div className={style.allListContainer}>
                 <div className={style.listBodyContainer}>
                     <div className={style.listBody}>
-                        <div className={`${style.blurEffect} ${style.left}`}></div>
-                            {displayedCards.map((cardItem, index) => (
-                                <Card key={`card-${index}`} item={cardItem} itemLogo={item.logo} />
-                            ))}
-                        <div className={`${style.blurEffect} ${style.right}`}></div>
+                        <div
+                            className={`${style.blurEffect} ${style.left}`}
+                        ></div>
+                        {displayedCards && displayedCards.map((cardItem, index) => (
+                            <Card
+                                key={`card-${index}`}
+                                item={cardItem}
+                                itemLogo={item.logo}
+                            />
+                        ))}
+                        <div
+                            className={`${style.blurEffect} ${style.right}`}
+                        ></div>
                     </div>
                 </div>
                 <div className={style.locationInCardsContainer}>
-                    <IconButton size="small" style={{ backgroundColor: "#252525", color: "#fff", margin: "10px" }} onClick={() => handleDisplayCard('prev')}>
-                        <ChevronLeftIcon/>
+                    <IconButton
+                        size="small"
+                        style={{
+                            backgroundColor: "#252525",
+                            color: "#fff",
+                            margin: "10px",
+                        }}
+                        onClick={() => handleDisplayCard("prev")}
+                    >
+                        <ChevronLeftIcon />
                     </IconButton>
                     {item.cardList.map((cardItem, index) => (
-                        <div key={`cardIndex-${index}`} className={index === startIndex ? style.locationInCardsSelected : style.locationInCards} />
+                        <div
+                            key={`cardIndex-${index}`}
+                            className={
+                                index === startIndex
+                                    ? style.locationInCardsSelected
+                                    : style.locationInCards
+                            }
+                        />
                     ))}
-                    <IconButton size="small" style={{ backgroundColor: "#252525", color: "#fff", margin: "10px" }} onClick={() => handleDisplayCard('next')}>
-                        <ChevronRightIcon/>
+                    <IconButton
+                        size="small"
+                        style={{
+                            backgroundColor: "#252525",
+                            color: "#fff",
+                            margin: "10px",
+                        }}
+                        onClick={() => handleDisplayCard("next")}
+                    >
+                        <ChevronRightIcon />
                     </IconButton>
                 </div>
             </div>
@@ -498,12 +439,75 @@ function ListContainer({ item }) {
     );
 }
 
-export default function HorizontalList(showInformationsCard, setShowInformationsCard) {
+const IconRouter = (app) => {
+    if (app === "Discord") return DiscordLogo;
+    if (app === "Trello") return TrelloLogo;
+    if (app === "Github") return GithubLogo;
+};
+
+export default function HorizontalList() {
+    const [infos, setInfos] = useState([]);
+
+    useEffect(() => {
+        fetch(API_URL + "/api/area", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("jwt"),
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let newInfos = [];
+                data.data.forEach((item) => {
+                    let newInfo = null;
+                    let found = false;
+                    for (let i = 0; i < newInfos.length; ++i) {
+                        if (newInfos[i].name === item.action.app) {
+                            newInfo = newInfos[i];
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (newInfo === null && !found) {
+                        newInfo = {
+                            logo: IconRouter(item.action.app),
+                            name: item.action.app,
+                            cardList: [],
+                        };
+                    }
+                    let newCard = {
+                        id: item.id,
+                        when: item.action.displayName,
+                        then: [],
+                        isActive: item.active,
+                    };
+                    for (let i = 0; i < item.reactions.length; ++i) {
+                        newCard.then.push({
+                            serviceName: item.reactions[i].app,
+                            serviceLogo: IconRouter(item.reactions[i].app),
+                            reactionName: item.reactions[i].name,
+                        });
+                    }
+                    newInfo.cardList.push(newCard);
+
+                    if (!found) {
+                        newInfos.push(newInfo);
+                    }
+                });
+                setInfos(newInfos);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }, []);
+
     return (
         <div className={style.mainContainerList}>
-            {array && array.map((item, index) => (
-                <ListContainer key={index} item={item} />
-            ))}
+            {infos &&
+                infos.map((item, index) => (
+                    <ListContainer key={index} item={item} />
+                ))}
         </div>
     );
 }

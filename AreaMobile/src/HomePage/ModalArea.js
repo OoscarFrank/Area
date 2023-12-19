@@ -1,48 +1,75 @@
-import { Text, View, TouchableOpacity, Switch, Modal, StyleSheet, Image, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Switch, StyleSheet, Image, ScrollView } from 'react-native';
 import React from 'react';
+import Modal from "react-native-modal";
+import * as SecureStore from 'expo-secure-store';
+import ApiRoute from '../ApiRoute/ApiRoute';
 
-export default function ModalArea({ showSettings, setShowSettings, isSet, setIsSet, index, deleteCard, image }) {
+export default function ModalArea({ showSettings, setShowSettings, isSet, setIsSet, index, deleteCard, image, when, then, id, setCurrentScreen, setRefresh, refresh }) {
+    const deleteArea = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token) {
+            console.error("No token");
+            return setCurrentScreen('login');
+        }
+        try {
+            const res = await fetch(ApiRoute + "/api/area", {
+                method : 'DELETE',
+                headers : { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: id,
+                })
+            });
+            if (res.status != 200) {
+                return;
+            }
+            setRefresh(!refresh);
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+        deleteCard(index.x, index.y);
+        setShowSettingsSettings(false);
+    }
 
     return (
-        <Modal animationType="slide"
-            visible={showSettings}
-            transparent={true}>
-            <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)', alignItems: "center" }}>
-                <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, height: '90%', backgroundColor: 'white', width: "100%" }}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <TouchableOpacity onPress={() => setShowSettings(false)}>
-                            <Text style={styles.return}>Return</Text>
-                        </TouchableOpacity>
-                        <Switch trackColor={{ false: '#767577', true: '#0000FF' }}
-                            thumbColor={isSet ? 'white' : '#f4f3f4'}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={(e) => setIsSet(index.x, index.y, e.valueOf())}
-                            value={isSet} />
+        <Modal isVisible={showSettings}
+        backdropOpacity={0.5}
+        backdropTransitionInTiming={200}
+        backdropTransitionOutTiming={200}
+        animationIn='slideInUp'
+        animationOut='slideOutDown'
+        animationInTiming={100}
+        onBackdropPress={() => setShowSettings(false)}
+        onBackButtonPress={() => setShowSettings(false)}
+        onAccessibilityEscape={() => setShowSettings(false)}
+        onAccessibilityAction={() => setShowSettings(false)}>
+            <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top:"10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <TouchableOpacity onPress={() => setShowSettings(false)}>
+                        <Text style={styles.return}>Return</Text>
+                    </TouchableOpacity>
+                </View>
+                <ScrollView style={{ flex: 0, height: "60%" }}>
+                    <Text style={styles.title}>AREA Details</Text>
+                    <Text style={styles.subTitle}>When</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <Image source={image} style={styles.image} />
+                        <Text style={{ marginLeft: 20, fontSize: 16 }}>{when.displayName}</Text>
                     </View>
-                    <ScrollView style={{ flex: 0, height: "60%" }}>
-                        <Text style={styles.title}>AREA Details</Text>
-                        <Text style={styles.subTitle}>When</Text>
-
-                        <View style={{ flexDirection: "row" }}>
-                            <Image source={image} style={styles.image} />
-                            <Text style={{ marginLeft: 20, fontSize: 16 }}>message received</Text>
-                        </View>
-
-                        <Text style={styles.subTitle}>Then</Text>
-                        {Array.from({ length: 13 }, (_, index) => {
-                            return (
-                                <View style={{ flexDirection: "row" }} key={index}>
-                                    <Image source={image} style={styles.image} />
-                                    <Text style={{ marginLeft: 20, fontSize: 16 }}>reaction name</Text>
-                                </View>
-                            );
-                        })}
-                    </ScrollView>
-                    <View style={{ flex: 1, alignItems: "center", paddingTop: 40 }}>
-                        <TouchableOpacity style={styles.deleteButton} onPress={() => { deleteCard(index.x, index.y); setShowSettings(false) }}>
-                            <Text style={{ color: '#fff' }}>Delete AREA</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Text style={styles.subTitle}>Then</Text>
+                    {then.map((item, index) => {
+                        return (
+                            <View style={{ flexDirection: "row" }} key={index}>
+                                <Image source={item.img} style={styles.image} />
+                                <Text style={{ marginLeft: 20, fontSize: 16 }}>{item.name}</Text>
+                            </View>
+                        );
+                    })}
+                </ScrollView>
+                <View style={{ flex: 1, alignItems: "center", paddingTop: 40 }}>
+                    <TouchableOpacity style={styles.deleteButton} onPress={() => deleteArea()}>
+                        <Text style={{ color: '#fff' }}>Delete AREA</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>

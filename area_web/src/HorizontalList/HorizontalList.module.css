@@ -34,7 +34,6 @@
 .serviceLogo {
     width: 50px;
     height: auto;
-    background-color: white;
 }
 
 .listTitle {
@@ -302,6 +301,7 @@
         width: 300px;
         margin: 20px;
     }
+
 
     .cardSubtitle {
         font-size: 18px;

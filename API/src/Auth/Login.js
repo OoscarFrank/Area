@@ -10,6 +10,7 @@ const login = async (req, res) => {
         ]);
     } catch (err) {
         res.status(err.status).json({ msg: err.msg });
+        return;
     }
 
     const params = {
@@ -30,6 +31,11 @@ const login = async (req, res) => {
     let user = tmpUser.Items[0];
     if (!bcrypt.compareSync(req.body.password, user.password)) {
         res.status(400).json({ msg: "Invalid credentials" });
+        return;
+    }
+
+    if (!user.confirmed) {
+        res.status(400).json({ msg: "User not confirmed" });
         return;
     }
 

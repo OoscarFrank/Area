@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, Switch, Image } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
 
 export default function Pagination({ activeIndex, itemCount }) {
     const array = new Array(itemCount).fill(0);
+    
     return (
       <View style={styles.paginationContainer}>
-        {array.map((item, index) => (
+        {array.map((_, index) => (
           <View
             key={index}
             style={[
@@ -37,4 +37,4 @@ export default function Pagination({ activeIndex, itemCount }) {
     inactiveDot: {
       backgroundColor: 'rgba(0, 0, 255, 0.2)'
     },
-  });
+});
