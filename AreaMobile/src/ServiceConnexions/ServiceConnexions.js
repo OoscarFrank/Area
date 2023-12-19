@@ -8,16 +8,16 @@ import GetImages from '../GetImages/GetImages';
 
 export default function ServiceConnexions({ show, setShow}) {
     const [availableServices, setAvailableServices] = useState([]);
-
+    const [me, setMe] = useState({});
     const setNewServices = async () => {
         const token = await SecureStore.getItemAsync("AreaToken");
         if (!token)
-            return setCurrentScreen('login');
+            return
         try {
             const res = await fetch(ApiRoute + "/api/services", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
             if (res.status != 200) {
                 SecureStore.deleteItemAsync("AreaToken");
-                return setCurrentScreen('login');
+                return
             }
             const data = await res.json();
             let newData = Array.from(data);
@@ -29,9 +29,24 @@ export default function ServiceConnexions({ show, setShow}) {
             return;
         }
     }
-
+    const setMeInfo = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token)
+            return
+        try {
+            const res = await fetch(ApiRoute + "/api/me", {method : 'GET', headers : { 'Authorization': 'Bearer ' + token }});
+            if (res.status != 200)
+                return
+            const data = await res.json();
+            setMe(data.data);
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+    }
     useEffect(() => {
         setNewServices();
+        setMeInfo();
     }, []);
 
     return (
@@ -53,7 +68,7 @@ export default function ServiceConnexions({ show, setShow}) {
                 </TouchableOpacity>
                 <ScrollView>
                 {
-                    availableServices.map((elem, index) => <ServiceConnectRow area={elem} key={index}/>)
+                    availableServices.map((elem, index) => <ServiceConnectRow area={elem} key={index} me={me}/>)
                 }
                 </ScrollView>
             </View>
