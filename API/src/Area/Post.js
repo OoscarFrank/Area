@@ -14,6 +14,16 @@ const PostArea = async (req, res) => {
         return;
     }
 
+    let found = false;
+    for(let i = 0; i < req.body.connected.length; ++i) {
+        if (req.body.connected[i] === req.body.app) {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        return res.status(400).json({ msg: "App not connected" });
+
     for (let i = 0; i < req.body.reactions.length; i++) {
         if (!req.body.reactions[i].app || !req.body.reactions[i].reaction) {
             res.status(400).json({ msg: "Invalid reaction" });

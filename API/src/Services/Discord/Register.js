@@ -62,7 +62,7 @@ const Register = async (req, res) => {
                     })
                     .promise();
                 if (!req.user.connected) req.user.connected = [];
-                req.user.connected.push("discord")
+                req.user.connected.push("Discord")
                 await dynamo
                     .client()
                     .put({
