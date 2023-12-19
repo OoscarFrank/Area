@@ -117,7 +117,7 @@ export default function HomePage({ setCurrentScreen}) {
             <PopUpDetails showDetails={userDetailsVisible} setShowDetails={setUserDetailsVisible} setCurrentScreen={setCurrentScreen} />
             <CreateArea setShowCreateArea={setShowCreateArea} showCreateArea={showCreateArea} setCurrentScreen={setCurrentScreen} refresh={refreshAreas} setRefresh={setRefreshAreas}/>
             <ServiceConnexions setShow={setShowServiceConnexions} show={showServiceConnexions}/>
-            <ScrollView>
+            <ScrollView style={{width : '100%', height : '100%'}}>
                 {
                     lines.map((line, index) => {
                         return (
@@ -154,8 +154,8 @@ export default function HomePage({ setCurrentScreen}) {
                     })
                 }
             </ScrollView>
-            <View>
-                <TouchableOpacity onPress={() => setShowCreateArea(true)} style={{borderRadius: 30, backgroundColor: "blue", width: 50, height: 50, alignItems: "center", justifyContent: "center", marginBottom : '2%'}}>
+            <View style={{flexDirection : 'row', alignItems : 'center', width : '85%', display : 'flex', justifyContent : 'flex-end'}}>
+                <TouchableOpacity onPress={() => setShowCreateArea(true)} style={{borderRadius: 30, backgroundColor: "blue", width: 50, height: 50, alignItems: "center", justifyContent: "center", marginBottom : '5%'}}>
                     <MaterialCommunityIcons name='plus-circle-outline' size={45} color="white" />
                 </TouchableOpacity>
             </View>
@@ -165,7 +165,8 @@ export default function HomePage({ setCurrentScreen}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width : '100%',
+        height : '100%',
         backgroundColor: backColor,
         alignItems: 'center',
     },

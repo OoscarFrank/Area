@@ -61,7 +61,8 @@ export default function ServiceConnexions({ show, setShow}) {
             onBackdropPress={() => setShow(false)}
             onBackButtonPress={() => setShow(false)}
             onAccessibilityEscape={() => setShow(false)}
-            onAccessibilityAction={() => setShow(false)}>
+            onAccessibilityAction={() => setShow(false)}
+            >
             <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20, top:"10%", height: '90%', backgroundColor: '#F3F2F8', width: "110%", alignSelf: "center" }}>
                 <TouchableOpacity onPress={() => setShow(false)} style={{ alignSelf: "flex-start", marginLeft: 20, marginTop: 20, }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'blue' }}>Close</Text>

@@ -48,11 +48,6 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
                     <TouchableOpacity onPress={() => setShowSettings(false)}>
                         <Text style={styles.return}>Return</Text>
                     </TouchableOpacity>
-                    <Switch trackColor={{ false: '#767577', true: '#0000FF' }}
-                        thumbColor={isSet ? 'white' : '#f4f3f4'}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(e) => setIsSet(index.x, index.y, e.valueOf())}
-                        value={isSet} />
                 </View>
                 <ScrollView style={{ flex: 0, height: "60%" }}>
                     <Text style={styles.title}>AREA Details</Text>
