@@ -43,9 +43,10 @@ export default function DisplayReactions({ Area, setReactions }) {
         let tmpTab = Array.from(checked);
         tmpTab[index] = !tmpTab[index];
         setChecked(tmpTab);
-        let tmpReaction = { "app": "", "reaction": "" };
+        let tmpReaction = { "app": "", "reaction": "", "name": ""};
         tmpReaction["app"] = Area.app;
-        tmpReaction["reaction"] = reaction;
+        tmpReaction["reaction"] = reaction.code;
+        tmpReaction["name"] = reaction.displayName;
         if (!checked[index]) {
             setReactions((prevReactions) => {
                 const tmpReactions = [...prevReactions];
@@ -73,7 +74,7 @@ export default function DisplayReactions({ Area, setReactions }) {
                                 <Image source={Area.icon} style={{ width: 35, height: 35, marginTop: 10, marginLeft: 15 }} />
                                 <Text style={{ marginTop: 15, marginLeft: 15 }}>{reaction.displayName}</Text>
                             </View>
-                            <Checkbox value={checked[index]} onValueChange={() => handlePress(index, reaction.code)} style={{ marginRight: 15 }} />
+                            <Checkbox value={checked[index]} onValueChange={() => handlePress(index, reaction)} style={{ marginRight: 15 }} />
                         </View>
                     </View>
                 </TouchableOpacity>

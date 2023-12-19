@@ -50,11 +50,6 @@ export default function CreateArea({ showCreateArea, setShowCreateArea, setCurre
             console.log("No token");
             return setCurrentScreen('login');
         }
-        console.log(JSON.stringify({
-            app: Areas[action[0]].app,
-            action: Areas[action[0]].actions[action[1]].code,
-            reactions: reactions    
-        }));
         try {
             const res = await fetch(ApiRoute + "/api/area", {
                 method : 'POST',

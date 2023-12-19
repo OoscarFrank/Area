@@ -39,7 +39,7 @@ export default function ModalArea({ showSettings, setShowSettings, isSet, setIsS
                         return (
                             <View style={{ flexDirection: "row" }} key={index}>
                                 <Image source={item.img} style={styles.image} />
-                                <Text style={{ marginLeft: 20, fontSize: 16 }}>{item.reaction}</Text>
+                                <Text style={{ marginLeft: 20, fontSize: 16 }}>{item.name}</Text>
                             </View>
                         );
                     })}
