@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { API_URL } from "../utils";
 
 
 function Confirm() {
@@ -8,7 +9,7 @@ function Confirm() {
 
         console.log(code)
         if (!code) return;
-        fetch("http://localhost:8080/api/github/register", {
+        fetch( API_URL + "/api/github/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
