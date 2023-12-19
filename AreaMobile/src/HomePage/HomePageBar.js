@@ -4,18 +4,36 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Logo from '../../assets/logo.svg';
 const backColor = "#fff";
 
-export default function HomePageBar({setCurrentScreen}) {
+
+export default function HomePageBar({setCurrentScreen, setModalVisible, setServicesConnexionsModalVisible}) {
   return (
     <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
+    {
+        Platform.OS === 'ios' && <View style={{
+            width: "100%",
+            height: 30,
+            backgroundColor: {backColor}
+        }}>
+            <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
+        </View>
+    }
+
+    {
+        Platform.OS === 'android' && <StatusBar barStyle="dark-content" backgroundColor={backColor}/>
+    }
         <View style={styles.contentContainer}>
             <View style={styles.leftContainer}>
                 <Logo width={50} height={50}/>
                 <Text style={styles.title}>AREA</Text>
             </View>
-            <TouchableOpacity onPress={() => setCurrentScreen('login')}>
-                <MaterialCommunityIcons name='account' size={50} color="black" />
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center', paddingRight : '1%', justifyContent : 'space-between'}}>
+                <TouchableOpacity onPress={() => setServicesConnexionsModalVisible(true)} style={{backgroundColor : 'black', borderRadius : 200, padding : 5}} >
+                    <MaterialCommunityIcons name='link' size={30} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setModalVisible(true)} style={{marginLeft : '8%', backgroundColor : 'black', borderRadius : 200, padding : 5, marginRight : '3%'}}>
+                    <MaterialCommunityIcons name='account' size={30} color="white" />
+                </TouchableOpacity>
+            </View>
         </View>
     </View>
   );
@@ -51,4 +69,3 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     }
 });
-
