@@ -17,9 +17,12 @@ jobs:
       with:
         node-version: '14'
 
+    - name: change directory
+      run: cd area_web
+      
     - name: Install dependencies
       run: npm install
 
     - name: Build React app
-      run: cd area_web && npm run build
+      run: npm run build
 
