@@ -184,7 +184,15 @@ export default function AddArea() {
         })
             .then((response) => response.json())
             .then(async (data) => {
-                setAreas(data);
+                let newData = []
+                for (let i = 0; i < data.length; i++) {
+                    for (let j = 0; j < window.user.connected.length; j++) {
+                        if (data[i].app === window.user.connected[j]) {
+                            newData.push(data[i])
+                        }
+                    }
+                }
+                setAreas(newData);
             })
             .catch((err) => {
                 console.log(err);
@@ -216,6 +224,7 @@ export default function AddArea() {
                 setReactions([]);
                 setSelectedAction(null);
                 setProgression(0);
+                window.location.reload();
             })
             .catch((err) => {
                 console.log(err);
