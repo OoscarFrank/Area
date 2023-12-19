@@ -1,9 +1,32 @@
 import { Text, View, TouchableOpacity, Switch, StyleSheet, Image, ScrollView } from 'react-native';
 import React from 'react';
 import Modal from "react-native-modal";
+import * as SecureStore from 'expo-secure-store';
+import ApiRoute from '../ApiRoute/ApiRoute';
 
-export default function ModalArea({ showSettings, setShowSettings, isSet, setIsSet, index, deleteCard, image, when, then }) {
-    const deleteArea = () => {
+export default function ModalArea({ showSettings, setShowSettings, isSet, setIsSet, index, deleteCard, image, when, then, id, setCurrentScreen, setRefresh, refresh }) {
+    const deleteArea = async () => {
+        const token = await SecureStore.getItemAsync("AreaToken");
+        if (!token) {
+            console.log("No token");
+            return setCurrentScreen('login');
+        }
+        try {
+            const res = await fetch(ApiRoute + "/api/area", {
+                method : 'DELETE',
+                headers : { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: id,
+                })
+            });
+            if (res.status != 200) {
+                return;
+            }
+            setRefresh(!refresh);
+        } catch (err) {
+            console.log(err);
+            return;
+        }
         deleteCard(index.x, index.y);
         setShowSettings(false);
     }

@@ -142,7 +142,7 @@ export default function HomePage({ setCurrentScreen}) {
                                         setActiveIndex(oldIndex)
                                     }}
                                     renderItem={(it) => (
-                                        <HomePageCard isSet={it.item.active} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.action} then={it.item.reactions} deleteCard={deleteCard}/>
+                                        <HomePageCard id={it.item.id} isSet={it.item.active} setIsSet={setIsSet} index={{x : index, y : it.index}} when={it.item.action} then={it.item.reactions} deleteCard={deleteCard} setCurrentScreen={setCurrentScreen} setRefresh={setRefreshAreas} refresh={refreshAreas}/>
                                     )}
                                     panGestureHandlerProps={{
                                         activeOffsetX: [-1, 1],

@@ -4,14 +4,14 @@ import React, {useState} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 const backColor = "#fff";
 
-export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard}) {
+export default function HomePageCard({isSet, setIsSet, when, then, index, deleteCard, id, setCurrentScreen, setRefresh, refresh}) {
     
   const [showSettings, setShowSettings] = useState(false);
 
   return (
     <View style={styles.container}>
-        <ModalArea setShowSettings={setShowSettings} showSettings={showSettings}
-        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img} when={when} then={then}/>
+        <ModalArea setShowSettings={setShowSettings} showSettings={showSettings} id={id} setCurrentScreen={setCurrentScreen} setRefresh={setRefresh}
+        isSet={isSet} setIsSet={setIsSet} index={index} deleteCard={deleteCard} image={when.img} when={when} then={then} refresh={refresh}/>
         <Text style={styles.textTitle}>When</Text>
         <View style={styles.contentContainer}>
             <View style={styles.alignContainer}>
